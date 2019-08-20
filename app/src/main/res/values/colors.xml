@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#B760E6</color>
-    <color name="colorPrimaryDark">#5722B6</color>
+    <color name="colorPrimary">#673AB7</color>
+    <color name="colorPrimaryDark">#5719B9</color>
     <color name="colorAccent">#673AB7</color>
-    <color name="roxo">#B760E6</color>
-    <color name="roxoEscuro">#4F0EB8</color>
+    <color name="roxo">#5719B9</color>
+    <color name="roxoEscuro">#5719B9</color>
 </resources>
