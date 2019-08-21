@@ -67,7 +67,7 @@ public class PrestadorActivity extends AppCompatActivity {
     }
 
     private void abrirConfiguracoes() {
-        startActivity(new Intent(PrestadorActivity.this, ConfiguracaoFirebase.class));
+        startActivity(new Intent(PrestadorActivity.this, ConfiguracoesPrestadorActivity.class));
     }
 
     private void abriNovoServico() {
