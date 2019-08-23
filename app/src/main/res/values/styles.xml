@@ -9,8 +9,8 @@
     </style>
 
     <style name="botaoPadrao" parent="Theme.AppCompat.Light">
-        <item name="colorControlHighlight">@color/roxoEscuro</item>
-        <item name="colorButtonNormal">@color/roxo</item>
+        <item name="colorControlHighlight">@color/colorPrimaryDark</item>
+        <item name="colorButtonNormal">@color/colorPrimary</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
 

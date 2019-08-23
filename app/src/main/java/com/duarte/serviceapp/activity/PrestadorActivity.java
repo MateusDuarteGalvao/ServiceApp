@@ -61,6 +61,7 @@ public class PrestadorActivity extends AppCompatActivity {
     private void deslogarUsuario(){
         try {
             autenticacao.signOut();
+            finish();
         }catch (Exception e){
             e.printStackTrace();
         }
