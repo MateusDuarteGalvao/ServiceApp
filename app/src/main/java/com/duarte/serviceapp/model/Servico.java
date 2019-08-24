@@ -6,11 +6,16 @@ import com.google.firebase.database.DatabaseReference;
 public class Servico {
 
     private String idUsuario;
+    private String idServico;
     private String nome;
     private String descricao;
     private Double preco;
 
     public Servico() {
+        DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
+        DatabaseReference servicoRef = firebaseRef
+                .child("servicos");
+        setIdServico( servicoRef.push().getKey() );
     }
 
     public void salvar(){
@@ -19,11 +24,27 @@ public class Servico {
         DatabaseReference servicoRef = firebaseRef
                 .child("servicos")
                 .child( getIdUsuario() )
-                .push();
+                .child( getIdServico() );
         servicoRef.setValue(this);
 
     }
 
+    public void remover(){
+        DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
+        DatabaseReference servicoRef = firebaseRef
+                .child("servicos")
+                .child( getIdUsuario() )
+                .child( getIdServico() );
+        servicoRef.removeValue();
+    }
+
+    public String getIdServico() {
+        return idServico;
+    }
+
+    public void setIdServico(String idServico) {
+        this.idServico = idServico;
+    }
 
     public String getIdUsuario() {
         return idUsuario;
@@ -56,4 +77,5 @@ public class Servico {
     public void setPreco(Double preco) {
         this.preco = preco;
     }
+
 }

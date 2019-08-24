@@ -1,4 +1,4 @@
-package br.com.ifood.cursoandroid.ifoodprojeto.listener;
+package com.duarte.serviceapp.listener;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,9 +7,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 
-/**
- * Created by Jamilton
- */
 
 public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener {
 

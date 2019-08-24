@@ -1,4 +1,4 @@
-package br.com.ifood.cursoandroid.ifoodprojeto.adapter;
+package com.duarte.serviceapp.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -8,43 +8,41 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.duarte.serviceapp.R;
+import com.duarte.serviceapp.model.Servico;
+
 import java.util.List;
 
-import br.com.ifood.cursoandroid.ifoodprojeto.R;
-import br.com.ifood.cursoandroid.ifoodprojeto.model.Produto;
 
-/**
- * Created by Jamilton
- */
 
-public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHolder>{
+public class AdapterServico extends RecyclerView.Adapter<AdapterServico.MyViewHolder>{
 
-    private List<Produto> produtos;
+    private List<Servico> servicos;
     private Context context;
 
-    public AdapterProduto(List<Produto> produtos, Context context) {
-        this.produtos = produtos;
+    public AdapterServico(List<Servico> servicos, Context context) {
+        this.servicos = servicos;
         this.context = context;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-        View itemLista = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_produto, parent, false);
+        View itemLista = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_servico, parent, false);
         return new MyViewHolder(itemLista);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int i) {
-        Produto produto = produtos.get(i);
-        holder.nome.setText(produto.getNome());
-        holder.descricao.setText(produto.getDescricao());
-        holder.valor.setText("R$ " + produto.getPreco());
+        Servico servico = servicos.get(i);
+        holder.nome.setText(servico.getNome());
+        holder.descricao.setText(servico.getDescricao());
+        holder.valor.setText("R$ " + servico.getPreco());
     }
 
     @Override
     public int getItemCount() {
-        return produtos.size();
+        return servicos.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -56,8 +54,8 @@ public class AdapterProduto extends RecyclerView.Adapter<AdapterProduto.MyViewHo
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            nome = itemView.findViewById(R.id.textNomeRefeicao);
-            descricao = itemView.findViewById(R.id.textDescricaoRefeicao);
+            nome = itemView.findViewById(R.id.textNomeServico);
+            descricao = itemView.findViewById(R.id.textDescricaoServico);
             valor = itemView.findViewById(R.id.textPreco);
         }
     }
