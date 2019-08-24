@@ -20,8 +20,13 @@ import com.duarte.serviceapp.helper.UsuarioFirebase;
 import com.duarte.serviceapp.model.Prestador;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 
@@ -35,6 +40,7 @@ public class ConfiguracoesPrestadorActivity extends AppCompatActivity {
 
     private static final int SELECAO_GALERIA = 200;
     private StorageReference storageReference;
+    private DatabaseReference firebaseRef;
     private String idUsuarioLogado;
     private String urlImagemSelecionada = "";
 
@@ -46,6 +52,7 @@ public class ConfiguracoesPrestadorActivity extends AppCompatActivity {
         //Configurações iniciais
         inicializarComponentes();
         storageReference = ConfiguracaoFirebase.getFirebaseStorage();
+        firebaseRef = ConfiguracaoFirebase.getFirebase();
         idUsuarioLogado = UsuarioFirebase.getIdUsuario();
 
         //Configurações Toolbar
@@ -67,6 +74,44 @@ public class ConfiguracoesPrestadorActivity extends AppCompatActivity {
                 }
             }
         });
+
+        //Recuperar dados do prestador
+        recuperarDadosPrestador();
+
+    }
+
+   private void recuperarDadosPrestador(){
+
+        DatabaseReference prestadorRef = firebaseRef
+                .child("prestadores")
+                .child( idUsuarioLogado );
+        prestadorRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if( dataSnapshot.getValue() != null ){
+                    Prestador prestador = dataSnapshot.getValue(Prestador.class);
+                    editPrestadorNome.setText(prestador.getNome());
+                    editPrestadorCategoria.setText(prestador.getCategoria());
+                    editPrestadorTempo.setText(prestador.getTempo());
+                    editPrestadorValorHora.setText(prestador.getPrecoHora().toString());
+
+                    urlImagemSelecionada = prestador.getUrlImagem();
+                    if ( urlImagemSelecionada != "" ) {
+                        Picasso.get()
+                                .load(urlImagemSelecionada)
+                                .into(imagePerfilPrestador);
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     public void validarDadosPrestador(View view){

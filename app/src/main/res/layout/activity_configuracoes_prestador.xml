@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Valor da hora"
-            android:inputType="text"
+            android:inputType="numberDecimal"
             android:padding="16dp" />
 
         <Button
