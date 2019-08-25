@@ -84,7 +84,7 @@ public class ConfiguracoesClienteActivity extends AppCompatActivity {
         DatabaseReference clienteRef = firebaseRef
                 .child("clientes")
                 .child( idUsuarioLogado );
-        clienteRef.addValueEventListener(new ValueEventListener() {
+        clienteRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -129,6 +129,8 @@ public class ConfiguracoesClienteActivity extends AppCompatActivity {
                     cliente.setTelefone( telefone );
                     cliente.setUrlImagem( urlImagemSelecionada );
                     cliente.salvar();
+
+                    exibirMensagem("Dados atualizados com sucesso!");
                     finish();
 
                 }else{
