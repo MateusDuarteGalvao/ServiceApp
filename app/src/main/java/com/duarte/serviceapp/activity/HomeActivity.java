@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
@@ -57,6 +58,50 @@ public class HomeActivity extends AppCompatActivity {
         //Recupera prestadores para o cliente
         recuperarPrestadores();
 
+        //Configuração do search view
+        searchView.setHint("Pesquisar...");
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                pesquisarPrestadores( newText );
+
+                return true;
+            }
+        });
+
+    }
+
+    private void pesquisarPrestadores(String pesquisa){
+        final DatabaseReference prestadoresRef = firebaseRef
+                .child("prestadores");
+        Query query = prestadoresRef.orderByChild("nome")
+                .startAt(pesquisa)
+                .endAt(pesquisa + "\uf8ff");
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                prestadores.clear();
+
+                for (DataSnapshot ds: dataSnapshot.getChildren()){
+                    prestadores.add( ds.getValue(Prestador.class) );
+                }
+
+                adapterPrestador.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void recuperarPrestadores(){
