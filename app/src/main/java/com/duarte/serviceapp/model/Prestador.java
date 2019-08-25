@@ -3,7 +3,9 @@ package com.duarte.serviceapp.model;
 import com.duarte.serviceapp.helper.ConfiguracaoFirebase;
 import com.google.firebase.database.DatabaseReference;
 
-public class Prestador {
+import java.io.Serializable;
+
+public class Prestador implements Serializable {
 
     private String idUsuario;
     private String urlImagem;

@@ -9,11 +9,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 
 import com.duarte.serviceapp.R;
 import com.duarte.serviceapp.adapter.AdapterPrestador;
 import com.duarte.serviceapp.adapter.AdapterServico;
 import com.duarte.serviceapp.helper.ConfiguracaoFirebase;
+import com.duarte.serviceapp.listener.RecyclerItemClickListener;
 import com.duarte.serviceapp.model.Prestador;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -73,6 +76,35 @@ public class HomeActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        //Configurar evento de clique
+        recyclerPrestador.addOnItemTouchListener(
+                new RecyclerItemClickListener(
+                        this,
+                        recyclerPrestador,
+                        new RecyclerItemClickListener.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
+
+                                Prestador prestadorSelecionado = prestadores.get(position);
+                                Intent i = new Intent(HomeActivity.this, ServicosActivity.class);
+                                i.putExtra("prestador", prestadorSelecionado);
+                                startActivity(i);
+
+                            }
+
+                            @Override
+                            public void onLongItemClick(View view, int position) {
+
+                            }
+
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                            }
+                        }
+                )
+        );
 
     }
 
