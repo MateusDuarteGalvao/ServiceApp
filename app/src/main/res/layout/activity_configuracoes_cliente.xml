@@ -4,11 +4,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activity.ConfiguracoesClienteActivity">
 
     <include
         layout="@layout/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imagePerfilCliente"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/perfil" />
+
+        <EditText
+            android:id="@+id/editClienteNome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nome"
+            android:inputType="text"
+            android:padding="16dp" />
+
+        <EditText
+            android:id="@+id/editClienteEndereco"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Endereço"
+            android:inputType="text"
+            android:padding="16dp" />
+
+        <EditText
+            android:id="@+id/editClienteTelefone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Telefone"
+            android:inputType="phone"
+            android:padding="16dp" />
+
+        <Button
+            android:id="@+id/buttonSalvar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="validarDadosCliente"
+            android:padding="16dp"
+            android:text="Salvar"
+            android:theme="@style/botaoPadrao" />
+
+    </LinearLayout>
 
 </LinearLayout>
