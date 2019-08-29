@@ -1,5 +1,6 @@
 package com.duarte.serviceapp.activity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -30,6 +31,8 @@ import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 
+import dmax.dialog.SpotsDialog;
+
 
 public class ConfiguracoesPrestadorActivity extends AppCompatActivity {
 
@@ -37,6 +40,7 @@ public class ConfiguracoesPrestadorActivity extends AppCompatActivity {
     private EditText editPrestadorNome, editPrestadorCategoria, editPrestadorTempo,
             editPrestadorValorHora;
     private ImageView imagePerfilPrestador;
+    private AlertDialog dialog;
 
     private static final int SELECAO_GALERIA = 200;
     private StorageReference storageReference;
@@ -82,6 +86,13 @@ public class ConfiguracoesPrestadorActivity extends AppCompatActivity {
 
    private void recuperarDadosPrestador(){
 
+       dialog = new SpotsDialog.Builder()
+               .setContext(this)
+               .setMessage("Carregando dados")
+               .setCancelable(false)
+               .build();
+       dialog.show();
+
         DatabaseReference prestadorRef = firebaseRef
                 .child("prestadores")
                 .child( idUsuarioLogado );
@@ -102,6 +113,8 @@ public class ConfiguracoesPrestadorActivity extends AppCompatActivity {
                                 .load(urlImagemSelecionada)
                                 .into(imagePerfilPrestador);
                     }
+
+                    dialog.dismiss();
                 }
 
             }

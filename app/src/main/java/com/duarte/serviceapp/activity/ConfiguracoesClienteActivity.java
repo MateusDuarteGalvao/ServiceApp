@@ -1,5 +1,6 @@
 package com.duarte.serviceapp.activity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -31,11 +32,14 @@ import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 
+import dmax.dialog.SpotsDialog;
+
 public class ConfiguracoesClienteActivity extends AppCompatActivity {
 
     //Inicializando atributos
     private EditText editClienteNome, editClienteEndereco, editClienteTelefone;
     private ImageView imagePerfilCliente;
+    private AlertDialog dialog;
 
     private static final int SELECAO_GALERIA = 200;
     private StorageReference storageReference;
@@ -81,6 +85,13 @@ public class ConfiguracoesClienteActivity extends AppCompatActivity {
 
     private void recuperarDadosCliente(){
 
+        dialog = new SpotsDialog.Builder()
+                .setContext(this)
+                .setMessage("Carregando dados")
+                .setCancelable(false)
+                .build();
+        dialog.show();
+
         DatabaseReference clienteRef = firebaseRef
                 .child("clientes")
                 .child( idUsuarioLogado );
@@ -100,6 +111,8 @@ public class ConfiguracoesClienteActivity extends AppCompatActivity {
                                 .load(urlImagemSelecionada)
                                 .into(imagePerfilCliente);
                     }
+
+                    dialog.dismiss();
                 }
 
             }
@@ -153,6 +166,7 @@ public class ConfiguracoesClienteActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
 
         if( resultCode == RESULT_OK ){
             Bitmap imagem = null;
