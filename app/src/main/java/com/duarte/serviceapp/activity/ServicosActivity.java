@@ -1,6 +1,7 @@
 package com.duarte.serviceapp.activity;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +10,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,7 +20,10 @@ import com.duarte.serviceapp.R;
 import com.duarte.serviceapp.adapter.AdapterServico;
 import com.duarte.serviceapp.helper.ConfiguracaoFirebase;
 import com.duarte.serviceapp.helper.UsuarioFirebase;
+import com.duarte.serviceapp.listener.RecyclerItemClickListener;
 import com.duarte.serviceapp.model.Cliente;
+import com.duarte.serviceapp.model.ItemOrdemServico;
+import com.duarte.serviceapp.model.OrdemServico;
 import com.duarte.serviceapp.model.Prestador;
 import com.duarte.serviceapp.model.Servico;
 import com.google.firebase.database.DataSnapshot;
@@ -25,6 +32,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,14 +45,19 @@ public class ServicosActivity extends AppCompatActivity {
     private TextView textNomePrestadorServico;
     private Prestador prestadorSelecionado;
     private AlertDialog dialog;
+    private TextView textServicosQtde, textServicosTotal;
 
 
     private AdapterServico adapterServico;
     private List<Servico> servicos = new ArrayList<>();
+    private List<ItemOrdemServico> itensServicos = new ArrayList<>();
     private DatabaseReference firebaseRef;
     private String idPrestador;
     private String idUsuarioLogado;
     private Cliente cliente;
+    private OrdemServico ordemServicoRecuperada;
+    private int qtdeItensServico;
+    private Double totalServicos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,10 +93,86 @@ public class ServicosActivity extends AppCompatActivity {
         adapterServico = new AdapterServico(servicos, this);
         recyclerServicosPrestador.setAdapter( adapterServico );
 
+        //Configurar evento de clique
+        recyclerServicosPrestador.addOnItemTouchListener(
+                new RecyclerItemClickListener(
+                        this,
+                        recyclerServicosPrestador,
+                        new RecyclerItemClickListener.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
+                                confirmarQuantidade(position);
+                            }
+
+                            @Override
+                            public void onLongItemClick(View view, int position) {
+
+                            }
+
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                            }
+                        }
+                )
+        );
+
         //Recupera serviços para o prestador
         recuperarServicos();
         recuperarDadosCliente();
 
+    }
+
+    private void confirmarQuantidade(final int posicao) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Quantidade");
+        builder.setMessage("Digite a quantidade");
+
+        final EditText editQunatidade = new EditText(this);
+        editQunatidade.setText("1");
+
+        builder.setView( editQunatidade );
+
+        builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                String quantidade = editQunatidade.getText().toString();
+
+                Servico servicoSelecionado = servicos.get(posicao);
+
+                ItemOrdemServico itemOrdemServico = new ItemOrdemServico();
+                itemOrdemServico.setIdServico( servicoSelecionado.getIdServico() );
+                itemOrdemServico.setDescricaoServico( servicoSelecionado.getDescricao() );
+                itemOrdemServico.setNomeServico( servicoSelecionado.getNome() );
+                itemOrdemServico.setPreco( servicoSelecionado.getPreco() );
+                itemOrdemServico.setQuantidade( Integer.parseInt(quantidade) );
+
+                itensServicos.add( itemOrdemServico );
+
+                if( ordemServicoRecuperada == null ){
+                    ordemServicoRecuperada = new OrdemServico(idUsuarioLogado, idPrestador);
+                }
+
+                ordemServicoRecuperada.setNome( cliente.getNome() );
+                ordemServicoRecuperada.setEndereco( cliente.getEndereco() );
+                ordemServicoRecuperada.setTelefone( cliente.getEndereco() );
+                ordemServicoRecuperada.setItens( itensServicos );
+                ordemServicoRecuperada.salvar();
+
+            }
+        });
+
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void recuperarDadosCliente() {
@@ -118,7 +207,48 @@ public class ServicosActivity extends AppCompatActivity {
 
     private void recuperarOrdemServico() {
 
-        dialog.dismiss();
+        final DatabaseReference ordemServicoRef = firebaseRef
+                .child("ordens_servico_cliente")
+                .child( idPrestador )
+                .child( idUsuarioLogado );
+
+        ordemServicoRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                qtdeItensServico = 0;
+                totalServicos = 0.0;
+                itensServicos = new ArrayList<>();
+
+                if(dataSnapshot.getValue() != null) {
+
+                    ordemServicoRecuperada = dataSnapshot.getValue(OrdemServico.class);
+                    itensServicos = ordemServicoRecuperada.getItens();
+
+                    for(ItemOrdemServico itemOrdemServico: itensServicos) {
+
+                        int qtde = itemOrdemServico.getQuantidade();
+                        Double preco = itemOrdemServico.getPreco();
+
+                        totalServicos += (qtde * preco);
+                        qtdeItensServico += qtde;
+                    }
+
+                }
+
+                DecimalFormat df = new DecimalFormat( "0.00" );
+
+                textServicosQtde.setText( "qtd: " + String.valueOf(qtdeItensServico) );
+                textServicosTotal.setText( "R$ " +  df.format( totalServicos ));
+
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void recuperarServicos(){
@@ -172,6 +302,9 @@ public class ServicosActivity extends AppCompatActivity {
         recyclerServicosPrestador = findViewById(R.id.recyclerServicosPrestador);
         imagePrestadorServico = findViewById(R.id.imagePrestadorServico);
         textNomePrestadorServico = findViewById(R.id.textNomePrestadorServico);
+
+        textServicosQtde = findViewById(R.id.textOrcamentoQtd);
+        textServicosTotal = findViewById(R.id.textOrcamentoTotal);
     }
 
 
