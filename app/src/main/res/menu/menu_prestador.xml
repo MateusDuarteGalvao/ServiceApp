@@ -9,6 +9,12 @@
         app:showAsAction="always" />
 
     <item
+        android:id="@+id/menuOrdensServico"
+        android:icon="@drawable/ic_ordem_servico_24dp"
+        android:title="Ordens de serviço"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/menuConfiguracoes"
         android:title="Configurações"
         app:showAsAction="never" />

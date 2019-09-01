@@ -144,6 +144,9 @@ public class PrestadorActivity extends AppCompatActivity {
             case R.id.menuNovoServico :
                 abriNovoServico();
                 break;
+            case R.id.menuOrdensServico :
+                abrirOrdensServico();
+                break;
 
         }
 
@@ -165,6 +168,10 @@ public class PrestadorActivity extends AppCompatActivity {
 
     private void abriNovoServico() {
         startActivity(new Intent(PrestadorActivity.this, NovoServicoPrestadorActivity.class));
+    }
+
+    private void abrirOrdensServico() {
+        startActivity(new Intent(PrestadorActivity.this, OrdensServicoActivity.class));
     }
 
 

@@ -6,6 +6,7 @@ import com.duarte.serviceapp.activity.ConfiguracoesClienteActivity;
 import com.duarte.serviceapp.helper.ConfiguracaoFirebase;
 import com.google.firebase.database.DatabaseReference;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class OrdemServico {
@@ -66,6 +67,19 @@ public class OrdemServico {
                 .child( getIdPrestador() )
                 .child( getIdOrdemServico() );
         ordemServicoRef.setValue( this );
+    }
+
+    public void atualizarStatus() {
+
+        HashMap<String, Object> status = new HashMap<>();
+        status.put("status", getStatus() );
+
+        DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
+        DatabaseReference ordemServicoRef = firebaseRef
+                .child("ordens_servico")
+                .child( getIdPrestador() )
+                .child( getIdOrdemServico() );
+        ordemServicoRef.updateChildren( status );
     }
 
     public String getIdCliente() {
