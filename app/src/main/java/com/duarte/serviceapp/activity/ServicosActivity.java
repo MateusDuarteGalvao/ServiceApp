@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.duarte.serviceapp.R;
 import com.duarte.serviceapp.adapter.AdapterServico;
@@ -330,6 +331,11 @@ public class ServicosActivity extends AppCompatActivity {
                 ordemServicoRecuperada.confirmar();
                 ordemServicoRecuperada.remover();
                 ordemServicoRecuperada = null;
+
+                Toast.makeText(
+                        ServicosActivity.this,
+                        "Serviço confirmado com sucesso.",
+                        Toast.LENGTH_SHORT).show();
 
             }
         });
