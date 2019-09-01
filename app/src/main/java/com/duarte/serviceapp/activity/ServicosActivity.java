@@ -58,6 +58,7 @@ public class ServicosActivity extends AppCompatActivity {
     private OrdemServico ordemServicoRecuperada;
     private int qtdeItensServico;
     private Double totalServicos;
+    private int metodoPagamento;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -291,10 +292,57 @@ public class ServicosActivity extends AppCompatActivity {
 
         switch (item.getItemId()){
             case R.id.menuOrdemServico :
+                confirmarOrdemServico();
                 break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void confirmarOrdemServico() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Selecione um método de pagamento");
+
+        CharSequence[] itens = new CharSequence[] {
+          "Dinheiro", "Máquina cartão"
+        };
+        builder.setSingleChoiceItems(itens, 0, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                metodoPagamento = which;
+            }
+        });
+
+        final EditText editObservacao = new EditText(this);
+        editObservacao.setHint("Digite uma observação");
+        builder.setView( editObservacao );
+
+
+        builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                String observacao = editObservacao.getText().toString();
+                ordemServicoRecuperada.setMetodoPagamento( metodoPagamento );
+                ordemServicoRecuperada.setObservacao( observacao );
+                ordemServicoRecuperada.setStatus( "confirmado" );
+                ordemServicoRecuperada.confirmar();
+                ordemServicoRecuperada.remover();
+                ordemServicoRecuperada = null;
+
+            }
+        });
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
     }
 
 

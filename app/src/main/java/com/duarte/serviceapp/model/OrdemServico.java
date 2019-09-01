@@ -1,5 +1,7 @@
 package com.duarte.serviceapp.model;
 
+import android.provider.ContactsContract;
+
 import com.duarte.serviceapp.activity.ConfiguracoesClienteActivity;
 import com.duarte.serviceapp.helper.ConfiguracaoFirebase;
 import com.google.firebase.database.DatabaseReference;
@@ -43,6 +45,26 @@ public class OrdemServico {
                 .child("ordens_servico_cliente")
                 .child( getIdPrestador() )
                 .child( getIdCliente() );
+        ordemServicoRef.setValue( this );
+    }
+
+    public void remover() {
+
+        DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
+        DatabaseReference ordemServicoRef = firebaseRef
+                .child("ordens_servico_cliente")
+                .child( getIdPrestador() )
+                .child( getIdCliente() );
+        ordemServicoRef.removeValue();
+    }
+
+    public void confirmar() {
+
+        DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
+        DatabaseReference ordemServicoRef = firebaseRef
+                .child("ordens_servico")
+                .child( getIdPrestador() )
+                .child( getIdOrdemServico() );
         ordemServicoRef.setValue( this );
     }
 
@@ -133,4 +155,5 @@ public class OrdemServico {
     public void setObservacao(String observacao) {
         this.observacao = observacao;
     }
+
 }
