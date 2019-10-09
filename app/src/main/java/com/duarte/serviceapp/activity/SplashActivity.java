@@ -20,11 +20,11 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 abrirAutenticacao();
             }
-        }, 3000);
+        }, 2500);
     }
 
     private void abrirAutenticacao() {
-        Intent i = new Intent(SplashActivity.this, AutenticacaoActivity.class);
+        Intent i = new Intent(SplashActivity.this,SliderActivity.class);
         startActivity(i);
         finish();
     }

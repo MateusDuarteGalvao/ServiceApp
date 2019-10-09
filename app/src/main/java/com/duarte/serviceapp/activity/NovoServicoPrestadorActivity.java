@@ -1,8 +1,10 @@
 package com.duarte.serviceapp.activity;
 
+import android.support.design.internal.NavigationMenu;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -10,6 +12,8 @@ import android.widget.Toast;
 import com.duarte.serviceapp.R;
 import com.duarte.serviceapp.helper.UsuarioFirebase;
 import com.duarte.serviceapp.model.Servico;
+
+import io.github.yavski.fabspeeddial.FabSpeedDial;
 
 public class NovoServicoPrestadorActivity extends AppCompatActivity {
 
@@ -21,6 +25,9 @@ public class NovoServicoPrestadorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_novo_servico_prestador);
+
+
+
 
         //Configurações iniciais
         inicializarComponentes();
