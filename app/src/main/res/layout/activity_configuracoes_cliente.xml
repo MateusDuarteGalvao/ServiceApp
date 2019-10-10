@@ -44,14 +44,15 @@
             android:inputType="text"
             android:padding="16dp" />
 
-        <EditText
+        <com.santalu.maskedittext.MaskEditText
             android:id="@+id/editClienteTelefone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
             android:hint="Telefone"
             android:inputType="phone"
-            android:padding="16dp" />
+            app:met_mask="(##) #####-####"
+            android:padding="10dp"
+            android:layout_marginBottom="16dp" />
 
         <Button
             android:id="@+id/buttonSalvar"

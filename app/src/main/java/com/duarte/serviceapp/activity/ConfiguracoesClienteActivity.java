@@ -31,6 +31,7 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Locale;
 
 import dmax.dialog.SpotsDialog;
 
