@@ -31,20 +31,20 @@
 
     //FlotingBottom
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="16dp">
 
         <io.github.yavski.fabspeeddial.FabSpeedDial
-            android:id="@+id/fabSpeedDial"
+            android:id="@+id/fabSpeedDial2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:visibility="visible"
             app:fabGravity="bottom_end"
-            app:fabMenu="@menu/menu_main"
+            app:fabMenu="@menu/menu_main_cliente"
+            app:fabBackgroundTint="@color/colorPrimary"
             app:miniFabBackgroundTint="@android:color/white"
             app:miniFabDrawableTint="@color/colorPrimary"
             app:miniFabTitleTextColor="@color/colorPrimary" />

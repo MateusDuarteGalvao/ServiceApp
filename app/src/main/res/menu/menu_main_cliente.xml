@@ -13,9 +13,9 @@
         android:title="Configurações"
         />
     <item
-        android:id="@+id/ordens"
+        android:id="@+id/serviços"
         android:icon="@drawable/ic_contratos"
-        android:title="Contratos"
+        android:title="Serviços"
         />
 
 

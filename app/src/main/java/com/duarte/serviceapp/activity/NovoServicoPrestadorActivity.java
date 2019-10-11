@@ -13,7 +13,6 @@ import com.duarte.serviceapp.R;
 import com.duarte.serviceapp.helper.UsuarioFirebase;
 import com.duarte.serviceapp.model.Servico;
 
-import io.github.yavski.fabspeeddial.FabSpeedDial;
 
 public class NovoServicoPrestadorActivity extends AppCompatActivity {
 

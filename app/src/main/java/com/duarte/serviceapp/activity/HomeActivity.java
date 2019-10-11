@@ -15,6 +15,8 @@ import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.duarte.serviceapp.R;
+import com.duarte.serviceapp.activity.ConfiguracoesClienteActivity;
+import com.duarte.serviceapp.activity.ServicosActivity;
 import com.duarte.serviceapp.adapter.AdapterPrestador;
 import com.duarte.serviceapp.adapter.AdapterServico;
 import com.duarte.serviceapp.helper.ConfiguracaoFirebase;
@@ -26,6 +28,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
@@ -49,7 +52,7 @@ public class HomeActivity extends AppCompatActivity {
 
         //Botão flutuante
 
-        FabSpeedDial fabSpeedDial = (FabSpeedDial) findViewById(R.id.fabSpeedDial);
+        FabSpeedDial fabSpeedDial = (FabSpeedDial) findViewById(R.id.fabSpeedDial2);
         fabSpeedDial.setMenuListener(new FabSpeedDial.MenuListener() {
             @Override
             public boolean onPrepareMenu(NavigationMenu navigationMenu) {
@@ -58,7 +61,22 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public boolean onMenuItemSelected(MenuItem menuItem) {
-                Toast.makeText(HomeActivity.this, "" + menuItem.getTitle(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(PrestadorActivity.this, "" + menuItem.getTitle(), Toast.LENGTH_SHORT).show();
+                int id = menuItem.getItemId();
+
+                if (id == R.id.menuConfiguracoes) {
+                    startActivity(new Intent(HomeActivity.this, ConfiguracoesClienteActivity.class));
+                    return true;
+                }
+               /* if (id == R.id.serviços) {
+                    startActivity(new Intent(HomeActivity.this, ServicosActivity.class));
+                    return true;
+                }*/
+                if (id == R.id.chat) {
+                    Toast.makeText(HomeActivity.this, "Em breve", Toast.LENGTH_SHORT).show();
+                    //startActivity(new Intent(PrestadorActivity.this, ConfiguracoesPrestadorActivity.class));
+                    return true;
+                }
                 return true;
             }
 
@@ -66,7 +84,13 @@ public class HomeActivity extends AppCompatActivity {
             public void onMenuClosed() {
 
             }
+
+
         });
+
+
+        //Classificação do app
+
 
 
 

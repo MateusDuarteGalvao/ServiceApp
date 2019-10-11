@@ -46,6 +46,7 @@
             android:visibility="visible"
             app:fabGravity="bottom_end"
             app:fabMenu="@menu/menu_main"
+            app:fabBackgroundTint="@color/colorPrimary"
             app:miniFabBackgroundTint="@android:color/white"
             app:miniFabDrawableTint="@color/colorPrimary"
             app:miniFabTitleTextColor="@color/colorPrimary" />

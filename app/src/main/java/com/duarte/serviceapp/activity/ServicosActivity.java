@@ -2,6 +2,7 @@ package com.duarte.serviceapp.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.icu.text.NumberFormat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,11 +34,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import dmax.dialog.SpotsDialog;
+
+import android.widget.RatingBar;
 
 public class ServicosActivity extends AppCompatActivity {
 
@@ -238,12 +242,16 @@ public class ServicosActivity extends AppCompatActivity {
 
                 }
 
+
+
                 DecimalFormat df = new DecimalFormat( "0.00" );
 
                 textServicosQtde.setText( "qtd: " + String.valueOf(qtdeItensServico) );
                 textServicosTotal.setText( "R$ " +  df.format( totalServicos ));
 
                 dialog.dismiss();
+
+
             }
 
             @Override
