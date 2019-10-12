@@ -19,7 +19,6 @@ import com.duarte.serviceapp.R;
 import com.duarte.serviceapp.helper.ConfiguracaoFirebase;
 import com.duarte.serviceapp.helper.UsuarioFirebase;
 import com.duarte.serviceapp.model.Cliente;
-import com.duarte.serviceapp.model.Prestador;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -61,7 +60,7 @@ public class ConfiguracoesClienteActivity extends AppCompatActivity {
 
         //Configurações Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Configuração");
+        toolbar.setTitle("Perfil");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -173,8 +172,6 @@ public class ConfiguracoesClienteActivity extends AppCompatActivity {
             Bitmap imagem = null;
 
             try {
-
-
                 switch (requestCode){
                     case SELECAO_GALERIA:
                         Uri localImagem = data.getData();
@@ -217,10 +214,10 @@ public class ConfiguracoesClienteActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                         }
                     });
-
                 }
 
-            }catch (Exception e){
+            }
+            catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -228,7 +225,7 @@ public class ConfiguracoesClienteActivity extends AppCompatActivity {
 
     }
 
-    private void inicializarComponentes(){
+    private void inicializarComponentes() {
         editClienteNome = findViewById(R.id.editClienteNome);
         editClienteEndereco = findViewById(R.id.editClienteEndereco);
         editClienteTelefone = findViewById(R.id.editClienteTelefone);
