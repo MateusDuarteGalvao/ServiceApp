@@ -32,20 +32,16 @@ public class SliderActivity extends AppIntro {
     @Override
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
-        Intent intent = new Intent(getApplicationContext(),AutenticacaoActivity.class);
+        Intent intent = new Intent(getApplicationContext(), SelecaoUsuarioActivity.class);
         startActivity(intent);
+        finish();
     }
 
     @Override
     public void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
-        Intent intent = new Intent(getApplicationContext(), AutenticacaoActivity.class);
+        Intent intent = new Intent(getApplicationContext(), SelecaoUsuarioActivity.class);
         startActivity(intent);
-    }
-
-    private void abrirAutenticacao() {
-        Intent i = new Intent(SliderActivity.this, AutenticacaoActivity.class);
-        startActivity(i);
         finish();
     }
 }

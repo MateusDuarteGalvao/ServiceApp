@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.CadastroPrestadorActivity"></activity>
+        <activity android:name=".activity.AutenticacaoPrestadorActivity"></activity>
+        <activity android:name=".activity.AutenticacaoClienteActivity" />
+        <activity android:name=".activity.SelecaoUsuarioActivity" />
+        <activity android:name=".activity.CadastroPrestadorActivity" />
         <activity android:name=".activity.CadastroClienteActivity" />
         <activity android:name=".activity.SliderActivity" />
         <activity

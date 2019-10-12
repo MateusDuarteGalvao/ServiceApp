@@ -8,10 +8,28 @@ public class Cliente {
     private String idUsuario;
     private String urlImagem;
     private String nome;
+    private String email;
+    private String senha;
     private String endereco;
     private String telefone;
 
     public Cliente() {
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     public void salvar(){
