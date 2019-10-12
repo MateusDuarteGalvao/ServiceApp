@@ -36,12 +36,12 @@ public class AutenticacaoClienteActivity extends AppCompatActivity {
         //Verificar usuario logado
         verificarUsuarioLogado();
 
+        /* Setando clique para o botão de login */
         buttonLoginCliente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = editClienteEmail.getText().toString();
                 String senha = editClienteSenha.getText().toString();
-
 
                 if ( !email.isEmpty() ) {
                     if ( !senha.isEmpty() ) {
@@ -60,6 +60,17 @@ public class AutenticacaoClienteActivity extends AppCompatActivity {
                 }
             }
         });
+
+        /* Setando clique para o botão de cadastro */
+        buttonCadastroCliente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), CadastroClienteActivity.class);
+                startActivity(i);
+            }
+        });
+
+
     }
 
     private void loginCliente(String email, String senha) {
