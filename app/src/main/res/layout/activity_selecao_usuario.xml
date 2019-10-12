@@ -16,14 +16,14 @@
         android:text="Selecione o tipo de usuário"/>
 
     <Button
-        android:id="@+id/botaoAutenticaoPrestador"
+        android:id="@+id/botaoAutenticaoCliente"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="Cliente"
         android:theme="@style/botaoPadrao" />
 
     <Button
-        android:id="@+id/botaoAutenticaCliente"
+        android:id="@+id/botaoAutenticaoPrestador"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="Prestador"

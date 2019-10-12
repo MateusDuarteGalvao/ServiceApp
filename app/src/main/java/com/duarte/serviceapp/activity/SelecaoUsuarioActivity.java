@@ -39,7 +39,7 @@ public class SelecaoUsuarioActivity extends AppCompatActivity {
 
 
     private void inicializaComponentes() {
-        botaoAutenticacaoCliente = findViewById(R.id.botaoAutenticaCliente);
+        botaoAutenticacaoCliente = findViewById(R.id.botaoAutenticaoCliente);
         botaoAutenticaoPrestador = findViewById(R.id.botaoAutenticaoPrestador);
     }
 }
