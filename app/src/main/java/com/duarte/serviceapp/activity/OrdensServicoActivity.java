@@ -26,6 +26,11 @@ import java.util.List;
 
 import dmax.dialog.SpotsDialog;
 
+import android.widget.Button;
+import android.widget.RatingBar;
+import android.widget.TextView;
+import android.widget.Toast;
+
 public class OrdensServicoActivity extends AppCompatActivity {
 
     private RecyclerView recyclerOrdensServico;
@@ -75,7 +80,8 @@ public class OrdensServicoActivity extends AppCompatActivity {
                                 OrdemServico ordemServico = ordensServico.get( position );
                                 ordemServico.setStatus("finalizado");
                                 ordemServico.atualizarStatus();
-                            }
+
+                                                           }
 
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

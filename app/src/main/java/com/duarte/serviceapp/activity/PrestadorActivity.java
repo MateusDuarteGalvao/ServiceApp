@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.duarte.serviceapp.R;
@@ -31,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.yavski.fabspeeddial.FabSpeedDial;
+import io.github.yavski.fabspeeddial.FabSpeedDialBehaviour;
 
 
 public class PrestadorActivity extends AppCompatActivity {
@@ -59,7 +61,22 @@ public class PrestadorActivity extends AppCompatActivity {
 
             @Override
             public boolean onMenuItemSelected(MenuItem menuItem) {
-                Toast.makeText(PrestadorActivity.this, "" + menuItem.getTitle(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(PrestadorActivity.this, "" + menuItem.getTitle(), Toast.LENGTH_SHORT).show();
+                int id = menuItem.getItemId();
+
+                if (id == R.id.menuConfiguracoes) {
+                    startActivity(new Intent(PrestadorActivity.this, ConfiguracoesPrestadorActivity.class));
+                    return true;
+                }
+                if (id == R.id.ordens) {
+                    startActivity(new Intent(PrestadorActivity.this, OrdensServicoActivity.class));
+                    return true;
+                }
+                if (id == R.id.chat) {
+                    Toast.makeText(PrestadorActivity.this, "Em breve", Toast.LENGTH_SHORT).show();
+                    //startActivity(new Intent(PrestadorActivity.this, ConfiguracoesPrestadorActivity.class));
+                    return true;
+                }
                 return true;
             }
 
@@ -67,6 +84,8 @@ public class PrestadorActivity extends AppCompatActivity {
             public void onMenuClosed() {
 
             }
+
+
         });
 
 
