@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
+    android:gravity="center"
     tools:context=".activity.AutenticacaoClienteActivity">
 
     <ImageView
@@ -14,7 +15,7 @@
         android:layout_height="160dp"
         android:layout_gravity="center"
         app:srcCompat="@drawable/logo"
-        android:layout_marginBottom="20dp" />
+        android:layout_marginBottom="16dp" />
 
     <EditText
         android:id="@+id/editClienteLoginEmail"
@@ -31,7 +32,8 @@
         android:ems="10"
         android:hint="Senha"
         android:inputType="textPassword"
-        android:padding="16dp" />
+        android:padding="16dp"
+        android:layout_marginBottom="16dp" />
 
     <Button
         android:id="@+id/buttonLoginCliente"
