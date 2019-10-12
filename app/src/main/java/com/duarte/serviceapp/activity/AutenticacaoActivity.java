@@ -72,71 +72,10 @@ public class AutenticacaoActivity extends AppCompatActivity {
 
                         //Verifica o estado do switch
                         if ( tipoAcesso.isChecked() ) {//Cadastro
-
-                            autenticacao.createUserWithEmailAndPassword(
-                                    email, senha
-                            ).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-
-                                    if (task.isSuccessful()) {
-
-                                        Toast.makeText(AutenticacaoActivity.this,
-                                                "Cadastro realizado com sucesso!",
-                                                Toast.LENGTH_SHORT).show();
-                                        String tipoUsuario = getTipoUsuario();
-                                        UsuarioFirebase.atualizarTipoUsuario(tipoUsuario);
-                                        abrirTelaPrincipal(tipoUsuario);
-
-
-                                    }else {
-
-                                        String erroExcecao = "";
-
-                                        try{
-                                            throw task.getException();
-                                        }catch (FirebaseAuthWeakPasswordException e) {
-                                            erroExcecao = "Digite uma senha mais forte!";
-                                        }catch (FirebaseAuthInvalidCredentialsException e) {
-                                            erroExcecao = "Por favor, digite um e-mail válido!";
-                                        }catch (FirebaseAuthUserCollisionException e) {
-                                            erroExcecao = "Essa conta já foi cadastrada!";
-                                        }catch (Exception e) {
-                                            erroExcecao = "ao cadastrar usuário: " + e.getMessage();
-                                            e.printStackTrace();
-                                        }
-
-                                        Toast.makeText( AutenticacaoActivity.this,
-                                                "Erro: " + erroExcecao ,
-                                                Toast.LENGTH_SHORT).show();
-
-
-                                    }
-                                }
-                            });
-                        } else {//Login
-
-                            autenticacao.signInWithEmailAndPassword(
-                                    email, senha
-                            ).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()){
-
-                                        Toast.makeText(AutenticacaoActivity.this,
-                                                "Logado com sucesso",
-                                                Toast.LENGTH_SHORT).show();
-                                        String tipoUsuario = task.getResult().getUser().getDisplayName();
-                                        abrirTelaPrincipal(tipoUsuario);
-
-                                    }else {
-                                        Toast.makeText(AutenticacaoActivity.this,
-                                                "Erro ao fazer login",
-                                                Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-
+                            cadastro(email, senha);
+                        }
+                        else {//Login
+                            login(email, senha);
                         }
 
                     }
@@ -157,6 +96,67 @@ public class AutenticacaoActivity extends AppCompatActivity {
 
     }
 
+    private void cadastro(String email, String senha) {
+        autenticacao.createUserWithEmailAndPassword(
+                email, senha
+        ).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(AutenticacaoActivity.this,
+                            "Cadastro realizado com sucesso!",
+                            Toast.LENGTH_SHORT).show();
+                    String tipoUsuario = getTipoUsuario();
+                    UsuarioFirebase.atualizarTipoUsuario(tipoUsuario);
+                    abrirTelaPrincipal(tipoUsuario);
+                }
+                else {
+                    String erroExcecao = "";
+                    try{
+                        throw task.getException();
+                    }catch (FirebaseAuthWeakPasswordException e) {
+                        erroExcecao = "Digite uma senha mais forte!";
+                    }catch (FirebaseAuthInvalidCredentialsException e) {
+                        erroExcecao = "Por favor, digite um e-mail válido!";
+                    }catch (FirebaseAuthUserCollisionException e) {
+                        erroExcecao = "Essa conta já foi cadastrada!";
+                    }catch (Exception e) {
+                        erroExcecao = "ao cadastrar usuário: " + e.getMessage();
+                        e.printStackTrace();
+                    }
+                    Toast.makeText( AutenticacaoActivity.this,
+                            "Erro: " + erroExcecao ,
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void login(String email, String senha) {
+
+        autenticacao.signInWithEmailAndPassword(
+                email, senha
+        ).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+
+                    Toast.makeText(AutenticacaoActivity.this,
+                            "Logado com sucesso",
+                            Toast.LENGTH_SHORT).show();
+                    String tipoUsuario = task.getResult().getUser().getDisplayName();
+                    abrirTelaPrincipal(tipoUsuario);
+
+                }else {
+                    Toast.makeText(AutenticacaoActivity.this,
+                            "Erro ao fazer login",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
+
     private void verificarUsuarioLogado() {
         FirebaseUser usuarioAtual = autenticacao.getCurrentUser();
         if ( usuarioAtual != null ){
@@ -170,10 +170,10 @@ public class AutenticacaoActivity extends AppCompatActivity {
     }
 
     private void abrirTelaPrincipal(String tipoUsuario) {
-        if(tipoUsuario.equals("P")) {//empresa
+        if(tipoUsuario.equals("P")) {//prestador
             startActivity(new Intent(getApplicationContext(),
                     PrestadorActivity.class));
-        }else {//usuario
+        }else {//cliente
             startActivity(new Intent(getApplicationContext(),
                     HomeActivity.class));
         }

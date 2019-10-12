@@ -9,6 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activity.CadastroPrestadorActivity"></activity>
+        <activity android:name=".activity.CadastroClienteActivity" />
         <activity android:name=".activity.SliderActivity" />
         <activity
             android:name=".activity.OrdensServicoActivity"

@@ -69,8 +69,6 @@ dependencies {
     //Dependencia máscara de telefone
     implementation 'com.github.santalu:mask-edittext:1.0.7'
 
-    
-
 
 }
 
