@@ -96,6 +96,13 @@ public class CadastroClienteActivity extends AppCompatActivity {
                 }
             }
         });
+
+        buttonCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void cadastrarCliente() {

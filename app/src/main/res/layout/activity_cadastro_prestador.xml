@@ -1,9 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp"
     tools:context=".activity.CadastroPrestadorActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Realize seu cadastro"
+        android:layout_marginBottom="16dp" />
+
+    <EditText
+        android:id="@+id/editPrestadorCadastroNome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nome"
+        android:inputType="text"
+        android:padding="16dp" />
+
+    <com.santalu.maskedittext.MaskEditText
+        android:id="@+id/editPrestadorCadastroTelefone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Telefone"
+        android:inputType="phone"
+        app:met_mask="(##) #####-####"
+        android:padding="16dp" />
+
+    <EditText
+        android:id="@+id/editPrestadorCadastroEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:padding="16dp" />
+
+    <EditText
+        android:id="@+id/editPrestadorCadastroSenha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Senha"
+        android:inputType="textPassword"
+        android:padding="16dp"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:id="@+id/buttonCadastro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="Cadastrar"
+        android:theme="@style/botaoPadrao" />
+
+    <Button
+        android:id="@+id/buttonCancelar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:text="Cancelar" />
+
+</LinearLayout>

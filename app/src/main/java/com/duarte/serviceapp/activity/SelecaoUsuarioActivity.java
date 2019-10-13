@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.Button;
 
 import com.duarte.serviceapp.R;
+import com.duarte.serviceapp.helper.ConfiguracaoFirebase;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class SelecaoUsuarioActivity extends AppCompatActivity {
 
