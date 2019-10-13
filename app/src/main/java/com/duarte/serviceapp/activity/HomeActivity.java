@@ -19,7 +19,9 @@ import android.widget.Toast;
 import com.duarte.serviceapp.R;
 import com.duarte.serviceapp.adapter.AdapterPrestador;
 import com.duarte.serviceapp.helper.ConfiguracaoFirebase;
+import com.duarte.serviceapp.helper.UsuarioFirebase;
 import com.duarte.serviceapp.listener.RecyclerItemClickListener;
+import com.duarte.serviceapp.model.Cliente;
 import com.duarte.serviceapp.model.Prestador;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -28,6 +30,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import com.google.firebase.storage.StorageReference;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -38,6 +41,7 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +56,11 @@ public class HomeActivity extends AppCompatActivity {
     private List<Prestador> prestadores = new ArrayList<>();
     private DatabaseReference firebaseRef;
     private AdapterPrestador adapterPrestador;
+    private StorageReference storageReference;
 
+    private String idUsuarioLogado;
+    private String urlImagem;
+    private String nomeCliente, emailCliente;
 
     //Drawer presente nas activitys: HomeActivity, PrestadorActivity, ServicosActivity, OrdensServcoActivity.
 
@@ -99,20 +107,36 @@ public class HomeActivity extends AppCompatActivity {
 
         });
 
-
         inicializarComponentes();
         firebaseRef = ConfiguracaoFirebase.getFirebase();
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+        idUsuarioLogado = UsuarioFirebase.getIdUsuario();
+
+        //Recuperando dados do cliente
+        DatabaseReference clienteRef = firebaseRef
+                .child("clientes")
+                .child( idUsuarioLogado );
+        clienteRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if( dataSnapshot.getValue() != null ) {
+                    Cliente cliente = dataSnapshot.getValue(Cliente.class);
+                    nomeCliente = cliente.getNome();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         //Configurações ToolBar
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("ServiceApp");
+        toolbar.setTitle("ServiceApp" + nomeCliente);
         setSupportActionBar(toolbar);
 
-
-
         //Drawer
-
         AccountHeader conta = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withCompactStyle(false)
@@ -120,10 +144,11 @@ public class HomeActivity extends AppCompatActivity {
                 .withThreeSmallProfileImages(false)
                 .withHeaderBackground(R.drawable.bh)
                 .addProfiles(
-                        new ProfileDrawerItem().withName("Lucas").withEmail("Email").withIcon(R.drawable.perfil)
-                )
-
-                .build();
+                        new ProfileDrawerItem()
+                                .withName("Alvacir")
+                                .withEmail("Email")
+                                .withIcon(R.drawable.perfil)
+                ).build();
 
         new DrawerBuilder().withActivity(this).build();
 
