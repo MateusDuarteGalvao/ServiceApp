@@ -63,13 +63,17 @@ dependencies {
     /*Botão flutuante*/
     implementation 'io.github.yavski:fab-speed-dial:1.0.6'
 
+
     //Drawer
     implementation("com.mikepenz:materialdrawer:6.0.9@aar") {
         transitive = true
     }
-    
-    
 
+    //Dependência máscara de moeda
+    implementation 'com.github.BlacKCaT27:CurrencyEditText:2.0.2'
+
+    //Dependencia máscara de telefone
+    implementation 'com.github.santalu:mask-edittext:1.0.7'
 
 }
 

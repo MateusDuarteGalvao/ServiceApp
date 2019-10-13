@@ -9,26 +9,36 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.SliderActivity" />
+        <activity android:name=".activity.AutenticacaoPrestadorActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.AutenticacaoClienteActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.SelecaoUsuarioActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.CadastroPrestadorActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.CadastroClienteActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.SliderActivity" android:screenOrientation="portrait" />
         <activity
             android:name=".activity.OrdensServicoActivity"
-            android:parentActivityName=".activity.PrestadorActivity" />
+            android:parentActivityName=".activity.PrestadorActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ServicosActivity"
-            android:parentActivityName=".activity.HomeActivity" />
+            android:parentActivityName=".activity.HomeActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ConfiguracoesClienteActivity"
-            android:parentActivityName=".activity.HomeActivity" />
+            android:parentActivityName=".activity.HomeActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.NovoServicoPrestadorActivity"
-            android:parentActivityName=".activity.PrestadorActivity" />
+            android:parentActivityName=".activity.PrestadorActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ConfiguracoesPrestadorActivity"
-            android:parentActivityName=".activity.PrestadorActivity" />
-        <activity android:name=".activity.PrestadorActivity" />
-        <activity android:name=".activity.HomeActivity" />
-        <activity android:name=".activity.AutenticacaoActivity" />
-        <activity android:name=".activity.SplashActivity">
+            android:parentActivityName=".activity.PrestadorActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.PrestadorActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.HomeActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.AutenticacaoActivity" android:screenOrientation="portrait" />
+        <activity android:name=".activity.SplashActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
