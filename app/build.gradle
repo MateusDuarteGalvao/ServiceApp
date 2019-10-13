@@ -63,7 +63,11 @@ dependencies {
     /*Botão flutuante*/
     implementation 'io.github.yavski:fab-speed-dial:1.0.6'
 
-
+    //Drawer
+    implementation("com.mikepenz:materialdrawer:6.0.9@aar") {
+        transitive = true
+    }
+    
     
 
 

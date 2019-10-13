@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.support.design.internal.NavigationMenu;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,10 +17,7 @@ import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.duarte.serviceapp.R;
-import com.duarte.serviceapp.activity.ConfiguracoesClienteActivity;
-import com.duarte.serviceapp.activity.ServicosActivity;
 import com.duarte.serviceapp.adapter.AdapterPrestador;
-import com.duarte.serviceapp.adapter.AdapterServico;
 import com.duarte.serviceapp.helper.ConfiguracaoFirebase;
 import com.duarte.serviceapp.listener.RecyclerItemClickListener;
 import com.duarte.serviceapp.model.Prestador;
@@ -30,6 +29,15 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +52,9 @@ public class HomeActivity extends AppCompatActivity {
     private List<Prestador> prestadores = new ArrayList<>();
     private DatabaseReference firebaseRef;
     private AdapterPrestador adapterPrestador;
+
+
+    //Drawer presente nas activitys: HomeActivity, PrestadorActivity, ServicosActivity, OrdensServcoActivity.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,12 +100,6 @@ public class HomeActivity extends AppCompatActivity {
         });
 
 
-        //Classificação do app
-
-
-
-
-
         inicializarComponentes();
         firebaseRef = ConfiguracaoFirebase.getFirebase();
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
@@ -103,6 +108,107 @@ public class HomeActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("ServiceApp");
         setSupportActionBar(toolbar);
+
+
+
+        //Drawer
+
+        AccountHeader conta = new AccountHeaderBuilder()
+                .withActivity(this)
+                .withCompactStyle(false)
+                .withSavedInstance(savedInstanceState)
+                .withThreeSmallProfileImages(false)
+                .withHeaderBackground(R.drawable.bh)
+                .addProfiles(
+                        new ProfileDrawerItem().withName("Lucas").withEmail("Email").withIcon(R.drawable.perfil)
+                )
+
+                .build();
+
+        new DrawerBuilder().withActivity(this).build();
+
+        Drawer result = new DrawerBuilder()
+                .withActivity(this)
+                .withToolbar(toolbar)
+                .withActionBarDrawerToggle(true)
+                .withDisplayBelowStatusBar(true)
+                .withTranslucentStatusBar(false)
+                .withActionBarDrawerToggleAnimated(true)
+                .withDrawerGravity(Gravity.LEFT)
+                .withSavedInstance(savedInstanceState)
+                .withSelectedItem(0)
+                .withHeaderPadding(true)
+                .withAccountHeader(conta)
+                .withHeaderPadding(true)
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        return false;
+                    }
+                })
+                .withOnDrawerItemLongClickListener(new Drawer.OnDrawerItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(View view, int position, IDrawerItem drawerItem) {
+                        //Toast.makeText(HomeActivity.this, "onItemLongClick" + position, Toast.LENGTH_SHORT).show();
+                        return false;
+                    }
+                })
+
+
+                .build();
+
+
+        result.addItem(new PrimaryDrawerItem().withName("Home").withIcon(R.drawable.bt_home).
+                withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+            @Override
+            public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                startActivity(new Intent(HomeActivity.this, HomeActivity.class));
+                return false;
+            }
+        }));
+
+        result.addItem(new PrimaryDrawerItem().withName("Favoritos").withIcon(R.drawable.ic_fav).
+                withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        Toast.makeText(HomeActivity.this, "Em breve", Toast.LENGTH_SHORT).show();
+                        //startActivity(new Intent(HomeActivity.this, HomeActivity.class));
+                        return false;
+                    }
+                }));
+
+        result.addItem(new PrimaryDrawerItem().withName("Contratos").withIcon(R.drawable.ic_contratos).
+                withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        startActivity(new Intent(HomeActivity.this, OrdensServicoActivity.class));
+
+                        return false;
+                    }
+                }));
+
+        result.addItem(new DividerDrawerItem());
+
+        result.addItem(new PrimaryDrawerItem().withName("Configurações").withIcon(R.drawable.ic_config).
+                withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        startActivity(new Intent(HomeActivity.this, ConfiguracoesClienteActivity.class));
+                        return false;
+                    }
+                }));
+
+        result.addItem(new PrimaryDrawerItem().withName("Suporte").withIcon(R.drawable.ic_suggestion).
+                withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        Toast.makeText(HomeActivity.this, "Em breve", Toast.LENGTH_SHORT).show();
+                        //startActivity(new Intent(HomeActivity.this, HomeActivity.class));
+                        return false;
+                    }
+                }));
+
+
 
         //Configura recyclerView
         recyclerPrestador.setLayoutManager(new LinearLayoutManager(this));
