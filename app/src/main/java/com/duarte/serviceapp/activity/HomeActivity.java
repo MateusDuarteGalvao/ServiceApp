@@ -258,12 +258,12 @@ public class HomeActivity extends AppCompatActivity {
                     }
                 }));
 
-        result.addItem(new PrimaryDrawerItem().withName("Suporte").withIcon(R.drawable.ic_suggestion).
+        result.addItem(new PrimaryDrawerItem().withName("Suporte").withIcon(R.drawable.ic_ajuda).
                 withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        Toast.makeText(HomeActivity.this, "Em breve", Toast.LENGTH_SHORT).show();
-                        //startActivity(new Intent(HomeActivity.this, HomeActivity.class));
+                        //Toast.makeText(HomeActivity.this, "Em breve", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(HomeActivity.this, SuporteActivity.class));
                         return false;
                     }
                 }));

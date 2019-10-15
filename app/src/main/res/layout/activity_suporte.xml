@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/include2"
+        layout="@layout/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ajuda"
+        android:textColor="@color/primary"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.163" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:text="1º No menu principal, escolha um profissional que melhor atende suas necessidades;"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.286" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:text="2º Após escolher, você terá acesso ao perfil do profissional, nele contém dados importamtes para o fechamento do contrato;"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.360" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:text="3º Com os dados disponíveis, você poderá contratar os serviços deste profissional ou voltar ao menu e escolher outro;"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.460" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:text="4º Caso queira contratar o profissional, basta clicar no botão 'Confirmar serviço' e a solicitação de contrato será enviada ao profissional;"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.560" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:text="5º Após a confirmação do profissional, ele entrará em contato para definir alguns detalhes do serviço;"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.660" />
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:text="6º O pagamento pelo serviço deve ser realizado pessoalmente, sem relação ou qualquer dependência deste aplicativo; "
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.735" />
+
+</android.support.constraint.ConstraintLayout>

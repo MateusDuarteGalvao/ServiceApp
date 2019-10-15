@@ -17,12 +17,6 @@ public class SliderActivity extends AppIntro {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_slider);
 
-        /*addSlide(AppIntroFragment.newInstance("Resolva seus problemas!" , "Rápido e fácil.",
-                R.drawable.intro01, ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary)));
-        addSlide(AppIntroFragment.newInstance("Escolha seu tipo de perfil.." , "..e faça o cadastro",
-                R.drawable.intro02, ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary)));
-        addSlide(AppIntroFragment.newInstance("", "",
-                R.drawable.intro03, ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryDark)));*/
         addSlide(AppIntroSampleSlider.newInstance(R.layout.slide01));
         addSlide(AppIntroSampleSlider.newInstance(R.layout.slide02));
         addSlide(AppIntroSampleSlider.newInstance(R.layout.slide03));

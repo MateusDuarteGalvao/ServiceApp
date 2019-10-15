@@ -1,30 +1,25 @@
 package com.duarte.serviceapp.activity;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.duarte.serviceapp.R;
-import com.duarte.serviceapp.adapter.AdapterOrdemServico;
+import com.duarte.serviceapp.adapter.AdapterPrestador;
 import com.duarte.serviceapp.helper.ConfiguracaoFirebase;
 import com.duarte.serviceapp.helper.UsuarioFirebase;
-import com.duarte.serviceapp.listener.RecyclerItemClickListener;
-import com.duarte.serviceapp.model.OrdemServico;
+import com.duarte.serviceapp.model.Prestador;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -37,65 +32,59 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import java.util.ArrayList;
 import java.util.List;
 
-import dmax.dialog.SpotsDialog;
-
-import android.widget.Button;
-import android.widget.RatingBar;
-import android.widget.TextView;
-import android.widget.Toast;
-
-public class OrdensServicoActivity extends AppCompatActivity {
-
-    private RecyclerView recyclerOrdensServico;
-    private AdapterOrdemServico adapterOrdemServico;
-    private List<OrdemServico> ordensServico = new ArrayList<>();
-    private AlertDialog dialog;
-    private DatabaseReference firebaseRef;
-    private String idPrestador;
+public class SuporteActivity extends AppCompatActivity {
 
     private FirebaseAuth autenticacao;
+    private MaterialSearchView searchView;
+    private RecyclerView recyclerPrestador;
+    private List<Prestador> prestadores = new ArrayList<>();
+    private DatabaseReference firebaseRef;
+    private AdapterPrestador adapterPrestador;
+    private StorageReference storageReference;
     private FirebaseUser idat;
 
     private String idUsuarioLogado;
     private String urlImagem;
-    private String nomePrestador;
-    private String emailPrestador;
-    private Uri fotoPrestador;
-
+    private String nomeCliente;
+    private String emailCliente;
+    private Uri fotoCliente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ordens_servico);
+        setContentView(R.layout.activity_suporte);
 
-        //Configurações iniciais
+
         inicializarComponentes();
-        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         firebaseRef = ConfiguracaoFirebase.getFirebase();
-        idPrestador = UsuarioFirebase.getIdUsuario();
-
-        //Puxando os dados autenticados
+        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+        idUsuarioLogado = UsuarioFirebase.getIdUsuario();
         idat = FirebaseAuth.getInstance().getCurrentUser();
 
-        if (idat != null){
+        if (idat != null) {
             String nomeLogado = idat.getDisplayName();
             String emailLogado = idat.getEmail();
             Uri fotoURL = idat.getPhotoUrl();
 
             String userId = idat.getUid();
-            nomePrestador = nomeLogado;
-            emailPrestador = emailLogado;
-            fotoPrestador = fotoURL;
-        }
+            nomeCliente = nomeLogado;
+            emailCliente = emailLogado;
+            fotoCliente = fotoURL;
 
-        //Configuracoes Toolbar
+            DatabaseReference clienteRef = firebaseRef
+                    .child("clientes")
+                    .child(idUsuarioLogado);
+        }
+        //Configurações ToolBar
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Ordens de serviço");
+        toolbar.setTitle("ServiceApp");
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+
+
 
         //Drawer
-
         AccountHeader conta = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withCompactStyle(false)
@@ -104,12 +93,10 @@ public class OrdensServicoActivity extends AppCompatActivity {
                 .withHeaderBackground(R.drawable.bh)
                 .addProfiles(
                         new ProfileDrawerItem()
-                                .withName(nomePrestador)
-                                .withEmail(emailPrestador)
-                                .withIcon(fotoPrestador)
-                )
-
-                .build();
+                                .withName(nomeCliente)
+                                .withEmail(emailCliente)
+                                .withIcon(fotoCliente)
+                ).build();
 
         new DrawerBuilder().withActivity(this).build();
 
@@ -148,7 +135,7 @@ public class OrdensServicoActivity extends AppCompatActivity {
                 withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        startActivity(new Intent(OrdensServicoActivity.this, HomeActivity.class));
+                        startActivity(new Intent(SuporteActivity.this, HomeActivity.class));
                         return false;
                     }
                 }));
@@ -157,7 +144,7 @@ public class OrdensServicoActivity extends AppCompatActivity {
                 withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        Toast.makeText(OrdensServicoActivity.this, "Em breve", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SuporteActivity.this, "Em breve", Toast.LENGTH_SHORT).show();
                         //startActivity(new Intent(HomeActivity.this, HomeActivity.class));
                         return false;
                     }
@@ -167,7 +154,7 @@ public class OrdensServicoActivity extends AppCompatActivity {
                 withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        startActivity(new Intent(OrdensServicoActivity.this, OrdensServicoActivity.class));
+                        startActivity(new Intent(SuporteActivity.this, OrdensServicoActivity.class));
 
                         return false;
                     }
@@ -179,7 +166,7 @@ public class OrdensServicoActivity extends AppCompatActivity {
                 withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        startActivity(new Intent(OrdensServicoActivity.this, ConfiguracoesClienteActivity.class));
+                        startActivity(new Intent(SuporteActivity.this, ConfiguracoesClienteActivity.class));
                         return false;
                     }
                 }));
@@ -188,11 +175,11 @@ public class OrdensServicoActivity extends AppCompatActivity {
                 withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        //Toast.makeText(OrdensServicoActivity.this, "Em breve", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(OrdensServicoActivity.this, SuporteActivity.class));                        return false;
+                        Toast.makeText(SuporteActivity.this, "Em breve", Toast.LENGTH_SHORT).show();
+                        //startActivity(new Intent(HomeActivity.this, HomeActivity.class));
+                        return false;
                     }
                 }));
-
         result.addItem(new PrimaryDrawerItem().withName("Sair").withIcon(R.drawable.bt_sair).
                 withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -202,93 +189,22 @@ public class OrdensServicoActivity extends AppCompatActivity {
                     }
                 }));
 
-        //Configurações recyclerView
-        recyclerOrdensServico.setLayoutManager(new LinearLayoutManager(this));
-        recyclerOrdensServico.setHasFixedSize(true);
-        adapterOrdemServico = new AdapterOrdemServico(ordensServico);
-        recyclerOrdensServico.setAdapter( adapterOrdemServico );
-
-        recuperarOrdensServico();
-
-        //Adiciona evento de clique no recyclerView
-        recyclerOrdensServico.addOnItemTouchListener(
-                new RecyclerItemClickListener(
-                        this,
-                        recyclerOrdensServico,
-                        new RecyclerItemClickListener.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(View view, int position) {
-
-                            }
-
-                            @Override
-                            public void onLongItemClick(View view, int position) {
-                                OrdemServico ordemServico = ordensServico.get( position );
-                                ordemServico.setStatus("finalizado");
-                                ordemServico.atualizarStatus();
-
-                                                           }
-
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                            }
-                        }
-                )
-        );
 
     }
 
-    private void recuperarOrdensServico() {
 
-        dialog = new SpotsDialog.Builder()
-                .setContext(this)
-                .setMessage("Carregando dados")
-                .setCancelable(false)
-                .build();
-        dialog.show();
-
-        DatabaseReference ordemServicoRef = firebaseRef
-                .child("ordens_servico")
-                .child( idPrestador );
-
-        Query ordemServicoPesquisa = ordemServicoRef.orderByChild("status")
-                .equalTo("confirmado");
-
-        ordemServicoPesquisa.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                ordensServico.clear();
-                if ( dataSnapshot.getValue() != null ){
-                    for (DataSnapshot ds: dataSnapshot.getChildren()){
-                        OrdemServico ordemServico = ds.getValue(OrdemServico.class);
-                        ordensServico.add( ordemServico );
-                    }
-                    adapterOrdemServico.notifyDataSetChanged();
-                }
-                dialog.dismiss();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
+    private void inicializarComponentes(){
+        searchView = findViewById(R.id.materialSearchView);
+        recyclerPrestador = findViewById(R.id.recyclerPrestador);
     }
 
     private void deslogarUsuario(){
         try {
-           autenticacao.signOut();
+            autenticacao.signOut();
             finish();
         }catch (Exception e){
             e.printStackTrace();
         }
-    }
-
-    private void inicializarComponentes() {
-        recyclerOrdensServico = findViewById(R.id.recyclerOrdensServico);
     }
 
 }
