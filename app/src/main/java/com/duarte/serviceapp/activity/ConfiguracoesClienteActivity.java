@@ -37,7 +37,7 @@ import dmax.dialog.SpotsDialog;
 public class ConfiguracoesClienteActivity extends AppCompatActivity {
 
     //Inicializando atributos
-    private EditText editClienteNome, editClienteEndereco, editClienteTelefone;
+    public EditText editClienteNome, editClienteEndereco, editClienteTelefone;
     private ImageView imagePerfilCliente;
     private AlertDialog dialog;
 
@@ -96,32 +96,33 @@ public class ConfiguracoesClienteActivity extends AppCompatActivity {
                 .child("clientes")
                 .child( idUsuarioLogado );
         clienteRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
 
-                if( dataSnapshot.getValue() != null ){
-                    Cliente cliente = dataSnapshot.getValue(Cliente.class);
-                    editClienteNome.setText(cliente.getNome());
-                    editClienteEndereco.setText(cliente.getEndereco());
-                    editClienteTelefone.setText(cliente.getTelefone());
+                    if( dataSnapshot.getValue() != null ){
+                        Cliente cliente = dataSnapshot.getValue(Cliente.class);
+                        editClienteNome.setText(cliente.getNome());
+                        editClienteEndereco.setText(cliente.getEndereco());
+                        editClienteTelefone.setText(cliente.getTelefone());
 
-                    urlImagemSelecionada = cliente.getUrlImagem();
-                    if ( urlImagemSelecionada != "" ) {
-                        Picasso.get()
-                                .load(urlImagemSelecionada)
-                                .into(imagePerfilCliente);
+                        urlImagemSelecionada = cliente.getUrlImagem();
+                        if ( urlImagemSelecionada != "" ) {
+                            Picasso.get()
+                                    .load(urlImagemSelecionada)
+                                    .into(imagePerfilCliente);
+                        }
+
+                        dialog.dismiss();
                     }
 
-                    dialog.dismiss();
                 }
-
-            }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
         });
+
     }
 
     public void validarDadosCliente(View view){
@@ -157,6 +158,7 @@ public class ConfiguracoesClienteActivity extends AppCompatActivity {
         }else{
             exibirMensagem("Digite seu nome");
         }
+
     }
 
     private void exibirMensagem(String texto){
@@ -231,5 +233,6 @@ public class ConfiguracoesClienteActivity extends AppCompatActivity {
         editClienteTelefone = findViewById(R.id.editClienteTelefone);
         imagePerfilCliente = findViewById(R.id.imagePerfilCliente);
     }
+
 
 }

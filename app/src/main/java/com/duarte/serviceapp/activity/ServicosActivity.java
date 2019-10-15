@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.icu.text.NumberFormat;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,6 +31,8 @@ import com.duarte.serviceapp.model.ItemOrdemServico;
 import com.duarte.serviceapp.model.OrdemServico;
 import com.duarte.serviceapp.model.Prestador;
 import com.duarte.serviceapp.model.Servico;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -75,6 +78,15 @@ public class ServicosActivity extends AppCompatActivity {
     private Double totalServicos;
     private int metodoPagamento;
 
+    private FirebaseUser idat;
+
+
+    private String urlImagem;
+    private String nomePrestador;
+    private String emailPrestador;
+    private Uri fotoPrestador;
+    private FirebaseAuth autenticacao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,8 +94,23 @@ public class ServicosActivity extends AppCompatActivity {
 
         //Configurações iniciais
         inicializarComponentes();
+        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         firebaseRef = ConfiguracaoFirebase.getFirebase();
         idUsuarioLogado = UsuarioFirebase.getIdUsuario();
+
+        //Puxando os dados autenticados
+        idat = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (idat != null){
+            String nomeLogado = idat.getDisplayName();
+            String emailLogado = idat.getEmail();
+            Uri fotoURL = idat.getPhotoUrl();
+
+            String userId = idat.getUid();
+            nomePrestador = nomeLogado;
+            emailPrestador = emailLogado;
+            fotoPrestador = fotoURL;
+        }
 
         //Recupera prestador selecionado
         Bundle bundle = getIntent().getExtras();
@@ -112,7 +139,10 @@ public class ServicosActivity extends AppCompatActivity {
                 .withThreeSmallProfileImages(false)
                 .withHeaderBackground(R.drawable.bh)
                 .addProfiles(
-                        new ProfileDrawerItem().withName("Lucas").withEmail("Email").withIcon(R.drawable.perfil)
+                        new ProfileDrawerItem()
+                                .withName(nomePrestador)
+                                .withEmail(emailPrestador)
+                                .withIcon(fotoPrestador)
                 )
 
                 .build();
@@ -196,6 +226,15 @@ public class ServicosActivity extends AppCompatActivity {
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         Toast.makeText(ServicosActivity.this, "Em breve", Toast.LENGTH_SHORT).show();
                         //startActivity(new Intent(HomeActivity.this, HomeActivity.class));
+                        return false;
+                    }
+                }));
+
+        result.addItem(new PrimaryDrawerItem().withName("Sair").withIcon(R.drawable.bt_sair).
+                withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        deslogarUsuario();
                         return false;
                     }
                 }));
@@ -466,6 +505,14 @@ public class ServicosActivity extends AppCompatActivity {
 
     }
 
+    private void deslogarUsuario(){
+        try {
+            autenticacao.signOut();
+            finish();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     private void inicializarComponentes(){
         recyclerServicosPrestador = findViewById(R.id.recyclerServicosPrestador);

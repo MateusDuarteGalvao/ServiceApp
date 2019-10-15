@@ -22,13 +22,12 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
 public class CadastroClienteActivity extends AppCompatActivity {
 
-    private EditText campoNome, campoEndereco, campoTelefone, campoEmail, campoSenha;
+    public EditText campoNome, campoEndereco, campoTelefone, campoEmail, campoSenha;
     private Button buttonCadastro, buttonCancelar;
     private Cliente cliente;
     private String idUsuario;
 
     private FirebaseAuth autenticacao;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,7 +120,9 @@ public class CadastroClienteActivity extends AppCompatActivity {
                     String tipoUsuario = "cliente";
                     UsuarioFirebase.atualizarTipoUsuario(tipoUsuario);
 
-                    idUsuario = UsuarioFirebase.getIdUsuario();
+                    UsuarioFirebase idLogado = new UsuarioFirebase();
+
+                    idUsuario = idLogado.getIdUsuario();
                     Cliente clienteCadastro = new Cliente();
                     clienteCadastro.setIdUsuario( idUsuario );
                     clienteCadastro.setNome( cliente.getNome() );
@@ -150,6 +151,8 @@ public class CadastroClienteActivity extends AppCompatActivity {
                 }
             }
         });
+
+
 
 
     }

@@ -21,7 +21,6 @@ public class AutenticacaoClienteActivity extends AppCompatActivity {
 
     private Button buttonLoginCliente, buttonCadastroCliente;
     private EditText editClienteEmail, editClienteSenha;
-
     private FirebaseAuth autenticacao;
 
     @Override
@@ -96,12 +95,15 @@ public class AutenticacaoClienteActivity extends AppCompatActivity {
         });
     }
 
-    private void verificarUsuarioLogado() {
+    public void verificarUsuarioLogado() {
         FirebaseUser usuarioAtual = autenticacao.getCurrentUser();
         if ( usuarioAtual != null ){
             abrirTelaPrincipal();
         }
+
     }
+
+
 
     private void abrirTelaPrincipal() {
         Intent i = new Intent(getApplicationContext(), HomeActivity.class);

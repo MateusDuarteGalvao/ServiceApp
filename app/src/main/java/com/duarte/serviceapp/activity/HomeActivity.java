@@ -1,6 +1,7 @@
 package com.duarte.serviceapp.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.design.internal.NavigationMenu;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,9 +25,11 @@ import com.duarte.serviceapp.listener.RecyclerItemClickListener;
 import com.duarte.serviceapp.model.Cliente;
 import com.duarte.serviceapp.model.Prestador;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
@@ -36,6 +39,7 @@ import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.ContainerDrawerItem;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
@@ -43,10 +47,13 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.squareup.picasso.Picasso;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
 import io.github.yavski.fabspeeddial.FabSpeedDial;
+
+import static java.lang.String.valueOf;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -57,10 +64,13 @@ public class HomeActivity extends AppCompatActivity {
     private DatabaseReference firebaseRef;
     private AdapterPrestador adapterPrestador;
     private StorageReference storageReference;
+    private FirebaseUser idat;
 
     private String idUsuarioLogado;
     private String urlImagem;
-    private String nomeCliente, emailCliente;
+    private String nomeCliente;
+    private String emailCliente;
+    private Uri fotoCliente;
 
     //Drawer presente nas activitys: HomeActivity, PrestadorActivity, ServicosActivity, OrdensServcoActivity.
 
@@ -104,36 +114,61 @@ public class HomeActivity extends AppCompatActivity {
 
             }
 
-
         });
 
         inicializarComponentes();
         firebaseRef = ConfiguracaoFirebase.getFirebase();
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         idUsuarioLogado = UsuarioFirebase.getIdUsuario();
+        idat = FirebaseAuth.getInstance().getCurrentUser();
 
-        //Recuperando dados do cliente
-        DatabaseReference clienteRef = firebaseRef
-                .child("clientes")
-                .child( idUsuarioLogado );
-        clienteRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if( dataSnapshot.getValue() != null ) {
-                    Cliente cliente = dataSnapshot.getValue(Cliente.class);
-                    nomeCliente = cliente.getNome();
-                }
-            }
+       if (idat != null){
+           String nomeLogado = idat.getDisplayName();
+           String emailLogado = idat.getEmail();
+           Uri fotoURL = idat.getPhotoUrl();
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+           String userId = idat.getUid();
+           nomeCliente = nomeLogado;
+           emailCliente = emailLogado;
+           fotoCliente = fotoURL;
 
-            }
-        });
+           DatabaseReference clienteRef = firebaseRef
+                   .child("clientes")
+                   .child(idUsuarioLogado);
+           /*clienteRef.addListenerForSingleValueEvent(new ValueEventListener() {
+               @Override
+               public void onDataChange(DataSnapshot dataSnapshot) {
+
+                   if( dataSnapshot.getValue() != null ){
+                       Cliente cliente = dataSnapshot.getValue(Cliente.class);
+                       nomeCliente = cliente.getNome();
+
+
+                       urlImagemSelecionada = cliente.getUrlImagem();
+                       if ( urlImagemSelecionada != "" ) {
+                           Picasso.get()
+                                   .load(urlImagemSelecionada)
+                                   .into(imagePerfilCliente);
+                       }
+
+
+                   }
+
+               }
+
+               @Override
+               public void onCancelled(DatabaseError databaseError) {
+
+               }
+           });
+           */
+
+
+       }
 
         //Configurações ToolBar
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("ServiceApp" + nomeCliente);
+        toolbar.setTitle("ServiceApp");
         setSupportActionBar(toolbar);
 
         //Drawer
@@ -145,9 +180,9 @@ public class HomeActivity extends AppCompatActivity {
                 .withHeaderBackground(R.drawable.bh)
                 .addProfiles(
                         new ProfileDrawerItem()
-                                .withName("Alvacir")
-                                .withEmail("Email")
-                                .withIcon(R.drawable.perfil)
+                                .withName(nomeCliente)
+                                .withEmail(emailCliente)
+                                .withIcon(fotoCliente)
                 ).build();
 
         new DrawerBuilder().withActivity(this).build();
@@ -229,6 +264,14 @@ public class HomeActivity extends AppCompatActivity {
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         Toast.makeText(HomeActivity.this, "Em breve", Toast.LENGTH_SHORT).show();
                         //startActivity(new Intent(HomeActivity.this, HomeActivity.class));
+                        return false;
+                    }
+                }));
+        result.addItem(new PrimaryDrawerItem().withName("Sair").withIcon(R.drawable.bt_sair).
+                withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        deslogarUsuario();
                         return false;
                     }
                 }));

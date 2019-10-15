@@ -1,6 +1,7 @@
 package com.duarte.serviceapp.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.design.internal.NavigationMenu;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +25,7 @@ import com.duarte.serviceapp.helper.UsuarioFirebase;
 import com.duarte.serviceapp.listener.RecyclerItemClickListener;
 import com.duarte.serviceapp.model.Servico;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,7 +43,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.yavski.fabspeeddial.FabSpeedDial;
-import io.github.yavski.fabspeeddial.FabSpeedDialBehaviour;
 
 
 public class PrestadorActivity extends AppCompatActivity {
@@ -52,6 +53,14 @@ public class PrestadorActivity extends AppCompatActivity {
     private List<Servico> servicos = new ArrayList<>();
     private DatabaseReference firebaseRef;
     private String idUsuarioLogado;
+
+    private FirebaseUser idat;
+
+
+    private String urlImagem;
+    private String nomePrestador;
+    private String emailPrestador;
+    private Uri fotoPrestador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +113,19 @@ public class PrestadorActivity extends AppCompatActivity {
         firebaseRef = ConfiguracaoFirebase.getFirebase();
         idUsuarioLogado = UsuarioFirebase.getIdUsuario();
 
+        //Puxando os dados autenticados
+        idat = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (idat != null){
+            String nomeLogado = idat.getDisplayName();
+            String emailLogado = idat.getEmail();
+            Uri fotoURL = idat.getPhotoUrl();
+
+            nomePrestador = nomeLogado;
+            emailPrestador = emailLogado;
+            fotoPrestador = fotoURL;
+        }
+
         //Configurações ToolBar
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("ServiceApp - prestador");
@@ -118,7 +140,10 @@ public class PrestadorActivity extends AppCompatActivity {
                 .withThreeSmallProfileImages(false)
                 .withHeaderBackground(R.drawable.bh)
                 .addProfiles(
-                        new ProfileDrawerItem().withName("Lucas").withEmail("Email").withIcon(R.drawable.perfil)
+                        new ProfileDrawerItem()
+                                .withName(nomePrestador)
+                                .withEmail(emailPrestador)
+                                .withIcon(fotoPrestador)
                 )
 
                 .build();
@@ -203,6 +228,15 @@ public class PrestadorActivity extends AppCompatActivity {
                         Toast.makeText(PrestadorActivity.this, "Em breve", Toast.LENGTH_SHORT).show();
                         //startActivity(new Intent(HomeActivity.this, HomeActivity.class));
                         return false;
+                    }
+                }));
+
+        result.addItem(new PrimaryDrawerItem().withName("Sair").withIcon(R.drawable.bt_sair).
+                withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        deslogarUsuario();
+                        return true;
                     }
                 }));
 

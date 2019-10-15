@@ -2,6 +2,7 @@ package com.duarte.serviceapp.activity;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +18,8 @@ import com.duarte.serviceapp.helper.ConfiguracaoFirebase;
 import com.duarte.serviceapp.helper.UsuarioFirebase;
 import com.duarte.serviceapp.listener.RecyclerItemClickListener;
 import com.duarte.serviceapp.model.OrdemServico;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -50,6 +53,16 @@ public class OrdensServicoActivity extends AppCompatActivity {
     private DatabaseReference firebaseRef;
     private String idPrestador;
 
+    private FirebaseAuth autenticacao;
+    private FirebaseUser idat;
+
+    private String idUsuarioLogado;
+    private String urlImagem;
+    private String nomePrestador;
+    private String emailPrestador;
+    private Uri fotoPrestador;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,8 +70,23 @@ public class OrdensServicoActivity extends AppCompatActivity {
 
         //Configurações iniciais
         inicializarComponentes();
+        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         firebaseRef = ConfiguracaoFirebase.getFirebase();
         idPrestador = UsuarioFirebase.getIdUsuario();
+
+        //Puxando os dados autenticados
+        idat = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (idat != null){
+            String nomeLogado = idat.getDisplayName();
+            String emailLogado = idat.getEmail();
+            Uri fotoURL = idat.getPhotoUrl();
+
+            String userId = idat.getUid();
+            nomePrestador = nomeLogado;
+            emailPrestador = emailLogado;
+            fotoPrestador = fotoURL;
+        }
 
         //Configuracoes Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -75,7 +103,10 @@ public class OrdensServicoActivity extends AppCompatActivity {
                 .withThreeSmallProfileImages(false)
                 .withHeaderBackground(R.drawable.bh)
                 .addProfiles(
-                        new ProfileDrawerItem().withName("Lucas").withEmail("Email").withIcon(R.drawable.perfil)
+                        new ProfileDrawerItem()
+                                .withName(nomePrestador)
+                                .withEmail(emailPrestador)
+                                .withIcon(fotoPrestador)
                 )
 
                 .build();
@@ -163,6 +194,15 @@ public class OrdensServicoActivity extends AppCompatActivity {
                     }
                 }));
 
+        result.addItem(new PrimaryDrawerItem().withName("Sair").withIcon(R.drawable.bt_sair).
+                withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        deslogarUsuario();
+                        return false;
+                    }
+                }));
+
         //Configurações recyclerView
         recyclerOrdensServico.setLayoutManager(new LinearLayoutManager(this));
         recyclerOrdensServico.setHasFixedSize(true);
@@ -239,7 +279,17 @@ public class OrdensServicoActivity extends AppCompatActivity {
 
     }
 
+    private void deslogarUsuario(){
+        try {
+           autenticacao.signOut();
+            finish();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     private void inicializarComponentes() {
         recyclerOrdensServico = findViewById(R.id.recyclerOrdensServico);
     }
+
 }
