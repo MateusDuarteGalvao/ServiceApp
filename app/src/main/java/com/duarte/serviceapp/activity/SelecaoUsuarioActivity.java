@@ -8,12 +8,15 @@ import android.widget.Button;
 
 import com.duarte.serviceapp.R;
 import com.duarte.serviceapp.helper.ConfiguracaoFirebase;
+import com.duarte.serviceapp.helper.UsuarioFirebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class SelecaoUsuarioActivity extends AppCompatActivity {
 
     private Button botaoAutenticaoPrestador, botaoAutenticacaoCliente;
+    private FirebaseAuth autenticacao;
+    private String idUsuarioLogado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +25,10 @@ public class SelecaoUsuarioActivity extends AppCompatActivity {
 
         //Configurações inicais
         inicializaComponentes();
+        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+
+        //Verificar usuario logado
+        verificarUsuarioLogado();
 
         botaoAutenticacaoCliente.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,5 +51,24 @@ public class SelecaoUsuarioActivity extends AppCompatActivity {
     private void inicializaComponentes() {
         botaoAutenticacaoCliente = findViewById(R.id.botaoAutenticaoCliente);
         botaoAutenticaoPrestador = findViewById(R.id.botaoAutenticaoPrestador);
+    }
+
+    private void verificarUsuarioLogado() {
+        FirebaseUser usuarioAtual = autenticacao.getCurrentUser();
+        if ( usuarioAtual != null ){
+            String tipoUsuario = usuarioAtual.getDisplayName();
+            abrirTelaPrincipal(tipoUsuario);
+        }
+    }
+
+    private void abrirTelaPrincipal(String tipoUsuario) {
+        if(tipoUsuario.equals("prestador")) {//prestador
+            startActivity(new Intent(getApplicationContext(),
+                    PrestadorActivity.class));
+        }
+        else {//cliente
+            startActivity(new Intent(getApplicationContext(),
+                    HomeActivity.class));
+        }
     }
 }
