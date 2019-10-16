@@ -216,7 +216,7 @@ public class PrestadorActivity extends AppCompatActivity {
                 withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        startActivity(new Intent(PrestadorActivity.this, ConfiguracoesClienteActivity.class));
+                        startActivity(new Intent(PrestadorActivity.this, ConfiguracoesPrestadorActivity.class));
                         return false;
                     }
                 }));
