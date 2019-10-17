@@ -37,7 +37,7 @@ public class AdapterServico extends RecyclerView.Adapter<AdapterServico.MyViewHo
         Servico servico = servicos.get(i);
         holder.nome.setText(servico.getNome());
         holder.descricao.setText(servico.getDescricao());
-        holder.valor.setText("R$ " + servico.getPreco());
+        holder.valor.setText(servico.getPreco());
     }
 
     @Override
