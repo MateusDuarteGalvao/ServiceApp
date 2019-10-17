@@ -43,9 +43,9 @@ public class NovoServicoPrestadorActivity extends AppCompatActivity {
     public void validarDadosServico(View view){
 
         //Valida se os campos foram preenchidos
-        String nome     = editServicoNome.getText().toString();
-        String descricao = editServicoDescricao.getText().toString();
-        String preco    = editServicoPreco.getText().toString();
+        String nome         = editServicoNome.getText().toString();
+        String descricao    = editServicoDescricao.getText().toString();
+        String preco        = editServicoPreco.getText().toString();
 
         if ( !nome.isEmpty() ){
             if ( !descricao.isEmpty() ){
@@ -55,7 +55,7 @@ public class NovoServicoPrestadorActivity extends AppCompatActivity {
                         servico.setIdUsuario( idUsuarioLogado );
                         servico.setNome( nome );
                         servico.setDescricao( descricao );
-                        servico.setPreco( Double.parseDouble(preco) );
+                        servico.setPreco( preco );
 
                         servico.salvar();
                         finish();

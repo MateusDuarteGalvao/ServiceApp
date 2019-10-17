@@ -298,7 +298,7 @@ public class ServicosActivity extends AppCompatActivity {
                 itemOrdemServico.setIdServico( servicoSelecionado.getIdServico() );
                 itemOrdemServico.setDescricaoServico( servicoSelecionado.getDescricao() );
                 itemOrdemServico.setNomeServico( servicoSelecionado.getNome() );
-                itemOrdemServico.setPreco( servicoSelecionado.getPreco() );
+                itemOrdemServico.setPreco( Double.parseDouble(servicoSelecionado.getPreco()) );
                 itemOrdemServico.setQuantidade( Integer.parseInt(quantidade) );
 
                 itensServicos.add( itemOrdemServico );
