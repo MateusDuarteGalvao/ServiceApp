@@ -264,6 +264,10 @@ public class PrestadorActivity extends AppCompatActivity {
                             @Override
                             public void onLongItemClick(View view, int position) {
                                 Servico servicoSelecionado = servicos.get(position);
+
+
+
+
                                 servicoSelecionado.remover();
                                 Toast.makeText(PrestadorActivity.this,
                                         "Servico excluído com sucesso",
@@ -351,15 +355,18 @@ public class PrestadorActivity extends AppCompatActivity {
     }
 
     private void abrirConfiguracoes() {
-        startActivity(new Intent(PrestadorActivity.this, ConfiguracoesPrestadorActivity.class));
+        Intent i = new Intent(PrestadorActivity.this, ConfiguracoesPrestadorActivity.class);
+        startActivity(i);
     }
 
     private void abriNovoServico() {
-        startActivity(new Intent(PrestadorActivity.this, NovoServicoPrestadorActivity.class));
+        Intent i = new Intent(PrestadorActivity.this, NovoServicoPrestadorActivity.class);
+        startActivity(i);
     }
 
     private void abrirOrdensServico() {
-        startActivity(new Intent(PrestadorActivity.this, OrdensServicoActivity.class));
+        Intent i = new Intent(PrestadorActivity.this, OrdensServicoActivity.class);
+        startActivity(i);
     }
 
 

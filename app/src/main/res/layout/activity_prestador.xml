@@ -28,12 +28,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-
-
     />
-
-
-    //FlotingBottom
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -52,7 +47,6 @@
             app:miniFabBackgroundTint="@android:color/white"
             app:miniFabDrawableTint="@color/colorPrimary"
             app:miniFabTitleTextColor="@color/colorPrimary" />
-
 
     </FrameLayout>
 
