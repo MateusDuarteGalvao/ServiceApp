@@ -11,10 +11,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activity.SuporteActivity"></activity>
         <activity
-            android:name=".activity.AutenticacaoPrestadorActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.AutenticacaoClienteActivity"
+            android:name=".activity.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SelecaoUsuarioActivity"

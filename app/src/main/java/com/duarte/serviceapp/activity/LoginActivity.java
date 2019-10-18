@@ -17,16 +17,16 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class AutenticacaoClienteActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
-    private Button buttonLoginCliente, buttonCadastroCliente;
-    private EditText editClienteEmail, editClienteSenha;
+    private Button buttonLogin, buttonCadastro;
+    private EditText editEmail, editSenha;
     private FirebaseAuth autenticacao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_autenticacao_cliente);
+        setContentView(R.layout.activity_login);
 
         //Configurações iniciais
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
@@ -36,24 +36,24 @@ public class AutenticacaoClienteActivity extends AppCompatActivity {
         verificarUsuarioLogado();
 
         /* Setando clique para o botão de login */
-        buttonLoginCliente.setOnClickListener(new View.OnClickListener() {
+        buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = editClienteEmail.getText().toString();
-                String senha = editClienteSenha.getText().toString();
+                String email = editEmail.getText().toString();
+                String senha = editSenha.getText().toString();
 
                 if ( !email.isEmpty() ) {
                     if ( !senha.isEmpty() ) {
-                        loginCliente(email, senha);
+                        login(email, senha);
                     }
                     else {
-                        Toast.makeText(AutenticacaoClienteActivity.this,
+                        Toast.makeText(LoginActivity.this,
                                 "Preencha a senha!",
                                 Toast.LENGTH_SHORT).show();
                     }
                 }
                 else {
-                    Toast.makeText(AutenticacaoClienteActivity.this,
+                    Toast.makeText(LoginActivity.this,
                             "Preencha o E-mail!",
                             Toast.LENGTH_SHORT).show();
                 }
@@ -61,18 +61,17 @@ public class AutenticacaoClienteActivity extends AppCompatActivity {
         });
 
         /* Setando clique para o botão de cadastro */
-        buttonCadastroCliente.setOnClickListener(new View.OnClickListener() {
+        buttonCadastro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), CadastroClienteActivity.class);
-                startActivity(i);
+            Intent i = new Intent(getApplicationContext(), SelecaoUsuarioActivity.class);
+            startActivity(i);
             }
         });
 
-
     }
 
-    private void loginCliente(String email, String senha) {
+    private void login(String email, String senha) {
         //Autenticando com email e senha
         autenticacao.signInWithEmailAndPassword(email, senha)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -80,14 +79,15 @@ public class AutenticacaoClienteActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
 
-                    Toast.makeText(AutenticacaoClienteActivity.this,
+                    Toast.makeText(LoginActivity.this,
                             "Logado com sucesso",
                             Toast.LENGTH_SHORT).show();
-                    abrirTelaPrincipal();
+                    String tipoUsuario = task.getResult().getUser().getDisplayName();
+                    abrirTelaPrincipal(tipoUsuario);
 
                 }
                 else {
-                    Toast.makeText(AutenticacaoClienteActivity.this,
+                    Toast.makeText(LoginActivity.this,
                             "Erro ao fazer login",
                             Toast.LENGTH_SHORT).show();
                 }
@@ -97,23 +97,29 @@ public class AutenticacaoClienteActivity extends AppCompatActivity {
 
     public void verificarUsuarioLogado() {
         FirebaseUser usuarioAtual = autenticacao.getCurrentUser();
-        if ( usuarioAtual != null ){
-            abrirTelaPrincipal();
+        if ( usuarioAtual != null ) {
+            String tipoUsuario = usuarioAtual.getDisplayName();
+            abrirTelaPrincipal(tipoUsuario);
         }
-
     }
 
-
-
-    private void abrirTelaPrincipal() {
-        Intent i = new Intent(getApplicationContext(), HomeActivity.class);
-        startActivity(i);
+    private void abrirTelaPrincipal(String tipoUsuario) {
+        if (tipoUsuario.equals("prestador")) {
+            Intent i = new Intent(getApplicationContext(), PrestadorActivity.class);
+            startActivity(i);
+            finish();
+        }
+        else {
+            Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+            startActivity(i);
+            finish();
+        }
     }
 
     private void inicializaComponentes() {
-        buttonLoginCliente = findViewById(R.id.buttonLoginCliente);
-        buttonCadastroCliente = findViewById(R.id.buttonCadastroCliente);
-        editClienteEmail = findViewById(R.id.editClienteLoginEmail);
-        editClienteSenha = findViewById(R.id.editClienteLoginSenha);
+        buttonLogin = findViewById(R.id.buttonLogin);
+        buttonCadastro = findViewById(R.id.buttonCadastro);
+        editEmail = findViewById(R.id.editLoginEmail);
+        editSenha = findViewById(R.id.editLoginSenha);
     }
 }

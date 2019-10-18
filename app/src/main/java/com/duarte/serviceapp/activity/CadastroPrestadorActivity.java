@@ -1,5 +1,6 @@
 package com.duarte.serviceapp.activity;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -113,12 +114,16 @@ public class CadastroPrestadorActivity extends AppCompatActivity {
                     idUsuario = UsuarioFirebase.getIdUsuario();
                     Prestador prestadorCadastro = new Prestador();
                     prestadorCadastro.setIdUsuario( idUsuario );
+                    prestadorCadastro.setEmail( prestador.getEmail() );
                     prestadorCadastro.setNome( prestador.getNome() );
                     prestadorCadastro.setTelefone( prestador.getTelefone() );
                     prestadorCadastro.setCategoria("");
                     prestadorCadastro.setPrecoHora(0.00);
                     prestadorCadastro.setTempo("");
                     prestadorCadastro.salvar();
+
+                    abrirTelaPrincipal();
+
                     finish();
                 }
                 else {
@@ -141,6 +146,11 @@ public class CadastroPrestadorActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void abrirTelaPrincipal() {
+        Intent i = new Intent(getApplicationContext(), PrestadorActivity.class);
+        startActivity(i);
     }
 
     private void inicializaComponentes() {

@@ -1,5 +1,6 @@
 package com.duarte.serviceapp.activity;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -125,10 +126,14 @@ public class CadastroClienteActivity extends AppCompatActivity {
                     idUsuario = idLogado.getIdUsuario();
                     Cliente clienteCadastro = new Cliente();
                     clienteCadastro.setIdUsuario( idUsuario );
+                    clienteCadastro.setEmail( cliente.getEmail() );
                     clienteCadastro.setNome( cliente.getNome() );
                     clienteCadastro.setEndereco( cliente.getEndereco() );
                     clienteCadastro.setTelefone( cliente.getTelefone() );
                     clienteCadastro.salvar();
+
+                    abrirTelaPrincipal();
+
                     finish();
                 }
                 else {
@@ -155,6 +160,11 @@ public class CadastroClienteActivity extends AppCompatActivity {
 
 
 
+    }
+
+    private void abrirTelaPrincipal() {
+        Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+        startActivity(i);
     }
 
     private void inicializaComponentes() {

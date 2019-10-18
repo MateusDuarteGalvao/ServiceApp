@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
 import com.duarte.serviceapp.R;
 
@@ -19,13 +18,15 @@ public class SelecaoUsuarioActivity extends AppCompatActivity {
 
     }
 
-    public void autenticarCliente(View view) {
-        Intent i = new Intent(getApplicationContext(), AutenticacaoClienteActivity.class);
+    public void abrirCadastroCliente(View view) {
+        Intent i = new Intent(getApplicationContext(), CadastroClienteActivity.class);
         startActivity(i);
+        finish();
     }
 
-    public void autenticarPrestador(View view) {
-        Intent i = new Intent(getApplicationContext(), AutenticacaoPrestadorActivity.class);
+    public void abrirCadastroPrestador(View view) {
+        Intent i = new Intent(getApplicationContext(), CadastroPrestadorActivity.class);
         startActivity(i);
+        finish();
     }
 }

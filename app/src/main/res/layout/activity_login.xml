@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
     android:padding="16dp"
-    tools:context=".activity.AutenticacaoPrestadorActivity">
+    android:gravity="center"
+    tools:context=".activity.LoginActivity">
 
     <ImageView
         android:id="@+id/imageView"
@@ -18,7 +18,7 @@
         android:layout_marginBottom="16dp" />
 
     <EditText
-        android:id="@+id/editPrestadorLoginEmail"
+        android:id="@+id/editLoginEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Email"
@@ -26,7 +26,7 @@
         android:padding="16dp" />
 
     <EditText
-        android:id="@+id/editPrestadorLoginSenha"
+        android:id="@+id/editLoginSenha"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -36,7 +36,7 @@
         android:layout_marginBottom="16dp" />
 
     <Button
-        android:id="@+id/buttonLoginPrestador"
+        android:id="@+id/buttonLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
@@ -44,7 +44,7 @@
         android:theme="@style/botaoPadrao" />
 
     <Button
-        android:id="@+id/buttonCadastroPrestador"
+        android:id="@+id/buttonCadastro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"

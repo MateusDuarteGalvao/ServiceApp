@@ -3,7 +3,6 @@ package com.duarte.serviceapp.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.icu.text.NumberFormat;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -47,14 +46,12 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.squareup.picasso.Picasso;
 
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import dmax.dialog.SpotsDialog;
 
-import android.widget.RatingBar;
 
 public class ServicosActivity extends AppCompatActivity {
 
