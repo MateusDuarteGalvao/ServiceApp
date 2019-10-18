@@ -52,9 +52,6 @@
             android:name=".activity.HomeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.AutenticacaoActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activity.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
