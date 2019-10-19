@@ -18,7 +18,7 @@ import android.widget.Toast;
 import com.duarte.serviceapp.R;
 import com.duarte.serviceapp.helper.ConfiguracaoFirebase;
 import com.duarte.serviceapp.helper.UsuarioFirebase;
-import com.duarte.serviceapp.model.Cliente;
+import com.duarte.serviceapp.model.Prestador;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -30,15 +30,16 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
-import java.util.Locale;
 
 import dmax.dialog.SpotsDialog;
 
-public class ConfiguracoesClienteActivity extends AppCompatActivity {
+
+public class PerfilPrestadorActivity extends AppCompatActivity {
 
     //Inicializando atributos
-    public EditText editClienteNome, editClienteEndereco, editClienteTelefone;
-    private ImageView imagePerfilCliente;
+    private EditText editPrestadorNome, editPrestadorCategoria, editPrestadorTempo,
+            editPrestadorValorHora;
+    private ImageView imagePerfilPrestador;
     private AlertDialog dialog;
 
     private static final int SELECAO_GALERIA = 200;
@@ -50,7 +51,8 @@ public class ConfiguracoesClienteActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_configuracoes_cliente);
+        setContentView(R.layout.activity_perfil_prestador);
+
 
         //Configurações iniciais
         inicializarComponentes();
@@ -60,62 +62,63 @@ public class ConfiguracoesClienteActivity extends AppCompatActivity {
 
         //Configurações Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Perfil");
+        toolbar.setTitle("Configuração");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Adicionando evento de click na imagem
-        imagePerfilCliente.setOnClickListener(new View.OnClickListener() {
+        imagePerfilPrestador.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(
                         Intent.ACTION_PICK,
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-                );
+                        );
                 if( i.resolveActivity(getPackageManager()) != null ){
                     startActivityForResult(i, SELECAO_GALERIA);
                 }
             }
         });
 
-        //Recuperar dados do cliente
-        recuperarDadosCliente();
+        //Recuperar dados do prestador
+        recuperarDadosPrestador();
 
     }
 
-    private void recuperarDadosCliente(){
+   private void recuperarDadosPrestador(){
 
-        dialog = new SpotsDialog.Builder()
-                .setContext(this)
-                .setMessage("Carregando dados")
-                .setCancelable(false)
-                .build();
-        dialog.show();
+       dialog = new SpotsDialog.Builder()
+               .setContext(this)
+               .setMessage("Carregando dados")
+               .setCancelable(false)
+               .build();
+       dialog.show();
 
-        DatabaseReference clienteRef = firebaseRef
-                .child("clientes")
+        DatabaseReference prestadorRef = firebaseRef
+                .child("prestadores")
                 .child( idUsuarioLogado );
-        clienteRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
+        prestadorRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
-                    if( dataSnapshot.getValue() != null ){
-                        Cliente cliente = dataSnapshot.getValue(Cliente.class);
-                        editClienteNome.setText(cliente.getNome());
-                        editClienteEndereco.setText(cliente.getEndereco());
-                        editClienteTelefone.setText(cliente.getTelefone());
+                if( dataSnapshot.getValue() != null ){
+                    Prestador prestador = dataSnapshot.getValue(Prestador.class);
+                    editPrestadorNome.setText(prestador.getNome());
+                    editPrestadorCategoria.setText(prestador.getCategoria());
+                    editPrestadorTempo.setText(prestador.getTempo());
+                    editPrestadorValorHora.setText(prestador.getPrecoHora().toString());
 
-                        urlImagemSelecionada = cliente.getUrlImagem();
-                        if ( urlImagemSelecionada != "" ) {
-                            Picasso.get()
-                                    .load(urlImagemSelecionada)
-                                    .into(imagePerfilCliente);
-                        }
-
-                        dialog.dismiss();
+                    urlImagemSelecionada = prestador.getUrlImagem();
+                    if ( urlImagemSelecionada != "" ) {
+                        Picasso.get()
+                                .load(urlImagemSelecionada)
+                                .into(imagePerfilPrestador);
                     }
 
+                    dialog.dismiss();
                 }
+
+            }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -125,41 +128,46 @@ public class ConfiguracoesClienteActivity extends AppCompatActivity {
 
     }
 
-    public void validarDadosCliente(View view){
+    public void validarDadosPrestador(View view){
 
         //Valida se os campos foram preenchidos
-        String nome = editClienteNome.getText().toString();
-        String endereco = editClienteEndereco.getText().toString();
-        String telefone = editClienteTelefone.getText().toString();
+        String nome = editPrestadorNome.getText().toString();
+        String valor = editPrestadorValorHora.getText().toString();
+        String categoria = editPrestadorCategoria.getText().toString();
+        String tempo = editPrestadorTempo.getText().toString();
 
         if ( !nome.isEmpty() ){
-            if ( !endereco.isEmpty() ){
-                if ( !telefone.isEmpty() ){
+            if ( !valor.isEmpty() ){
+                if ( !categoria.isEmpty() ){
+                    if ( !tempo.isEmpty() ){
 
-                    Cliente cliente = new Cliente();
-                    cliente.setIdUsuario( idUsuarioLogado );
-                    cliente.setNome( nome );
-                    cliente.setEndereco( endereco );
-                    cliente.setTelefone( telefone );
-                    cliente.setUrlImagem( urlImagemSelecionada );
-                    cliente.salvar();
+                        Prestador prestador = new Prestador();
+                        prestador.setIdUsuario( idUsuarioLogado );
+                        prestador.setNome( nome );
+                        prestador.setPrecoHora( Double.parseDouble(valor) );
+                        prestador.setCategoria(categoria);
+                        prestador.setTempo( tempo );
+                        prestador.setUrlImagem( urlImagemSelecionada );
+                        prestador.salvar();
+                        finish();
 
-                    exibirMensagem("Dados atualizados com sucesso!");
-                    finish();
+                    }else{
+                        exibirMensagem("Digite o tempo de espera");
+                    }
 
                 }else{
-                    exibirMensagem("Digite um telefone!");
+                    exibirMensagem("Digite uma categoria");
                 }
 
             }else{
-                exibirMensagem("Digite seu endereço");
+                exibirMensagem("Digite um valor por hora");
             }
 
         }else{
             exibirMensagem("Digite seu nome");
         }
-
     }
+
 
     private void exibirMensagem(String texto){
         Toast.makeText(this, texto, Toast.LENGTH_SHORT).show();
@@ -169,11 +177,12 @@ public class ConfiguracoesClienteActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-
         if( resultCode == RESULT_OK ){
             Bitmap imagem = null;
 
             try {
+
+
                 switch (requestCode){
                     case SELECAO_GALERIA:
                         Uri localImagem = data.getData();
@@ -187,7 +196,7 @@ public class ConfiguracoesClienteActivity extends AppCompatActivity {
                 }
 
                 if( imagem != null){
-                    imagePerfilCliente.setImageBitmap( imagem );
+                    imagePerfilPrestador.setImageBitmap( imagem );
 
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     imagem.compress(Bitmap.CompressFormat.JPEG, 70, baos);
@@ -195,14 +204,14 @@ public class ConfiguracoesClienteActivity extends AppCompatActivity {
 
                     StorageReference imageRef = storageReference
                             .child("Imagens")
-                            .child("clientes")
+                            .child("prestadores")
                             .child(idUsuarioLogado + "jpeg");
 
                     UploadTask uploadTask = imageRef.putBytes( dadosImagem );
                     uploadTask.addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(ConfiguracoesClienteActivity.this,
+                            Toast.makeText(PerfilPrestadorActivity.this,
                                     "Erro ao fazer upload da imagem",
                                     Toast.LENGTH_SHORT).show();
                         }
@@ -211,27 +220,27 @@ public class ConfiguracoesClienteActivity extends AppCompatActivity {
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
                             urlImagemSelecionada = taskSnapshot.getDownloadUrl().toString();
-                            Toast.makeText(ConfiguracoesClienteActivity.this,
+                            Toast.makeText(PerfilPrestadorActivity.this,
                                     "Sucesso ao fazer upload da imagem",
                                     Toast.LENGTH_SHORT).show();
                         }
                     });
+
                 }
 
-            }
-            catch (Exception e) {
+            }catch (Exception e){
                 e.printStackTrace();
             }
 
         }
-
     }
 
-    private void inicializarComponentes() {
-        editClienteNome = findViewById(R.id.editClienteNome);
-        editClienteEndereco = findViewById(R.id.editClienteEndereco);
-        editClienteTelefone = findViewById(R.id.editClienteTelefone);
-        imagePerfilCliente = findViewById(R.id.imagePerfilCliente);
+    private void inicializarComponentes(){
+        editPrestadorNome = findViewById(R.id.editPrestadorNome);
+        editPrestadorCategoria = findViewById(R.id.editPrestadorCategoria);
+        editPrestadorTempo = findViewById(R.id.editPrestadorTempo);
+        editPrestadorValorHora = findViewById(R.id.editPrestadorValorHora);
+        imagePerfilPrestador = findViewById(R.id.imagePerfilPrestador);
     }
 
 

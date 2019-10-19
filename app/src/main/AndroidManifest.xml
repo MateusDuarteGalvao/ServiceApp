@@ -34,7 +34,7 @@
             android:parentActivityName=".activity.HomeActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ConfiguracoesClienteActivity"
+            android:name=".activity.PerfilClienteActivity"
             android:parentActivityName=".activity.HomeActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -42,7 +42,7 @@
             android:parentActivityName=".activity.PrestadorActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ConfiguracoesPrestadorActivity"
+            android:name=".activity.PerfilPrestadorActivity"
             android:parentActivityName=".activity.PrestadorActivity"
             android:screenOrientation="portrait" />
         <activity

@@ -1,8 +1,5 @@
 package com.duarte.serviceapp.model;
 
-import android.provider.ContactsContract;
-
-import com.duarte.serviceapp.activity.ConfiguracoesClienteActivity;
 import com.duarte.serviceapp.helper.ConfiguracaoFirebase;
 import com.google.firebase.database.DatabaseReference;
 

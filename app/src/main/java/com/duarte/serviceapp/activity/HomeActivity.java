@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.support.design.internal.NavigationMenu;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -22,14 +21,12 @@ import com.duarte.serviceapp.adapter.AdapterPrestador;
 import com.duarte.serviceapp.helper.ConfiguracaoFirebase;
 import com.duarte.serviceapp.helper.UsuarioFirebase;
 import com.duarte.serviceapp.listener.RecyclerItemClickListener;
-import com.duarte.serviceapp.model.Cliente;
 import com.duarte.serviceapp.model.Prestador;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
@@ -39,15 +36,11 @@ import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.model.ContainerDrawerItem;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
-import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.squareup.picasso.Picasso;
 
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,7 +87,7 @@ public class HomeActivity extends AppCompatActivity {
                 int id = menuItem.getItemId();
 
                 if (id == R.id.menuConfiguracoes) {
-                    startActivity(new Intent(HomeActivity.this, ConfiguracoesClienteActivity.class));
+                    startActivity(new Intent(HomeActivity.this, PerfilClienteActivity.class));
                     return true;
                 }
                /* if (id == R.id.serviços) {
@@ -103,7 +96,7 @@ public class HomeActivity extends AppCompatActivity {
                 }*/
                 if (id == R.id.chat) {
                     Toast.makeText(HomeActivity.this, "Em breve", Toast.LENGTH_SHORT).show();
-                    //startActivity(new Intent(PrestadorActivity.this, ConfiguracoesPrestadorActivity.class));
+                    //startActivity(new Intent(PrestadorActivity.this, PerfilPrestadorActivity.class));
                     return true;
                 }
                 return true;
@@ -253,7 +246,7 @@ public class HomeActivity extends AppCompatActivity {
                 withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        startActivity(new Intent(HomeActivity.this, ConfiguracoesClienteActivity.class));
+                        startActivity(new Intent(HomeActivity.this, PerfilClienteActivity.class));
                         return false;
                     }
                 }));
@@ -430,6 +423,6 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void abrirConfiguracoes() {
-        startActivity(new Intent(HomeActivity.this, ConfiguracoesClienteActivity.class));
+        startActivity(new Intent(HomeActivity.this, PerfilClienteActivity.class));
     }
 }

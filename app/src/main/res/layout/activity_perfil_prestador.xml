@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.ConfiguracoesClienteActivity">
+    tools:context=".activity.PerfilPrestadorActivity">
 
     <include
         layout="@layout/toolbar"
@@ -18,17 +18,16 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imagePerfilCliente"
+            android:id="@+id/imagePerfilPrestador"
             android:layout_width="match_parent"
             android:layout_height="120dp"
+            android:src="@drawable/perfil"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:src="@drawable/perfil" />
+            android:layout_marginBottom="8dp"/>
 
         <EditText
-            android:id="@+id/editClienteNome"
+            android:id="@+id/editPrestadorNome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nome"
@@ -36,33 +35,42 @@
             android:padding="16dp" />
 
         <EditText
-            android:id="@+id/editClienteEndereco"
+            android:id="@+id/editPrestadorCategoria"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Endereço"
+            android:hint="Categoria"
             android:inputType="text"
             android:padding="16dp" />
 
-        <com.santalu.maskedittext.MaskEditText
-            android:id="@+id/editClienteTelefone"
+        <EditText
+            android:id="@+id/editPrestadorTempo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Telefone"
-            android:inputType="phone"
-            app:met_mask="(##) #####-####"
-            android:padding="16dp"
-            android:layout_marginBottom="16dp" />
+            android:ems="10"
+            android:hint="Tempo de espera"
+            android:inputType="text"
+            android:padding="16dp" />
+
+        <EditText
+            android:id="@+id/editPrestadorValorHora"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Valor da hora"
+            android:inputType="numberDecimal"
+            android:padding="16dp" />
 
         <Button
             android:id="@+id/buttonSalvar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="validarDadosCliente"
             android:padding="16dp"
             android:text="Salvar"
-            android:theme="@style/botaoPadrao" />
+            android:theme="@style/botaoPadrao"
+            android:onClick="validarDadosPrestador"/>
 
     </LinearLayout>
+
 
 </LinearLayout>

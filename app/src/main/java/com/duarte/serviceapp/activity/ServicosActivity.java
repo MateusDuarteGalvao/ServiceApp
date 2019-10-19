@@ -212,7 +212,7 @@ public class ServicosActivity extends AppCompatActivity {
                 withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        startActivity(new Intent(ServicosActivity.this, ConfiguracoesClienteActivity.class));
+                        startActivity(new Intent(ServicosActivity.this, PerfilClienteActivity.class));
                         return false;
                     }
                 }));

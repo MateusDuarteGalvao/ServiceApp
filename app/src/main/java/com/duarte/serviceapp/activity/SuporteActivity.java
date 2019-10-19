@@ -166,7 +166,7 @@ public class SuporteActivity extends AppCompatActivity {
                 withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        startActivity(new Intent(SuporteActivity.this, ConfiguracoesClienteActivity.class));
+                        startActivity(new Intent(SuporteActivity.this, PerfilClienteActivity.class));
                         return false;
                     }
                 }));

@@ -3,7 +3,6 @@ package com.duarte.serviceapp.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.design.internal.NavigationMenu;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,7 +14,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.duarte.serviceapp.R;
@@ -83,7 +81,7 @@ public class PrestadorActivity extends AppCompatActivity {
                 int id = menuItem.getItemId();
 
                 if (id == R.id.menuConfiguracoes) {
-                    startActivity(new Intent(PrestadorActivity.this, ConfiguracoesPrestadorActivity.class));
+                    startActivity(new Intent(PrestadorActivity.this, PerfilPrestadorActivity.class));
                     return true;
                 }
                 if (id == R.id.ordens) {
@@ -92,7 +90,7 @@ public class PrestadorActivity extends AppCompatActivity {
                 }
                 if (id == R.id.chat) {
                     Toast.makeText(PrestadorActivity.this, "Em breve", Toast.LENGTH_SHORT).show();
-                    //startActivity(new Intent(PrestadorActivity.this, ConfiguracoesPrestadorActivity.class));
+                    //startActivity(new Intent(PrestadorActivity.this, PerfilPrestadorActivity.class));
                     return true;
                 }
                 return true;
@@ -216,7 +214,7 @@ public class PrestadorActivity extends AppCompatActivity {
                 withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        startActivity(new Intent(PrestadorActivity.this, ConfiguracoesPrestadorActivity.class));
+                        startActivity(new Intent(PrestadorActivity.this, PerfilPrestadorActivity.class));
                         return false;
                     }
                 }));
@@ -355,7 +353,7 @@ public class PrestadorActivity extends AppCompatActivity {
     }
 
     private void abrirConfiguracoes() {
-        Intent i = new Intent(PrestadorActivity.this, ConfiguracoesPrestadorActivity.class);
+        Intent i = new Intent(PrestadorActivity.this, PerfilPrestadorActivity.class);
         startActivity(i);
     }
 
