@@ -9,7 +9,7 @@ public class Servico {
     private String idServico;
     private String nome;
     private String descricao;
-    private String preco;
+    private Double preco;
 
     public Servico() {
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
@@ -70,11 +70,11 @@ public class Servico {
         this.descricao = descricao;
     }
 
-    public String getPreco() {
+    public Double getPreco() {
         return preco;
     }
 
-    public void setPreco(String preco) {
+    public void setPreco(Double preco) {
         this.preco = preco;
     }
 

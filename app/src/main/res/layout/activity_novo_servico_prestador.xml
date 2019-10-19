@@ -35,14 +35,14 @@
             android:inputType="text"
             android:padding="16dp" />
 
-        <com.blackcat.currencyedittext.CurrencyEditText
+        <EditText
             android:id="@+id/editServicoPreco"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:ems="10"
             android:hint="Valor"
-            android:inputType="textPersonName"
+            android:inputType="number"
             android:padding="16dp" />
 
         <Button

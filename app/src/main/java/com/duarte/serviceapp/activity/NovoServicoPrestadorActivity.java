@@ -1,10 +1,8 @@
 package com.duarte.serviceapp.activity;
 
-import android.support.design.internal.NavigationMenu;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -12,7 +10,6 @@ import android.widget.Toast;
 import com.duarte.serviceapp.R;
 import com.duarte.serviceapp.helper.UsuarioFirebase;
 import com.duarte.serviceapp.model.Servico;
-
 
 public class NovoServicoPrestadorActivity extends AppCompatActivity {
 
@@ -24,9 +21,6 @@ public class NovoServicoPrestadorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_novo_servico_prestador);
-
-
-
 
         //Configurações iniciais
         inicializarComponentes();
@@ -55,21 +49,23 @@ public class NovoServicoPrestadorActivity extends AppCompatActivity {
                         servico.setIdUsuario( idUsuarioLogado );
                         servico.setNome( nome );
                         servico.setDescricao( descricao );
-                        servico.setPreco( preco );
+                        servico.setPreco( Double.parseDouble(preco) );
 
                         servico.salvar();
                         finish();
                         exibirMensagem("Serviço salvo com sucesso!");
 
-                }else{
+                }
+                else {
                     exibirMensagem("Digite o preço do serviço");
                 }
 
-            }else{
+            }
+            else {
                 exibirMensagem("Digite a descricao do serviço");
             }
-
-        }else{
+        }
+        else {
             exibirMensagem("Digite o nome do serviço");
         }
     }
