@@ -74,7 +74,7 @@
         android:id="@+id/textView2"
         android:layout_width="364dp"
         android:layout_height="56dp"
-        android:text="Para prestar seus serviços e guanhar destaque no mundo profissional.."
+        android:text="Para prestar seus serviços e ganhar destaque no mundo profissional.."
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="20dp"
