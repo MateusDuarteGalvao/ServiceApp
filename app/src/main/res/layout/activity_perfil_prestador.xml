@@ -24,7 +24,7 @@
             android:layout_height="120dp"
             android:src="@drawable/perfil"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="10dp"/>
 
         <EditText
             android:id="@+id/editPrestadorNome"
@@ -32,34 +32,38 @@
             android:layout_height="wrap_content"
             android:hint="Nome"
             android:inputType="text"
-            android:padding="16dp" />
+            android:padding="10dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_edit_text" />
 
-        <EditText
-            android:id="@+id/editPrestadorCategoria"
+        <com.santalu.maskedittext.MaskEditText
+            android:id="@+id/editPrestadorTelefone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10"
+            android:hint="Telefone"
+            android:inputType="phone"
+            app:met_mask="(##) #####-####"
+            android:padding="10dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_edit_text" />
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteTextPrestadorCidade"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Cidade"
+            android:padding="10dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_edit_text" />
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteTextPrestadorCategoria"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:hint="Categoria"
-            android:inputType="text"
-            android:padding="16dp" />
-
-        <EditText
-            android:id="@+id/editPrestadorTempo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Tempo de espera"
-            android:inputType="text"
-            android:padding="16dp" />
-
-        <EditText
-            android:id="@+id/editPrestadorValorHora"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Valor da hora"
-            android:inputType="numberDecimal"
-            android:padding="16dp" />
+            android:padding="10dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_edit_text" />
 
         <Button
             android:id="@+id/buttonSalvar"

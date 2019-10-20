@@ -16,6 +16,7 @@ public class Prestador implements Serializable {
     private String telefone;
     private String email;
     private String senha;
+    private String cidade;
 
     public String getTelefone() {
         return telefone;
@@ -23,6 +24,14 @@ public class Prestador implements Serializable {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
     }
 
     public String getEmail() {

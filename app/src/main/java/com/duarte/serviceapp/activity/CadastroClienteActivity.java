@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -139,15 +138,19 @@ public class CadastroClienteActivity extends AppCompatActivity {
                 }
                 else {
                     String erroExcecao = "";
-                    try{
+                    try {
                         throw task.getException();
-                    }catch (FirebaseAuthWeakPasswordException e) {
+                    }
+                    catch (FirebaseAuthWeakPasswordException e) {
                         erroExcecao = "Digite uma senha mais forte!";
-                    }catch (FirebaseAuthInvalidCredentialsException e) {
+                    }
+                    catch (FirebaseAuthInvalidCredentialsException e) {
                         erroExcecao = "Por favor, digite um e-mail válido!";
-                    }catch (FirebaseAuthUserCollisionException e) {
+                    }
+                    catch (FirebaseAuthUserCollisionException e) {
                         erroExcecao = "Essa conta já foi cadastrada!";
-                    }catch (Exception e) {
+                    }
+                    catch (Exception e) {
                         erroExcecao = "ao cadastrar usuário: " + e.getMessage();
                         e.printStackTrace();
                     }
@@ -157,10 +160,6 @@ public class CadastroClienteActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-
-
     }
 
     private void abrirTelaPrincipal() {

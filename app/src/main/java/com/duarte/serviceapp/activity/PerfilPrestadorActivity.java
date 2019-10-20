@@ -9,10 +9,14 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.duarte.serviceapp.R;
@@ -37,8 +41,11 @@ import dmax.dialog.SpotsDialog;
 public class PerfilPrestadorActivity extends AppCompatActivity {
 
     //Inicializando atributos
-    private EditText editPrestadorNome, editPrestadorCategoria, editPrestadorTempo,
-            editPrestadorValorHora;
+    private EditText editPrestadorNome, editPrestadorTelefone;
+    private Spinner  spinnerPrestadorCidade, spinnerPrestadorCategoria;
+
+    private AutoCompleteTextView autoCompleteCidade, autoCompleteCategoria;
+
     private ImageView imagePerfilPrestador;
     private AlertDialog dialog;
 
@@ -53,16 +60,17 @@ public class PerfilPrestadorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil_prestador);
 
-
         //Configurações iniciais
         inicializarComponentes();
+        carregarDadosAutoComplete();
+
         storageReference = ConfiguracaoFirebase.getFirebaseStorage();
         firebaseRef = ConfiguracaoFirebase.getFirebase();
         idUsuarioLogado = UsuarioFirebase.getIdUsuario();
 
         //Configurações Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Configuração");
+        toolbar.setTitle("Perfil");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -70,11 +78,10 @@ public class PerfilPrestadorActivity extends AppCompatActivity {
         imagePerfilPrestador.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(
-                        Intent.ACTION_PICK,
+                Intent i = new Intent(Intent.ACTION_PICK,
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI
                         );
-                if( i.resolveActivity(getPackageManager()) != null ){
+                if ( i.resolveActivity(getPackageManager()) != null ) {
                     startActivityForResult(i, SELECAO_GALERIA);
                 }
             }
@@ -101,12 +108,12 @@ public class PerfilPrestadorActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                if( dataSnapshot.getValue() != null ){
+                if( dataSnapshot.getValue() != null ) {
                     Prestador prestador = dataSnapshot.getValue(Prestador.class);
                     editPrestadorNome.setText(prestador.getNome());
-                    editPrestadorCategoria.setText(prestador.getCategoria());
-                    editPrestadorTempo.setText(prestador.getTempo());
-                    editPrestadorValorHora.setText(prestador.getPrecoHora().toString());
+                    editPrestadorTelefone.setText(prestador.getTelefone());
+                    autoCompleteCategoria.setText(prestador.getCategoria());
+                    autoCompleteCidade.setText(prestador.getCidade());
 
                     urlImagemSelecionada = prestador.getUrlImagem();
                     if ( urlImagemSelecionada != "" ) {
@@ -128,42 +135,42 @@ public class PerfilPrestadorActivity extends AppCompatActivity {
 
     }
 
-    public void validarDadosPrestador(View view){
+    public void validarDadosPrestador(View view) {
 
         //Valida se os campos foram preenchidos
         String nome = editPrestadorNome.getText().toString();
-        String valor = editPrestadorValorHora.getText().toString();
-        String categoria = editPrestadorCategoria.getText().toString();
-        String tempo = editPrestadorTempo.getText().toString();
+        String telefone = editPrestadorTelefone.getText().toString();
+        String categoria = autoCompleteCategoria.getText().toString();
+        String cidade = autoCompleteCidade.getText().toString();
 
-        if ( !nome.isEmpty() ){
-            if ( !valor.isEmpty() ){
-                if ( !categoria.isEmpty() ){
-                    if ( !tempo.isEmpty() ){
+        if ( !nome.isEmpty() ) {
+            if ( !telefone.isEmpty() ) {
+                if ( !categoria.isEmpty() ) {
+                    if ( !cidade.isEmpty() ) {
 
                         Prestador prestador = new Prestador();
                         prestador.setIdUsuario( idUsuarioLogado );
                         prestador.setNome( nome );
-                        prestador.setPrecoHora( Double.parseDouble(valor) );
                         prestador.setCategoria(categoria);
-                        prestador.setTempo( tempo );
+                        prestador.setTelefone( telefone );
+                        prestador.setCidade( cidade );
                         prestador.setUrlImagem( urlImagemSelecionada );
                         prestador.salvar();
                         finish();
-
-                    }else{
-                        exibirMensagem("Digite o tempo de espera");
                     }
-
-                }else{
-                    exibirMensagem("Digite uma categoria");
+                    else {
+                        exibirMensagem("Selecione a cidade");
+                    }
                 }
-
-            }else{
-                exibirMensagem("Digite um valor por hora");
+                else {
+                    exibirMensagem("Selecione uma categoria");
+                }
             }
-
-        }else{
+            else {
+                exibirMensagem("Digite seu telefone");
+            }
+        }
+        else {
             exibirMensagem("Digite seu nome");
         }
     }
@@ -182,8 +189,7 @@ public class PerfilPrestadorActivity extends AppCompatActivity {
 
             try {
 
-
-                switch (requestCode){
+                switch (requestCode) {
                     case SELECAO_GALERIA:
                         Uri localImagem = data.getData();
                         imagem = MediaStore.Images
@@ -228,18 +234,39 @@ public class PerfilPrestadorActivity extends AppCompatActivity {
 
                 }
 
-            }catch (Exception e){
+            }
+            catch (Exception e) {
                 e.printStackTrace();
             }
-
         }
     }
 
-    private void inicializarComponentes(){
+    private void carregarDadosAutoComplete() {
+
+        //Configura autocomplete das cidades
+        String[] cidades = getResources().getStringArray(R.array.cidades);
+        ArrayAdapter<String> adapterCidade = new ArrayAdapter<String>(
+                this, android.R.layout.select_dialog_item,
+                cidades);
+        autoCompleteCidade.setThreshold(1);
+        autoCompleteCidade.setAdapter( adapterCidade );
+
+        //Configura autocomplete das categorias
+        String[] categorias = getResources().getStringArray(R.array.categorias);
+        ArrayAdapter<String> adapterCategoria = new ArrayAdapter<String>(
+                this, android.R.layout.select_dialog_item,
+                categorias
+        );
+        autoCompleteCategoria.setThreshold(1);
+        autoCompleteCategoria.setAdapter( adapterCategoria );
+
+    }
+
+    private void inicializarComponentes() {
         editPrestadorNome = findViewById(R.id.editPrestadorNome);
-        editPrestadorCategoria = findViewById(R.id.editPrestadorCategoria);
-        editPrestadorTempo = findViewById(R.id.editPrestadorTempo);
-        editPrestadorValorHora = findViewById(R.id.editPrestadorValorHora);
+        editPrestadorTelefone = findViewById(R.id.editPrestadorTelefone);
+        autoCompleteCategoria = findViewById(R.id.autoCompleteTextPrestadorCategoria);
+        autoCompleteCidade = findViewById(R.id.autoCompleteTextPrestadorCidade);
         imagePerfilPrestador = findViewById(R.id.imagePerfilPrestador);
     }
 
