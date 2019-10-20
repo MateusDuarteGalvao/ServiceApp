@@ -71,7 +71,7 @@ public class PerfilClienteActivity extends AppCompatActivity {
                         Intent.ACTION_PICK,
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI
                 );
-                if( i.resolveActivity(getPackageManager()) != null ){
+                if ( i.resolveActivity(getPackageManager()) != null ) {
                     startActivityForResult(i, SELECAO_GALERIA);
                 }
             }
@@ -131,9 +131,9 @@ public class PerfilClienteActivity extends AppCompatActivity {
         String endereco = editClienteEndereco.getText().toString();
         String telefone = editClienteTelefone.getText().toString();
 
-        if ( !nome.isEmpty() ){
-            if ( !endereco.isEmpty() ){
-                if ( !telefone.isEmpty() ){
+        if ( !nome.isEmpty() ) {
+            if ( !endereco.isEmpty() ) {
+                if ( !telefone.isEmpty() ) {
 
                     Cliente cliente = new Cliente();
                     cliente.setIdUsuario( idUsuarioLogado );
@@ -146,18 +146,20 @@ public class PerfilClienteActivity extends AppCompatActivity {
                     exibirMensagem("Dados atualizados com sucesso!");
                     finish();
 
-                }else{
+                }
+                else {
                     exibirMensagem("Digite um telefone!");
                 }
 
-            }else{
+            }
+            else {
                 exibirMensagem("Digite seu endereço");
             }
 
-        }else{
+        }
+        else {
             exibirMensagem("Digite seu nome");
         }
-
     }
 
     private void exibirMensagem(String texto){
@@ -168,8 +170,7 @@ public class PerfilClienteActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-
-        if( resultCode == RESULT_OK ){
+        if( resultCode == RESULT_OK ) {
             Bitmap imagem = null;
 
             try {
@@ -185,7 +186,7 @@ public class PerfilClienteActivity extends AppCompatActivity {
                         break;
                 }
 
-                if( imagem != null){
+                if( imagem != null) {
                     imagePerfilCliente.setImageBitmap( imagem );
 
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();

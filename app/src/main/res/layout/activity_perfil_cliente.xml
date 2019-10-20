@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="10dp"
             android:src="@drawable/perfil" />
 
         <EditText
@@ -33,7 +33,9 @@
             android:layout_height="wrap_content"
             android:hint="Nome"
             android:inputType="text"
-            android:padding="16dp" />
+            android:padding="10dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_edit_text" />
 
         <EditText
             android:id="@+id/editClienteEndereco"
@@ -42,7 +44,9 @@
             android:ems="10"
             android:hint="Endereço"
             android:inputType="text"
-            android:padding="16dp" />
+            android:padding="10dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_edit_text" />
 
         <com.santalu.maskedittext.MaskEditText
             android:id="@+id/editClienteTelefone"
@@ -51,8 +55,9 @@
             android:hint="Telefone"
             android:inputType="phone"
             app:met_mask="(##) #####-####"
-            android:padding="16dp"
-            android:layout_marginBottom="16dp" />
+            android:padding="10dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_edit_text" />
 
         <Button
             android:id="@+id/buttonSalvar"
