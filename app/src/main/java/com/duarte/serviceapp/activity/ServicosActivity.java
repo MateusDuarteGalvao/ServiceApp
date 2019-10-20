@@ -306,7 +306,7 @@ public class ServicosActivity extends AppCompatActivity {
 
                 ordemServicoRecuperada.setNome( cliente.getNome() );
                 ordemServicoRecuperada.setEndereco( cliente.getEndereco() );
-                ordemServicoRecuperada.setTelefone( cliente.getEndereco() );
+                ordemServicoRecuperada.setTelefone( cliente.getTelefone() );
                 ordemServicoRecuperada.setItens( itensServicos );
                 ordemServicoRecuperada.salvar();
 
@@ -515,7 +515,6 @@ public class ServicosActivity extends AppCompatActivity {
         recyclerServicosPrestador = findViewById(R.id.recyclerServicosPrestador);
         imagePrestadorServico = findViewById(R.id.imagePrestadorServico);
         textNomePrestadorServico = findViewById(R.id.textNomePrestadorServico);
-
         textServicosQtde = findViewById(R.id.textOrcamentoQtd);
         textServicosTotal = findViewById(R.id.textOrcamentoTotal);
     }
