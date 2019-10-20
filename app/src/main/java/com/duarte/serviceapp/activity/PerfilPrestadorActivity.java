@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatAutoCompleteTextView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -42,10 +41,7 @@ public class PerfilPrestadorActivity extends AppCompatActivity {
 
     //Inicializando atributos
     private EditText editPrestadorNome, editPrestadorTelefone;
-    private Spinner  spinnerPrestadorCidade, spinnerPrestadorCategoria;
-
     private AutoCompleteTextView autoCompleteCidade, autoCompleteCategoria;
-
     private ImageView imagePerfilPrestador;
     private AlertDialog dialog;
 
@@ -79,8 +75,7 @@ public class PerfilPrestadorActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(Intent.ACTION_PICK,
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-                        );
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 if ( i.resolveActivity(getPackageManager()) != null ) {
                     startActivityForResult(i, SELECAO_GALERIA);
                 }
@@ -89,7 +84,6 @@ public class PerfilPrestadorActivity extends AppCompatActivity {
 
         //Recuperar dados do prestador
         recuperarDadosPrestador();
-
     }
 
    private void recuperarDadosPrestador(){
@@ -229,6 +223,7 @@ public class PerfilPrestadorActivity extends AppCompatActivity {
                             Toast.makeText(PerfilPrestadorActivity.this,
                                     "Sucesso ao fazer upload da imagem",
                                     Toast.LENGTH_SHORT).show();
+                            
                         }
                     });
 

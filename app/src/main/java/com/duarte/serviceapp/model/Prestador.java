@@ -51,7 +51,7 @@ public class Prestador implements Serializable {
     public Prestador() {
     }
 
-    public void salvar(){
+    public void salvar() {
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
         DatabaseReference prestadorRef = firebaseRef.child("prestadores")
                 .child( getIdUsuario() );
