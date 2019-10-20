@@ -24,7 +24,9 @@
             android:layout_height="wrap_content"
             android:hint="Nome"
             android:inputType="text"
-            android:padding="16dp" />
+            android:padding="10dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_edit_text" />
 
         <EditText
             android:id="@+id/editServicoDescricao"
@@ -33,17 +35,20 @@
             android:ems="10"
             android:hint="Descrição"
             android:inputType="text"
-            android:padding="16dp" />
+            android:padding="10dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_edit_text" />
 
         <EditText
             android:id="@+id/editServicoPreco"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
             android:ems="10"
             android:hint="Valor"
             android:inputType="number"
-            android:padding="16dp" />
+            android:padding="10dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_edit_text" />
 
         <Button
             android:id="@+id/buttonSalvar"
