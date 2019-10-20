@@ -10,9 +10,7 @@ public class Prestador implements Serializable {
     private String idUsuario;
     private String urlImagem;
     private String nome;
-    private String tempo;
     private String categoria;
-    private Double precoHora;
     private String telefone;
     private String email;
     private String senha;
@@ -84,14 +82,6 @@ public class Prestador implements Serializable {
         this.nome = nome;
     }
 
-    public String getTempo() {
-        return tempo;
-    }
-
-    public void setTempo(String tempo) {
-        this.tempo = tempo;
-    }
-
     public String getCategoria() {
         return categoria;
     }
@@ -100,11 +90,4 @@ public class Prestador implements Serializable {
         this.categoria = categoria;
     }
 
-    public Double getPrecoHora() {
-        return precoHora;
-    }
-
-    public void setPrecoHora(Double precoHora) {
-        this.precoHora = precoHora;
-    }
 }

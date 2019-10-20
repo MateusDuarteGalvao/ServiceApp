@@ -118,8 +118,6 @@ public class CadastroPrestadorActivity extends AppCompatActivity {
                     prestadorCadastro.setNome( prestador.getNome() );
                     prestadorCadastro.setTelefone( prestador.getTelefone() );
                     prestadorCadastro.setCategoria("");
-                    prestadorCadastro.setPrecoHora(0.00);
-                    prestadorCadastro.setTempo("");
                     prestadorCadastro.salvar();
 
                     abrirTelaPrincipal();
