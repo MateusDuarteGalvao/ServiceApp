@@ -36,6 +36,24 @@
         android:layout_marginBottom="16dp"
         android:background="@drawable/bg_edit_text" />
 
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteTextPrestadorCadastroCidade"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Cidade"
+        android:padding="10dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_edit_text" />
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCompletePrestadorCadastroCategoria"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Categoria"
+        android:padding="10dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_edit_text" />
+
     <EditText
         android:id="@+id/editPrestadorCadastroEmail"
         android:layout_width="match_parent"

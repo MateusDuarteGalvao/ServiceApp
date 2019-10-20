@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -24,6 +26,7 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 public class CadastroPrestadorActivity extends AppCompatActivity {
 
     private EditText campoNome, campoTelefone, campoEmail, campoSenha;
+    private AutoCompleteTextView campoCidade, campoCategoria;
     private Button buttonCadastro, buttonCancelar;
     private Prestador prestador;
     private String idUsuario;
@@ -37,6 +40,7 @@ public class CadastroPrestadorActivity extends AppCompatActivity {
 
         //Configurações
         inicializaComponentes();
+        carregarDadosAutoComplete();
 
         buttonCadastro.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,31 +48,49 @@ public class CadastroPrestadorActivity extends AppCompatActivity {
 
                 String nome = campoNome.getText().toString();
                 String telefone = campoTelefone.getText().toString();
+                String cidade = campoCidade.getText().toString();
+                String categoria = campoCategoria.getText().toString();
                 String email = campoEmail.getText().toString();
                 String senha = campoSenha.getText().toString();
 
                 if ( !nome.isEmpty() ) {
                     if ( !telefone.isEmpty() ) {
-                        if ( !email.isEmpty() ) {
-                            if ( !senha.isEmpty() ) {
+                        if ( !cidade.isEmpty() ) {
+                            if ( !categoria.isEmpty() ) {
+                                if ( !email.isEmpty() ) {
+                                    if ( !senha.isEmpty() ) {
 
-                                prestador = new Prestador();
-                                prestador.setNome( nome );
-                                prestador.setTelefone( telefone );
-                                prestador.setEmail( email );
-                                prestador.setSenha( senha );
-                                cadastrarPrestador();
+                                        prestador = new Prestador();
+                                        prestador.setNome( nome );
+                                        prestador.setTelefone( telefone );
+                                        prestador.setCategoria( categoria );
+                                        prestador.setCidade( cidade );
+                                        prestador.setEmail( email );
+                                        prestador.setSenha( senha );
+                                        cadastrarPrestador();
 
+                                    }
+                                    else {
+                                        Toast.makeText(CadastroPrestadorActivity.this,
+                                                "Digite a senha",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                else {
+                                    Toast.makeText(CadastroPrestadorActivity.this,
+                                            "Digite seu e-mail",
+                                            Toast.LENGTH_SHORT).show();
+                                }
                             }
                             else {
                                 Toast.makeText(CadastroPrestadorActivity.this,
-                                        "Digite a senha",
+                                        "Digite a categoria",
                                         Toast.LENGTH_SHORT).show();
                             }
                         }
                         else {
                             Toast.makeText(CadastroPrestadorActivity.this,
-                                    "Digite seu e-mail",
+                                    "Digite a cidade",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -117,7 +139,8 @@ public class CadastroPrestadorActivity extends AppCompatActivity {
                     prestadorCadastro.setEmail( prestador.getEmail() );
                     prestadorCadastro.setNome( prestador.getNome() );
                     prestadorCadastro.setTelefone( prestador.getTelefone() );
-                    prestadorCadastro.setCategoria("");
+                    prestadorCadastro.setCategoria( prestador.getCategoria() );
+                    prestadorCadastro.setCidade( prestador.getCidade() );
                     prestadorCadastro.salvar();
 
                     abrirTelaPrincipal();
@@ -126,15 +149,19 @@ public class CadastroPrestadorActivity extends AppCompatActivity {
                 }
                 else {
                     String erroExcecao = "";
-                    try{
+                    try {
                         throw task.getException();
-                    }catch (FirebaseAuthWeakPasswordException e) {
+                    }
+                    catch (FirebaseAuthWeakPasswordException e) {
                         erroExcecao = "Digite uma senha mais forte!";
-                    }catch (FirebaseAuthInvalidCredentialsException e) {
+                    }
+                    catch (FirebaseAuthInvalidCredentialsException e) {
                         erroExcecao = "Por favor, digite um e-mail válido!";
-                    }catch (FirebaseAuthUserCollisionException e) {
+                    }
+                    catch (FirebaseAuthUserCollisionException e) {
                         erroExcecao = "Essa conta já foi cadastrada!";
-                    }catch (Exception e) {
+                    }
+                    catch (Exception e) {
                         erroExcecao = "ao cadastrar usuário: " + e.getMessage();
                         e.printStackTrace();
                     }
@@ -151,9 +178,31 @@ public class CadastroPrestadorActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+    private void carregarDadosAutoComplete() {
+
+        //Configura autocomplete das cidades
+        String[] cidades = getResources().getStringArray(R.array.cidades);
+        ArrayAdapter<String> adapterCidade = new ArrayAdapter<String>(
+                this, android.R.layout.select_dialog_item,
+                cidades);
+        campoCidade.setThreshold(1);
+        campoCidade.setAdapter( adapterCidade );
+
+        //Configura autocomplete das categorias
+        String[] categorias = getResources().getStringArray(R.array.categorias);
+        ArrayAdapter<String> adapterCategoria = new ArrayAdapter<String>(
+                this, android.R.layout.select_dialog_item,
+                categorias
+        );
+        campoCategoria.setThreshold(1);
+        campoCategoria.setAdapter( adapterCategoria );
+    }
+
     private void inicializaComponentes() {
         campoNome = findViewById(R.id.editPrestadorCadastroNome);
         campoTelefone = findViewById(R.id.editPrestadorCadastroTelefone);
+        campoCategoria = findViewById(R.id.autoCompletePrestadorCadastroCategoria);
+        campoCidade = findViewById(R.id.autoCompleteTextPrestadorCadastroCidade);
         campoEmail = findViewById(R.id.editPrestadorCadastroEmail);
         campoSenha = findViewById(R.id.editPrestadorCadastroSenha);
         buttonCadastro = findViewById(R.id.buttonCadastro);
