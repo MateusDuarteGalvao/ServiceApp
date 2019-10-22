@@ -36,7 +36,7 @@ public class AdapterPrestador extends RecyclerView.Adapter<AdapterPrestador.MyVi
         holder.nomePrestador.setText(prestador.getNome());
         holder.categoria.setText(prestador.getCategoria() + " - ");
         holder.tempo.setText(prestador.getTempo() + " Min");
-        holder.precoHora.setText("R$ " + prestador.getPrecoHora().toString());
+       // holder.precoHora.setText("R$ " + prestador.getPrecoHora().toString());
 
         //Carregar imagem
         String urlImagem = prestador.getUrlImagem();
@@ -63,7 +63,7 @@ public class AdapterPrestador extends RecyclerView.Adapter<AdapterPrestador.MyVi
             nomePrestador = itemView.findViewById(R.id.textNomePrestador);
             categoria = itemView.findViewById(R.id.textCategoriaPrestador);
             tempo = itemView.findViewById(R.id.textTempoPrestador);
-            precoHora = itemView.findViewById(R.id.textPrecoHoraPrestador);
+           // precoHora = itemView.findViewById(R.id.textPrecoHoraPrestador);
             imagemPrestador = itemView.findViewById(R.id.imagePrestador);
         }
     }

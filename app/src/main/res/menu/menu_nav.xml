@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item android:title="Home"
+            android:id="@+id/menu_home"
+            android:icon="@drawable/bt_home"/>
+
+        <item android:title="Favoritos"
+            android:id="@+id/menu_fav"
+            android:icon="@drawable/ic_fav"/>
+
+        <item android:title="Ordens"
+            android:id="@+id/menu_ordem"
+            android:icon="@drawable/ic_contratos"/>
+
+    </group>
+
+    <item android:title=""
+        android:id="@+id/submenu">
+
+        <menu>
+
+            <item android:title="Configurações"
+                android:id="@+id/menu_config"
+                android:icon="@drawable/ic_config"/>
+
+            <item android:title="Suporte"
+                android:id="@+id/menu_sup"
+                android:icon="@drawable/ic_ajuda"/>
+            <item android:title="Sair"
+                android:id="@+id/menu_sair"
+                android:icon="@drawable/bt_sair"/>
+
+        </menu>
+
+
+    </item>
+
+
+
+</menu>
