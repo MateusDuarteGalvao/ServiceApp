@@ -106,7 +106,7 @@ public class AutenticacaoClienteActivity extends AppCompatActivity {
 
 
     private void abrirTelaPrincipal() {
-        Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+        Intent i = new Intent(getApplicationContext(), HomeActivityDrawer.class);
         startActivity(i);
     }
 
