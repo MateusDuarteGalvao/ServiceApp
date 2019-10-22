@@ -174,7 +174,7 @@ public class CadastroPrestadorActivity extends AppCompatActivity {
     }
 
     private void abrirTelaPrincipal() {
-        Intent i = new Intent(getApplicationContext(), PrestadorActivity.class);
+        Intent i = new Intent(getApplicationContext(), PrestadorActivityDrawer.class);
         startActivity(i);
     }
 

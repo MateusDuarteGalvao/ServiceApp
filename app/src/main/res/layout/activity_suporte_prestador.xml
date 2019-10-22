@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fitsSystemWindows="true"
+    android:id="@+id/drawerlayout3"
+    tools:openDrawer="start">
+
+
+    <include
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+       <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+           <TextView
+               android:id="@+id/textView4"
+               android:layout_width="320dp"
+               android:layout_height="50dp"
+               android:text="Ajuda"
+               android:textColor="@color/primary"
+               android:textSize="30dp"
+               android:textStyle="bold"
+               app:layout_constraintBottom_toBottomOf="parent"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintHorizontal_bias="0.498"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toTopOf="parent"
+               app:layout_constraintVertical_bias="0.163" />
+
+           <TextView
+               android:id="@+id/textView5"
+               android:layout_width="320dp"
+               android:layout_height="50dp"
+               android:text="1º No menu principal, clique no botão de 'Adicionar serviço' para cadastrar um novo serviço;"
+               app:layout_constraintBottom_toBottomOf="parent"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintHorizontal_bias="0.505"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toTopOf="parent"
+               app:layout_constraintVertical_bias="0.290" />
+
+           <TextView
+               android:id="@+id/textView6"
+               android:layout_width="320dp"
+               android:layout_height="50dp"
+               android:text="2º Após preencher os dados do serviço basta confirmar para cadastra-lo;"
+               app:layout_constraintBottom_toBottomOf="parent"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintHorizontal_bias="0.494"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toTopOf="parent"
+               app:layout_constraintVertical_bias="0.395" />
+
+           <TextView
+               android:id="@+id/textView7"
+               android:layout_width="320dp"
+               android:layout_height="50dp"
+               android:text="3º Com o cadastro de seu serviço finalizado, ele será exposto para possiveis clientes;"
+               app:layout_constraintBottom_toBottomOf="parent"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintHorizontal_bias="0.494"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toTopOf="parent"
+               app:layout_constraintVertical_bias="0.480" />
+
+           <TextView
+               android:id="@+id/textView8"
+               android:layout_width="320dp"
+               android:layout_height="50dp"
+               android:text="4º Caso algum cliente se interesse com seu serviço, um contrato de serviço será enviado pra você;"
+               app:layout_constraintBottom_toBottomOf="parent"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintHorizontal_bias="0.494"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toTopOf="parent"
+               app:layout_constraintVertical_bias="0.560" />
+
+           <TextView
+               android:id="@+id/textView9"
+               android:layout_width="320dp"
+               android:layout_height="50dp"
+               android:text="5º Aceitando o contrato de serviço você poderá entrar em contato com seu cliente e acertar detalhes do serviço;"
+               app:layout_constraintBottom_toBottomOf="parent"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintHorizontal_bias="0.494"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toTopOf="parent"
+               app:layout_constraintVertical_bias="0.660" />
+
+           <TextView
+               android:id="@+id/textView10"
+               android:layout_width="320dp"
+               android:layout_height="50dp"
+               android:text="6º O pagamento pelo serviço deve ser realizado pessoalmente, sem relação ou qualquer dependência deste aplicativo;"
+               app:layout_constraintBottom_toBottomOf="parent"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintHorizontal_bias="0.494"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toTopOf="parent"
+               app:layout_constraintVertical_bias="0.760" />
+
+           <Button
+               android:id="@+id/bt_ok"
+               android:layout_width="150dp"
+               android:layout_height="50dp"
+               android:text="Ok"
+               app:layout_constraintBottom_toBottomOf="parent"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintHorizontal_bias="0.498"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toTopOf="parent"
+               app:layout_constraintVertical_bias="0.900" />
+
+       </android.support.constraint.ConstraintLayout>
+
+
+
+
+    <android.support.design.widget.NavigationView
+        android:id="@+id/navView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/menu_nav_prest" />
+
+</android.support.v4.widget.DrawerLayout>

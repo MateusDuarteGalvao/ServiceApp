@@ -28,7 +28,7 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SuporteActivity extends HomeActivityDrawer {
+public class SuporteActivityPrestador extends PrestadorActivityDrawer{
 
     private FirebaseAuth autenticacao;
     private MaterialSearchView searchView;
@@ -45,6 +45,7 @@ public class SuporteActivity extends HomeActivityDrawer {
     private String emailCliente;
     private Uri fotoCliente;
 
+    //Drawer
     private DrawerLayout drawer;
     private NavigationView navigationView;
     private Toolbar toolbar;
@@ -52,7 +53,7 @@ public class SuporteActivity extends HomeActivityDrawer {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_suporte);
+        setContentView(R.layout.activity_suporte_prestador);
 
         inicializarComponentes();
 
@@ -61,8 +62,9 @@ public class SuporteActivity extends HomeActivityDrawer {
         toolbar.setTitle("ServiceApp");
         setSupportActionBar(toolbar);
 
+
         //Drawer
-        drawer = findViewById(R.id.drawerlayout4);
+        drawer = findViewById(R.id.drawerlayout3);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar,R.string.open_drawer,R.string.close_drawer);
         drawer.addDrawerListener(toggle);
@@ -70,12 +72,15 @@ public class SuporteActivity extends HomeActivityDrawer {
         toggle.syncState();
 
         navigationView = findViewById(R.id.navView);
-        navigationView.setNavigationItemSelectedListener(SuporteActivity.this);
+        navigationView.setNavigationItemSelectedListener(SuporteActivityPrestador.this);
 
         recuperaAuth();
 
         btOK();
+
     }
+
+
     @Override
     public void onBackPressed() {
         if(drawer.isDrawerOpen(GravityCompat.START))
@@ -88,26 +93,26 @@ public class SuporteActivity extends HomeActivityDrawer {
 
         switch (item.getItemId()){
             case R.id.menu_home:{
-                Intent home = new Intent(SuporteActivity.this, HomeActivityDrawer.class);
+                Intent home = new Intent(SuporteActivityPrestador.this, PrestadorActivityDrawer.class);
                 startActivity(home);
                 break;
             }
-            case R.id.menu_fav:{
-                Toast.makeText(this, "Em breve..", Toast.LENGTH_SHORT).show();
+            case R.id.menu_cont:{
+                Toast.makeText(SuporteActivityPrestador.this, "Em breve..", Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.menu_ordem:{
-                Intent ordem = new Intent(SuporteActivity.this, OrdensServicoActivity.class);
+                Intent ordem = new Intent(SuporteActivityPrestador.this, OrdensServicoActivity.class);
                 startActivity(ordem);
                 break;
             }
             case R.id.menu_config:{
-                Intent config = new Intent(SuporteActivity.this, PerfilClienteActivity.class);
+                Intent config = new Intent(SuporteActivityPrestador.this, PerfilClienteActivity.class);
                 startActivity(config);
                 break;
             }
             case R.id.menu_sup:{
-                Intent sup = new Intent(SuporteActivity.this, SuporteActivity.class);
+                Intent sup = new Intent(SuporteActivityPrestador.this, SuporteActivityPrestador.class);
                 startActivity(sup);
                 break;
             }
@@ -116,6 +121,9 @@ public class SuporteActivity extends HomeActivityDrawer {
                 break;
             }
         }
+
+        drawer.closeDrawer(GravityCompat.START);
+
 
         return true;
     }
@@ -160,7 +168,7 @@ public class SuporteActivity extends HomeActivityDrawer {
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(SuporteActivity.this, HomeActivityDrawer.class);
+                Intent i = new Intent(SuporteActivityPrestador.this, PrestadorActivityDrawer.class);
                 startActivity(i);
             }
         });

@@ -55,12 +55,12 @@ public class SliderActivity extends AppIntro {
 
     private void abrirTelaPrincipal(String tipoUsuario) {
         if (tipoUsuario.equals("prestador")) {
-            Intent i = new Intent(getApplicationContext(), PrestadorActivity.class);
+            Intent i = new Intent(getApplicationContext(), PrestadorActivityDrawer.class);
             startActivity(i);
             finish();
         }
         else {
-            Intent i = new Intent(getApplicationContext(), HomeActivity.class);
+            Intent i = new Intent(getApplicationContext(), HomeActivityDrawer.class);
             startActivity(i);
             finish();
         }

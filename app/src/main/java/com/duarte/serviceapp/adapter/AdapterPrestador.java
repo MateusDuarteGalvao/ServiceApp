@@ -34,6 +34,7 @@ public class AdapterPrestador extends RecyclerView.Adapter<AdapterPrestador.MyVi
     public void onBindViewHolder(@NonNull MyViewHolder holder, int i) {
         Prestador prestador = prestadores.get(i);
         holder.nomePrestador.setText(prestador.getNome());
+
         holder.categoria.setText(prestador.getCategoria());
         holder.cidade.setText(prestador.getCidade());
 
