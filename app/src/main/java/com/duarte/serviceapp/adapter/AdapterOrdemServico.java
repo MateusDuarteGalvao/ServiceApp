@@ -1,9 +1,7 @@
 package com.duarte.serviceapp.adapter;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +11,14 @@ import com.duarte.serviceapp.R;
 import com.duarte.serviceapp.model.ItemOrdemServico;
 import com.duarte.serviceapp.model.OrdemServico;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AdapterOrdemServico extends RecyclerView.Adapter<AdapterOrdemServico.MyViewHolder> {
 
     private List<OrdemServico> ordensServico;
+    private NumberFormat nf = NumberFormat.getCurrencyInstance();
 
     public AdapterOrdemServico(List<OrdemServico> ordensServico) {
         this.ordensServico = ordensServico;
@@ -35,7 +35,7 @@ public class AdapterOrdemServico extends RecyclerView.Adapter<AdapterOrdemServic
     public void onBindViewHolder(@NonNull MyViewHolder holder, int i) {
 
         OrdemServico ordemServico = ordensServico.get(i);
-        holder.nome.setText( ordemServico.getNome() );
+        holder.nome.setText( ordemServico.getNome());
         holder.endereco.setText( "Endereço: "+ordemServico.getEndereco() );
         holder.telefone.setText( "Telefone: "+ordemServico.getTelefone() );
         holder.observacao.setText( "Obs: "+ ordemServico.getObservacao() );
@@ -49,19 +49,20 @@ public class AdapterOrdemServico extends RecyclerView.Adapter<AdapterOrdemServic
         for( ItemOrdemServico itemOrdemServico : itens ){
 
             int qtde = itemOrdemServico.getQuantidade();
-            Double preco = itemOrdemServico.getPreco();
+            Float preco = itemOrdemServico.getPreco();
             total += (qtde * preco);
 
+
             String nome = itemOrdemServico.getNomeServico();
-            descricaoItens += numeroItem + ") " + nome + " / (" + qtde + " x R$ " + preco + ") \n";
+            descricaoItens += numeroItem + ") " + nome + " / (" + qtde + " x " + nf.format(preco) + ") \n";
             numeroItem++;
         }
-        descricaoItens += "Total: R$ " + total;
+        descricaoItens += "Total: " + nf.format(total);
         holder.itens.setText(descricaoItens);
 
         int metodoPagamento = ordemServico.getMetodoPagamento();
         String pagamento = metodoPagamento == 0 ? "Dinheiro" : "Máquina cartão" ;
-        holder.pgto.setText( "pgto: " + pagamento );
+        holder.pgto.setText( "Pagamento: " + pagamento );
 
     }
 

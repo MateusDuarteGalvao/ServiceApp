@@ -3,13 +3,18 @@ package com.duarte.serviceapp.model;
 import com.duarte.serviceapp.helper.ConfiguracaoFirebase;
 import com.google.firebase.database.DatabaseReference;
 
+import java.text.NumberFormat;
+
 public class Servico {
 
     private String idUsuario;
     private String idServico;
     private String nome;
     private String descricao;
-    private Double preco;
+    private Float preco;
+    private NumberFormat formater = NumberFormat.getCurrencyInstance();
+
+
 
     public Servico() {
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebase();
@@ -37,6 +42,7 @@ public class Servico {
                 .child( getIdServico() );
         servicoRef.removeValue();
     }
+
 
     public String getIdServico() {
         return idServico;
@@ -70,11 +76,11 @@ public class Servico {
         this.descricao = descricao;
     }
 
-    public Double getPreco() {
+    public Float getPreco() {
         return preco;
     }
 
-    public void setPreco(Double preco) {
+    public void setPreco(Float preco) {
         this.preco = preco;
     }
 

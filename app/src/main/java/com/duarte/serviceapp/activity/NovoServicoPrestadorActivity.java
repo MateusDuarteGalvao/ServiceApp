@@ -1,7 +1,7 @@
 package com.duarte.serviceapp.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
@@ -11,11 +11,16 @@ import com.duarte.serviceapp.R;
 import com.duarte.serviceapp.helper.UsuarioFirebase;
 import com.duarte.serviceapp.model.Servico;
 
+import java.text.NumberFormat;
+
 public class NovoServicoPrestadorActivity extends AppCompatActivity {
 
     //Inicializando atributos
     private EditText editServicoNome, editServicoDescricao, editServicoPreco;
     private String idUsuarioLogado;
+    private NumberFormat formater = NumberFormat.getCurrencyInstance();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +28,9 @@ public class NovoServicoPrestadorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_novo_servico_prestador);
 
         //Configurações iniciais
-        inicializarComponentes();
+        editServicoNome = findViewById(R.id.editServicoNome);
+        editServicoDescricao = findViewById(R.id.editServicoDescricao);
+        editServicoPreco = findViewById(R.id.editServicoPreco);
         idUsuarioLogado = UsuarioFirebase.getIdUsuario();
 
         //Configurações Toolbar
@@ -39,7 +46,8 @@ public class NovoServicoPrestadorActivity extends AppCompatActivity {
         //Valida se os campos foram preenchidos
         String nome         = editServicoNome.getText().toString();
         String descricao    = editServicoDescricao.getText().toString();
-        String preco        = editServicoPreco.getText().toString();
+        String preco      = editServicoPreco.getText().toString();
+
 
         if ( !nome.isEmpty() ){
             if ( !descricao.isEmpty() ){
@@ -49,8 +57,7 @@ public class NovoServicoPrestadorActivity extends AppCompatActivity {
                         servico.setIdUsuario( idUsuarioLogado );
                         servico.setNome( nome );
                         servico.setDescricao( descricao );
-                        servico.setPreco( Double.parseDouble(preco) );
-
+                        servico.setPreco( Float.parseFloat(preco) );
                         servico.salvar();
                         finish();
                         exibirMensagem("Serviço salvo com sucesso!");
@@ -75,10 +82,5 @@ public class NovoServicoPrestadorActivity extends AppCompatActivity {
         Toast.makeText(this, texto, Toast.LENGTH_SHORT).show();
     }
 
-    private void inicializarComponentes(){
-        editServicoNome = findViewById(R.id.editServicoNome);
-        editServicoDescricao = findViewById(R.id.editServicoDescricao);
-        editServicoPreco = findViewById(R.id.editServicoPreco);
-    }
 
 }

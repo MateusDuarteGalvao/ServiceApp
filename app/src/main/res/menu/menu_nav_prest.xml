@@ -7,7 +7,7 @@
             android:id="@+id/menu_home"
             android:icon="@drawable/bt_home"/>
 
-        <item android:title="Contratos"
+        <item android:title="Histórico"
             android:id="@+id/menu_cont"
             android:icon="@drawable/ic_contratos"/>
 
@@ -17,26 +17,20 @@
 
     </group>
 
-    <item android:title=""
-        android:id="@+id/submenu">
+    <group>
 
-        <menu>
+        <item android:title="Configurações"
+            android:id="@+id/menu_config"
+            android:icon="@drawable/ic_config"/>
 
-            <item android:title="Configurações"
-                android:id="@+id/menu_config"
-                android:icon="@drawable/ic_config"/>
+        <item android:title="Suporte"
+            android:id="@+id/menu_sup"
+            android:icon="@drawable/ic_ajuda"/>
+        <item android:title="Sair"
+            android:id="@+id/menu_sair"
+            android:icon="@drawable/bt_sair"/>
 
-            <item android:title="Suporte"
-                android:id="@+id/menu_sup"
-                android:icon="@drawable/ic_ajuda"/>
-            <item android:title="Sair"
-                android:id="@+id/menu_sair"
-                android:icon="@drawable/bt_sair"/>
-
-        </menu>
-
-
-    </item>
+    </group>
 
 
 

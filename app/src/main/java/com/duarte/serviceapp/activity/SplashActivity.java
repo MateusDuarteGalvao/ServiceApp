@@ -20,7 +20,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 abrirAutenticacao();
             }
-        }, 2000);
+        }, 1500);
     }
 
     private void abrirAutenticacao() {
@@ -28,6 +28,5 @@ public class SplashActivity extends AppCompatActivity {
         startActivity(i);
         finish();
     }
-
 
 }

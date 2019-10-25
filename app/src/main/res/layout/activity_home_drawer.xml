@@ -11,6 +11,12 @@ tools:openDrawer="start">
     <include
         android:id="@+id/include2"
         layout="@layout/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         />
 
     <android.support.v7.widget.LinearLayoutCompat
@@ -23,13 +29,13 @@ tools:openDrawer="start">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerPrestador"
-            android:layout_width="330dp"
+            android:layout_width="360dp"
             android:layout_height="match_parent"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="70dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -61,6 +67,8 @@ tools:openDrawer="start">
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/menu_nav" />
+        app:menu="@menu/menu_nav"
+        app:itemIconTint="#7248AA"
+        app:itemTextColor="@color/colorPrimary"/>
 
 </android.support.v4.widget.DrawerLayout>

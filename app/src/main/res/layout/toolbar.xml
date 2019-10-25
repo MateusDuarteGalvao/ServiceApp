@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:titleTextColor="@color/white" />
+        app:titleTextColor="@color/white"
+        android:theme="@style/ToolbarTheme"
+        android:elevation="10dp"/>
 
     <com.miguelcatalan.materialsearchview.MaterialSearchView
         android:id="@+id/materialSearchView"
-        android:layout_width="172dp"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
 
 
-</LinearLayout>
+</FrameLayout>

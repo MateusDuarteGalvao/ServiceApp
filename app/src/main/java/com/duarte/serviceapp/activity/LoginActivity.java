@@ -30,7 +30,10 @@ public class LoginActivity extends AppCompatActivity {
 
         //Configurações iniciais
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
-        inicializaComponentes();
+        buttonLogin = findViewById(R.id.buttonLogin);
+        buttonCadastro = findViewById(R.id.buttonCadastro);
+        editEmail = findViewById(R.id.editLoginEmail);
+        editSenha = findViewById(R.id.editLoginSenha);
 
         //Verificar usuario logado
         verificarUsuarioLogado();
@@ -115,10 +118,4 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void inicializaComponentes() {
-        buttonLogin = findViewById(R.id.buttonLogin);
-        buttonCadastro = findViewById(R.id.buttonCadastro);
-        editEmail = findViewById(R.id.editLoginEmail);
-        editSenha = findViewById(R.id.editLoginSenha);
-    }
 }

@@ -4,18 +4,17 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.duarte.serviceapp.R;
@@ -57,7 +56,11 @@ public class PerfilPrestadorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_perfil_prestador);
 
         //Configurações iniciais
-        inicializarComponentes();
+        editPrestadorNome = findViewById(R.id.editPrestadorNome);
+        editPrestadorTelefone = findViewById(R.id.editPrestadorTelefone);
+        autoCompleteCategoria = findViewById(R.id.autoCompleteTextPrestadorCategoria);
+        autoCompleteCidade = findViewById(R.id.autoCompleteTextPrestadorCidade);
+        imagePerfilPrestador = findViewById(R.id.imagePerfilPrestador);
         carregarDadosAutoComplete();
 
         storageReference = ConfiguracaoFirebase.getFirebaseStorage();
@@ -257,13 +260,6 @@ public class PerfilPrestadorActivity extends AppCompatActivity {
 
     }
 
-    private void inicializarComponentes() {
-        editPrestadorNome = findViewById(R.id.editPrestadorNome);
-        editPrestadorTelefone = findViewById(R.id.editPrestadorTelefone);
-        autoCompleteCategoria = findViewById(R.id.autoCompleteTextPrestadorCategoria);
-        autoCompleteCidade = findViewById(R.id.autoCompleteTextPrestadorCidade);
-        imagePerfilPrestador = findViewById(R.id.imagePerfilPrestador);
-    }
 
 
 }

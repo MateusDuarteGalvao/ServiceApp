@@ -1,18 +1,13 @@
 package com.duarte.serviceapp.activity;
 
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Toast;
 
 import com.duarte.serviceapp.R;
 import com.duarte.serviceapp.adapter.AdapterOrdemServico;
@@ -32,7 +27,7 @@ import java.util.List;
 
 import dmax.dialog.SpotsDialog;
 
-public class OrdensServicoActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
+public class OrdensServicoActivity extends AppCompatActivity {
 
     private RecyclerView recyclerOrdensServico;
     private AdapterOrdemServico adapterOrdemServico;
@@ -43,7 +38,7 @@ public class OrdensServicoActivity extends AppCompatActivity implements BottomNa
 
     private FirebaseAuth autenticacao;
 
-    private BottomNavigationView btView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,16 +46,13 @@ public class OrdensServicoActivity extends AppCompatActivity implements BottomNa
         setContentView(R.layout.activity_ordens_servico);
 
         //Configurações iniciais
-        inicializarComponentes();
+        recyclerOrdensServico = findViewById(R.id.recyclerOrdensServico);
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         firebaseRef = ConfiguracaoFirebase.getFirebase();
         idPrestador = UsuarioFirebase.getIdUsuario();
 
         //Puxando os dados autenticados
 
-
-        btView =  findViewById(R.id.bt_nav);
-        btView.setOnNavigationItemSelectedListener(this);
 
 
         //Configuracoes Toolbar
@@ -155,30 +147,6 @@ public class OrdensServicoActivity extends AppCompatActivity implements BottomNa
         }
     }
 
-    private void inicializarComponentes() {
-        recyclerOrdensServico = findViewById(R.id.recyclerOrdensServico);
-    }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-        switch (item.getItemId()){
-            case R.id.bt_home:{
-                Intent i = new Intent(OrdensServicoActivity.this, HomeActivityDrawer.class);
-                startActivity(i);
-                break;
-
-            }
-            case R.id.bt_fav:{
-                Toast.makeText(this, "Em breve..", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.bt_chat:{
-                Toast.makeText(this, "Em breve...", Toast.LENGTH_SHORT).show();
-                break;
-            }
-        }
-
-        return true;
-    }
 }

@@ -6,7 +6,8 @@ public class ItemOrdemServico {
     private String nomeServico;
     private String descricaoServico;
     private int quantidade;
-    private Double preco;
+    private Float preco;
+
 
     public ItemOrdemServico() {
     }
@@ -43,11 +44,11 @@ public class ItemOrdemServico {
         this.quantidade = quantidade;
     }
 
-    public Double getPreco() {
+    public Float getPreco() {
         return preco;
     }
 
-    public void setPreco(Double preco) {
+    public void setPreco(Float preco) {
         this.preco = preco;
     }
 }

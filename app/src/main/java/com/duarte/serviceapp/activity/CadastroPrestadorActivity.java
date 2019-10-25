@@ -39,7 +39,14 @@ public class CadastroPrestadorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cadastro_prestador);
 
         //Configurações
-        inicializaComponentes();
+        campoNome = findViewById(R.id.editPrestadorCadastroNome);
+        campoTelefone = findViewById(R.id.editPrestadorCadastroTelefone);
+        campoCategoria = findViewById(R.id.autoCompletePrestadorCadastroCategoria);
+        campoCidade = findViewById(R.id.autoCompleteTextPrestadorCadastroCidade);
+        campoEmail = findViewById(R.id.editPrestadorCadastroEmail);
+        campoSenha = findViewById(R.id.editPrestadorCadastroSenha);
+        buttonCadastro = findViewById(R.id.buttonCadastro);
+        buttonCancelar = findViewById(R.id.buttonCancelar);
         carregarDadosAutoComplete();
 
         buttonCadastro.setOnClickListener(new View.OnClickListener() {
@@ -198,14 +205,5 @@ public class CadastroPrestadorActivity extends AppCompatActivity {
         campoCategoria.setAdapter( adapterCategoria );
     }
 
-    private void inicializaComponentes() {
-        campoNome = findViewById(R.id.editPrestadorCadastroNome);
-        campoTelefone = findViewById(R.id.editPrestadorCadastroTelefone);
-        campoCategoria = findViewById(R.id.autoCompletePrestadorCadastroCategoria);
-        campoCidade = findViewById(R.id.autoCompleteTextPrestadorCadastroCidade);
-        campoEmail = findViewById(R.id.editPrestadorCadastroEmail);
-        campoSenha = findViewById(R.id.editPrestadorCadastroSenha);
-        buttonCadastro = findViewById(R.id.buttonCadastro);
-        buttonCancelar = findViewById(R.id.buttonCancelar);
-    }
+
 }

@@ -12,16 +12,22 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.duarte.serviceapp.R;
 import com.duarte.serviceapp.adapter.AdapterPrestador;
 import com.duarte.serviceapp.helper.ConfiguracaoFirebase;
 import com.duarte.serviceapp.helper.UsuarioFirebase;
+import com.duarte.serviceapp.model.Cliente;
 import com.duarte.serviceapp.model.Prestador;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
@@ -44,6 +50,9 @@ public class SuporteActivity extends HomeActivityDrawer {
     private String nomeCliente;
     private String emailCliente;
     private Uri fotoCliente;
+    private TextView nomeAtual;
+    private TextView emailAtual;
+    private ImageView fotoAtual;
 
     private DrawerLayout drawer;
     private NavigationView navigationView;
@@ -54,7 +63,54 @@ public class SuporteActivity extends HomeActivityDrawer {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_suporte);
 
-        inicializarComponentes();
+        searchView = findViewById(R.id.materialSearchView);
+        recyclerPrestador = findViewById(R.id.recyclerPrestador);
+        firebaseRef = ConfiguracaoFirebase.getFirebase();
+        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+        idUsuarioLogado = UsuarioFirebase.getIdUsuario();
+        idat = FirebaseAuth.getInstance().getCurrentUser();
+
+        drawer = findViewById(R.id.drawerlayout4);
+        navigationView = findViewById(R.id.navView);
+
+        View viewUser = navigationView.getHeaderView(0);
+        View viewEmail = navigationView.getHeaderView(0);
+        View viewFoto = navigationView.getHeaderView(0);
+
+        emailAtual = viewEmail.findViewById(R.id.emailuser);
+        nomeAtual = viewUser.findViewById(R.id.nomeuser);
+        fotoAtual = viewFoto.findViewById(R.id.fotouser);
+
+        DatabaseReference clienteRef = firebaseRef
+                .child("clientes")
+                .child(idUsuarioLogado);
+        if (idat != null) {
+            String nomeLogado = idat.getDisplayName();
+            String emailLogado = idat.getEmail();
+            Uri fotoURL = idat.getPhotoUrl();
+
+            nomeCliente = nomeLogado;
+            emailCliente = emailLogado;
+            fotoCliente = fotoURL;
+            emailAtual.setText(emailCliente);
+            fotoAtual.setImageURI(fotoCliente);
+        }
+
+        clienteRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if( dataSnapshot.getValue() != null ){
+                    Cliente cliente = dataSnapshot.getValue(Cliente.class);
+                    nomeCliente = cliente.getNome();
+                    nomeAtual.setText(nomeCliente);
+
+
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
 
         //Toolbar
         toolbar = findViewById(R.id.toolbar);
@@ -62,17 +118,23 @@ public class SuporteActivity extends HomeActivityDrawer {
         setSupportActionBar(toolbar);
 
         //Drawer
-        drawer = findViewById(R.id.drawerlayout4);
+
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar,R.string.open_drawer,R.string.close_drawer);
         drawer.addDrawerListener(toggle);
 
         toggle.syncState();
 
-        navigationView = findViewById(R.id.navView);
         navigationView.setNavigationItemSelectedListener(SuporteActivity.this);
+        viewFoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent config = new Intent(SuporteActivity.this, PerfilClienteActivity.class);
+                startActivity(config);
 
-        recuperaAuth();
+            }
+        });
+
 
         btOK();
     }
@@ -120,31 +182,6 @@ public class SuporteActivity extends HomeActivityDrawer {
         return true;
     }
 
-    private void recuperaAuth(){
-        if (idat != null) {
-            String nomeLogado = idat.getDisplayName();
-            String emailLogado = idat.getEmail();
-            Uri fotoURL = idat.getPhotoUrl();
-
-            String userId = idat.getUid();
-            nomeCliente = nomeLogado;
-            emailCliente = emailLogado;
-            fotoCliente = fotoURL;
-
-            DatabaseReference clienteRef = firebaseRef
-                    .child("clientes")
-                    .child(idUsuarioLogado);
-        }
-    }
-
-    private void inicializarComponentes(){
-        searchView = findViewById(R.id.materialSearchView);
-        recyclerPrestador = findViewById(R.id.recyclerPrestador);
-        firebaseRef = ConfiguracaoFirebase.getFirebase();
-        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
-        idUsuarioLogado = UsuarioFirebase.getIdUsuario();
-        idat = FirebaseAuth.getInstance().getCurrentUser();
-    }
 
     private void deslogarUsuario(){
         try {

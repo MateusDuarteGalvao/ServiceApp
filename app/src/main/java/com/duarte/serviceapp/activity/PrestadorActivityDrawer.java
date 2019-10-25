@@ -17,6 +17,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.duarte.serviceapp.R;
@@ -24,6 +26,7 @@ import com.duarte.serviceapp.adapter.AdapterServico;
 import com.duarte.serviceapp.helper.ConfiguracaoFirebase;
 import com.duarte.serviceapp.helper.UsuarioFirebase;
 import com.duarte.serviceapp.listener.RecyclerItemClickListener;
+import com.duarte.serviceapp.model.Prestador;
 import com.duarte.serviceapp.model.Servico;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -44,14 +47,17 @@ public class PrestadorActivityDrawer extends AppCompatActivity implements Naviga
     private AdapterServico adapterServico;
     private List<Servico> servicos = new ArrayList<>();
     private DatabaseReference firebaseRef;
-    private String idUsuarioLogado;
-
     private FirebaseUser idat;
 
+    private String idUsuarioLogado;
     private String urlImagem;
     private String nomePrestador;
     private String emailPrestador;
     private Uri fotoPrestador;
+    private TextView nomeAtual;
+    private TextView emailAtual;
+    private ImageView fotoAtual;
+    private ImageView image;
 
     //Drawer
     private DrawerLayout drawer;
@@ -65,43 +71,49 @@ public class PrestadorActivityDrawer extends AppCompatActivity implements Naviga
 
         botaoFlutuante();
 
-        //Toolbar
-        toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("ServiceApp");
-        setSupportActionBar(toolbar);
-
-        //Drawer
-        drawer = findViewById(R.id.drawerlayout2);
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar,R.string.open_drawer,R.string.close_drawer);
-        drawer.addDrawerListener(toggle);
-
-        toggle.syncState();
-
-        navigationView = findViewById(R.id.navView);
-        navigationView.setNavigationItemSelectedListener(PrestadorActivityDrawer.this);
-
         //Inicia os componentes
+        drawer = findViewById(R.id.drawerlayout2);
+        navigationView = findViewById(R.id.navView);
+        View viewUser = navigationView.getHeaderView(0);
+        View viewEmail = navigationView.getHeaderView(0);
+        View viewFoto = navigationView.getHeaderView(0);
+
+        emailAtual = viewEmail.findViewById(R.id.emailuser);
+        nomeAtual = viewUser.findViewById(R.id.nomeuser);
+        fotoAtual = viewFoto.findViewById(R.id.fotouser);
+
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         firebaseRef = ConfiguracaoFirebase.getFirebase();
         idUsuarioLogado = UsuarioFirebase.getIdUsuario();
         recyclerServicos = findViewById(R.id.recyclerServicos);
 
-        //Configura recyclerView
-
-        recyclerServicos.setLayoutManager(new LinearLayoutManager(this));
-        recyclerServicos.setHasFixedSize(true);
-        adapterServico = new AdapterServico(servicos, this);
-        recyclerServicos.setAdapter(adapterServico);
-
-
-        //recupera dados autenticados
-        recuperaDAuth();
-
         //Recupera serviços do prestador
         DatabaseReference servicosRef = firebaseRef
                 .child("servicos")
                 .child( idUsuarioLogado );
+
+        //Recupera dados do prestador
+        DatabaseReference prestadorRef = firebaseRef
+                .child("prestadores")
+                .child(idUsuarioLogado);
+
+        //recupera dados autenticados
+        idat = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (idat != null){
+            String nomeLogado = idat.getDisplayName();
+            String emailLogado = idat.getEmail();
+           // Uri fotoURL = idat.getPhotoUrl();
+
+
+
+            nomePrestador = nomeLogado;
+            emailPrestador = emailLogado;
+            //fotoPrestador = fotoURL;
+
+        }
+       // fotoAtual.setImageURI(fotoPrestador);
+        emailAtual.setText(emailPrestador );
 
         servicosRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -120,6 +132,55 @@ public class PrestadorActivityDrawer extends AppCompatActivity implements Naviga
 
             }
         });
+
+
+        prestadorRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if( dataSnapshot.getValue() != null ){
+                    Prestador prestador= dataSnapshot.getValue(Prestador.class);
+                    nomePrestador = prestador.getNome();
+                    nomeAtual.setText(nomePrestador);
+
+
+
+                }
+
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+
+        //Configura recyclerView
+        recyclerServicos.setLayoutManager(new LinearLayoutManager(this));
+        recyclerServicos.setHasFixedSize(true);
+        adapterServico = new AdapterServico(servicos, this);
+        recyclerServicos.setAdapter(adapterServico);
+
+        //Toolbar
+        toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("ServiceApp");
+        setSupportActionBar(toolbar);
+
+        //Drawer
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar,R.string.open_drawer,R.string.close_drawer);
+        drawer.addDrawerListener(toggle);
+
+        toggle.syncState();
+
+        navigationView.setNavigationItemSelectedListener(PrestadorActivityDrawer.this);
+
+        viewFoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent config = new Intent(PrestadorActivityDrawer.this, PerfilPrestadorActivity.class);
+                startActivity(config);
+
+            }
+        });
+
 
         //Adiciona o evento de clique no recyclerView
         clicRecicler();
@@ -259,20 +320,6 @@ public class PrestadorActivityDrawer extends AppCompatActivity implements Naviga
 
     private void abrirOrdensServico() {
         startActivity(new Intent(PrestadorActivityDrawer.this, OrdensServicoActivity.class));
-    }
-
-    private void recuperaDAuth() {
-        idat = FirebaseAuth.getInstance().getCurrentUser();
-
-        if (idat != null){
-            String nomeLogado = idat.getDisplayName();
-            String emailLogado = idat.getEmail();
-            Uri fotoURL = idat.getPhotoUrl();
-
-            nomePrestador = nomeLogado;
-            emailPrestador = emailLogado;
-            fotoPrestador = fotoURL;
-        }
     }
 
     protected void botaoFlutuante(){

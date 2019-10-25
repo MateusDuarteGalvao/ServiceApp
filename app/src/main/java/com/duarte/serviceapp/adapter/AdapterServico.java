@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.duarte.serviceapp.R;
 import com.duarte.serviceapp.model.Servico;
 
+import java.text.NumberFormat;
 import java.util.List;
 
 
@@ -19,6 +20,7 @@ public class AdapterServico extends RecyclerView.Adapter<AdapterServico.MyViewHo
 
     private List<Servico> servicos;
     private Context context;
+    private NumberFormat nf = NumberFormat.getCurrencyInstance();
 
     public AdapterServico(List<Servico> servicos, Context context) {
         this.servicos = servicos;
@@ -37,8 +39,11 @@ public class AdapterServico extends RecyclerView.Adapter<AdapterServico.MyViewHo
         Servico servico = servicos.get(i);
         holder.nome.setText(servico.getNome());
         holder.descricao.setText(servico.getDescricao());
-        holder.valor.setText("R$ "+ servico.getPreco());
+        holder.valor.setText(nf.format(servico.getPreco()));
+
+
     }
+
 
     @Override
     public int getItemCount() {
@@ -51,12 +56,13 @@ public class AdapterServico extends RecyclerView.Adapter<AdapterServico.MyViewHo
         TextView descricao;
         TextView valor;
 
+
         public MyViewHolder(View itemView) {
             super(itemView);
-
             nome = itemView.findViewById(R.id.textNomeServico);
             descricao = itemView.findViewById(R.id.textDescricaoServico);
             valor = itemView.findViewById(R.id.textPreco);
+
         }
     }
 }

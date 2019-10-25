@@ -36,7 +36,13 @@ public class CadastroClienteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cadastro_cliente);
 
         //Configurações
-        inicializaComponentes();
+        campoNome = findViewById(R.id.editClienteCadastroNome);
+        campoEndereco = findViewById(R.id.editClienteCadastroEndereco);
+        campoTelefone = findViewById(R.id.editClienteCadastroTelefone);
+        campoEmail = findViewById(R.id.editClienteCadastroEmail);
+        campoSenha = findViewById(R.id.editClienteCadastroSenha);
+        buttonCadastro = findViewById(R.id.buttonCadastro);
+        buttonCancelar = findViewById(R.id.buttonCancelar);
 
         buttonCadastro.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,13 +173,5 @@ public class CadastroClienteActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    private void inicializaComponentes() {
-        campoNome = findViewById(R.id.editClienteCadastroNome);
-        campoEndereco = findViewById(R.id.editClienteCadastroEndereco);
-        campoTelefone = findViewById(R.id.editClienteCadastroTelefone);
-        campoEmail = findViewById(R.id.editClienteCadastroEmail);
-        campoSenha = findViewById(R.id.editClienteCadastroSenha);
-        buttonCadastro = findViewById(R.id.buttonCadastro);
-        buttonCancelar = findViewById(R.id.buttonCancelar);
-    }
+
 }

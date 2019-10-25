@@ -2,8 +2,11 @@ package com.duarte.serviceapp.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,13 +39,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import dmax.dialog.SpotsDialog;
 
-public class ServicosActivity extends AppCompatActivity {
+public class ServicosActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private RecyclerView recyclerServicosPrestador;
     private ImageView imagePrestadorServico;
@@ -66,6 +69,10 @@ public class ServicosActivity extends AppCompatActivity {
 
     private FirebaseUser idat;
 
+    private BottomNavigationView btView;
+
+    private NumberFormat nf = NumberFormat.getCurrencyInstance();
+
     private String urlImagem;
     private String nomePrestador;
     private String emailPrestador;
@@ -78,7 +85,11 @@ public class ServicosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_servicos);
 
         //Configurações iniciais
-        inicializarComponentes();
+        recyclerServicosPrestador = findViewById(R.id.recyclerServicosPrestador);
+        imagePrestadorServico = findViewById(R.id.imagePrestadorServico);
+        textNomePrestadorServico = findViewById(R.id.textNomePrestadorServico);
+        textServicosQtde = findViewById(R.id.textOrcamentoQtd);
+        textServicosTotal = findViewById(R.id.textOrcamentoTotal);
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         firebaseRef = ConfiguracaoFirebase.getFirebase();
         idUsuarioLogado = UsuarioFirebase.getIdUsuario();
@@ -114,6 +125,9 @@ public class ServicosActivity extends AppCompatActivity {
         toolbar.setTitle("Serviços");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        btView =  findViewById(R.id.bt_nav);
+        btView.setOnNavigationItemSelectedListener(this);
 
 
         //Configura recyclerView
@@ -186,7 +200,7 @@ public class ServicosActivity extends AppCompatActivity {
 
                 ordemServicoRecuperada.setNome( cliente.getNome() );
                 ordemServicoRecuperada.setEndereco( cliente.getEndereco() );
-                ordemServicoRecuperada.setTelefone( cliente.getEndereco() );
+                ordemServicoRecuperada.setTelefone( cliente.getTelefone() );
                 ordemServicoRecuperada.setItens( itensServicos );
                 ordemServicoRecuperada.salvar();
 
@@ -257,7 +271,9 @@ public class ServicosActivity extends AppCompatActivity {
                     for(ItemOrdemServico itemOrdemServico: itensServicos) {
 
                         int qtde = itemOrdemServico.getQuantidade();
-                        Double preco = itemOrdemServico.getPreco();
+                        Float preco = itemOrdemServico.getPreco();
+
+
 
                         totalServicos += (qtde * preco);
                         qtdeItensServico += qtde;
@@ -267,10 +283,9 @@ public class ServicosActivity extends AppCompatActivity {
 
 
 
-                DecimalFormat df = new DecimalFormat( "0.00" );
 
-                textServicosQtde.setText( "qtd: " + String.valueOf(qtdeItensServico) );
-                textServicosTotal.setText( "R$ " +  df.format( totalServicos ));
+                textServicosQtde.setText( "Pedidos : " + String.valueOf(qtdeItensServico) );
+                textServicosTotal.setText( nf.format(totalServicos));
 
                 dialog.dismiss();
 
@@ -391,11 +406,27 @@ public class ServicosActivity extends AppCompatActivity {
         }
     }
 
-    private void inicializarComponentes() {
-        recyclerServicosPrestador = findViewById(R.id.recyclerServicosPrestador);
-        imagePrestadorServico = findViewById(R.id.imagePrestadorServico);
-        textNomePrestadorServico = findViewById(R.id.textNomePrestadorServico);
-        textServicosQtde = findViewById(R.id.textOrcamentoQtd);
-        textServicosTotal = findViewById(R.id.textOrcamentoTotal);
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.bt_home:{
+                Intent i = new Intent(ServicosActivity.this, HomeActivityDrawer.class);
+                startActivity(i);
+                break;
+
+            }
+            case R.id.bt_fav:{
+                Toast.makeText(this, "Em breve..", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case R.id.bt_chat:{
+                Toast.makeText(this, "Em breve...", Toast.LENGTH_SHORT).show();
+                break;
+            }
+        }
+
+        return true;
     }
 }

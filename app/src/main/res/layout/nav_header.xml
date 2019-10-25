@@ -2,11 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="220dp"
     android:padding="16dp"
     android:gravity="bottom"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
-
     android:background="@drawable/bh">
 
     <ImageView
@@ -14,7 +13,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="10dp"
         android:src="@mipmap/ic_profile"
         />
 
@@ -26,7 +25,7 @@
         android:textColor="@color/white"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:layout_marginTop="8dp"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="10dp"
         />
 
     <TextView
@@ -35,8 +34,8 @@
         android:layout_height="wrap_content"
         android:text="lucas@gmail.com "
         android:textColor="@color/white"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="15dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginLeft="10dp"
         />
 
 </LinearLayout>

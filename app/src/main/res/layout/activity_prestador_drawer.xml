@@ -67,7 +67,9 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/menu_nav_prest" />
+        app:menu="@menu/menu_nav_prest"
+        app:itemIconTint="#7248AA"
+        app:itemTextColor="@color/colorPrimary"/>
 
 
 </android.support.v4.widget.DrawerLayout>

@@ -53,7 +53,10 @@ public class PerfilClienteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_perfil_cliente);
 
         //Configurações iniciais
-        inicializarComponentes();
+        editClienteNome = findViewById(R.id.editClienteNome);
+        editClienteEndereco = findViewById(R.id.editClienteEndereco);
+        editClienteTelefone = findViewById(R.id.editClienteTelefone);
+        imagePerfilCliente = findViewById(R.id.imagePerfilCliente);
         storageReference = ConfiguracaoFirebase.getFirebaseStorage();
         firebaseRef = ConfiguracaoFirebase.getFirebase();
         idUsuarioLogado = UsuarioFirebase.getIdUsuario();
@@ -228,12 +231,6 @@ public class PerfilClienteActivity extends AppCompatActivity {
 
     }
 
-    private void inicializarComponentes() {
-        editClienteNome = findViewById(R.id.editClienteNome);
-        editClienteEndereco = findViewById(R.id.editClienteEndereco);
-        editClienteTelefone = findViewById(R.id.editClienteTelefone);
-        imagePerfilCliente = findViewById(R.id.imagePerfilCliente);
-    }
 
 
 }

@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -29,7 +30,8 @@
                 android:id="@+id/imagePrestadorServico"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:src="@drawable/perfil" />
+                android:src="@drawable/perfil"
+                android:elevation="10dp"/>
 
             <TextView
                 android:id="@+id/textNomePrestadorServico"
@@ -45,49 +47,95 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="5dp"
             android:background="@color/colorPrimaryDark"
+            android:elevation="10dp"
             android:gravity="center"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textVerOrcamento"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:text="Ver orçamento"
-                android:textColor="@android:color/white" />
 
             <TextView
                 android:id="@+id/textOrcamentoQtd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="qtd: 0"
-                android:textColor="@android:color/white" />
+                android:text="Pedidos: 0"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.951"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/textOrcamentoTotal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="RS 0"
-                android:textColor="@android:color/white" />
-        </LinearLayout>
+                android:text="0"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.088"
+                app:layout_constraintStart_toEndOf="@+id/textVerOrcamento"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerServicosPrestador"
+            <TextView
+                android:id="@+id/textVerOrcamento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="Orçamento:"
+                android:textColor="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.049"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="16dp"
-            android:layout_marginBottom="16dp"
-            android:layout_marginRight="16dp"/>
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerServicosPrestador"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="56dp" />
+
+
+            <android.support.design.widget.BottomNavigationView
+                android:id="@+id/bt_nav"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="@color/colorPrimaryDark"
+                app:itemIconTint="@color/white"
+                app:itemTextColor="@color/white"
+                android:elevation="10dp"
+                app:menu="@menu/bottom_menu" />
+
+        </android.support.design.widget.CoordinatorLayout>
+
+
+
+
+
 
     </LinearLayout>
+
+
+
+
 
 </LinearLayout>

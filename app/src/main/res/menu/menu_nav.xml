@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
 
@@ -11,33 +12,28 @@
             android:id="@+id/menu_fav"
             android:icon="@drawable/ic_fav"/>
 
-        <item android:title="Ordens"
+        <item android:title="Histórico"
             android:id="@+id/menu_ordem"
             android:icon="@drawable/ic_contratos"/>
 
     </group>
 
-    <item android:title=""
-        android:id="@+id/submenu">
 
-        <menu>
+    <group>
 
-            <item android:title="Configurações"
-                android:id="@+id/menu_config"
-                android:icon="@drawable/ic_config"/>
+        <item android:title="Configurações"
+            android:id="@+id/menu_config"
+            android:icon="@drawable/ic_config"
+            />
 
-            <item android:title="Suporte"
-                android:id="@+id/menu_sup"
-                android:icon="@drawable/ic_ajuda"/>
-            <item android:title="Sair"
-                android:id="@+id/menu_sair"
-                android:icon="@drawable/bt_sair"/>
+        <item android:title="Suporte"
+            android:id="@+id/menu_sup"
+            android:icon="@drawable/ic_ajuda"/>
+        <item android:title="Sair"
+            android:id="@+id/menu_sair"
+            android:icon="@drawable/bt_sair"/>
 
-        </menu>
-
-
-    </item>
-
+    </group>
 
 
 </menu>

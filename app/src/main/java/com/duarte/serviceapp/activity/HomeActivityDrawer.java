@@ -77,42 +77,39 @@ public class HomeActivityDrawer extends AppCompatActivity implements NavigationV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_drawer);
 
-        //Botão flutuante
-        botaoFlutuante();
-
         //Inicia componentes
-        navigationView = findViewById(R.id.navView);
-        drawer = findViewById(R.id.drawerlayout);
-        View viewUser = navigationView.getHeaderView(0);
-        View viewEmail = navigationView.getHeaderView(0);
-        View viewFoto = navigationView.getHeaderView(0);
-        emailAtual = viewEmail.findViewById(R.id.emailuser);
-        nomeAtual = viewUser.findViewById(R.id.nomeuser);
-        fotoAtual = viewFoto.findViewById(R.id.fotouser);
-
         searchView = findViewById(R.id.materialSearchView);
         recyclerPrestador = findViewById(R.id.recyclerPrestador);
         firebaseRef = FirebaseDatabase.getInstance().getReference();
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         idUsuarioLogado = UsuarioFirebase.getIdUsuario();
         idat = FirebaseAuth.getInstance().getCurrentUser();
+
+        navigationView = findViewById(R.id.navView);
+        drawer = findViewById(R.id.drawerlayout);
+        View viewUser = navigationView.getHeaderView(0);
+        View viewEmail = navigationView.getHeaderView(0);
+        View viewFoto = navigationView.getHeaderView(0);
+
+        emailAtual = viewEmail.findViewById(R.id.emailuser);
+        nomeAtual = viewUser.findViewById(R.id.nomeuser);
+        fotoAtual = viewFoto.findViewById(R.id.fotouser);
+
+        DatabaseReference clienteRef = firebaseRef
+                .child("clientes")
+                .child(idUsuarioLogado);
         if (idat != null) {
             String nomeLogado = idat.getDisplayName();
             String emailLogado = idat.getEmail();
             Uri fotoURL = idat.getPhotoUrl();
 
-            //String userId = idat.getUid();
             nomeCliente = nomeLogado;
             emailCliente = emailLogado;
             fotoCliente = fotoURL;
+            emailAtual.setText(emailCliente);
+            fotoAtual.setImageURI(fotoCliente);
         }
 
-        emailAtual.setText(emailCliente);
-        fotoAtual.setImageURI(fotoCliente);
-
-        DatabaseReference clienteRef = firebaseRef
-                .child("clientes")
-                .child(idUsuarioLogado);
         clienteRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -122,9 +119,6 @@ public class HomeActivityDrawer extends AppCompatActivity implements NavigationV
                     nomeAtual.setText(nomeCliente);
 
 
-
-
-
                 }
             }
             @Override
@@ -132,26 +126,8 @@ public class HomeActivityDrawer extends AppCompatActivity implements NavigationV
             }
         });
 
-
-
-        //Toolbar
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("ServiceApp");
-        setSupportActionBar(toolbar);
-
-        //Drawer
-
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar,R.string.open_drawer,R.string.close_drawer);
-        drawer.addDrawerListener(toggle);
-
-        toggle.syncState();
-
-
-        navigationView.setNavigationItemSelectedListener(HomeActivityDrawer.this);
-
-        //Recupera dados
-        recuperarDados();
+        //Botão flutuante
+        botaoFlutuante();
 
         //Configura recyclerView
         recyclerPrestador.setLayoutManager(new LinearLayoutManager(this));
@@ -164,34 +140,43 @@ public class HomeActivityDrawer extends AppCompatActivity implements NavigationV
         prestadorRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 prestadores.clear();
-
                 for (DataSnapshot ds: dataSnapshot.getChildren()){
                     prestadores.add( ds.getValue(Prestador.class) );
                 }
-
                 adapterPrestador.notifyDataSetChanged();
-
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
 
+        //Toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("ServiceApp");
+        setSupportActionBar(toolbar);
+
+        //Drawer
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar,R.string.open_drawer,R.string.close_drawer);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        navigationView.setNavigationItemSelectedListener(HomeActivityDrawer.this);
+        viewFoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent config = new Intent(HomeActivityDrawer.this, PerfilClienteActivity.class);
+                startActivity(config);
+
+            }
+        });
         //Configuração do search view
         configSearchView();
 
         //Configurar evento de clique
         configEventClique();
 
-
     }
-
-
-
 
     @Override
     public void onBackPressed() {
@@ -394,33 +379,6 @@ public class HomeActivityDrawer extends AppCompatActivity implements NavigationV
         });
     }
 
-    private void recuperarDados(){
-        DatabaseReference clienteRef = firebaseRef
-                .child("clientes")
-                .child(idUsuarioLogado);
-        clienteRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
 
-                if (dataSnapshot.getValue() != null) {
-                    Cliente cliente = dataSnapshot.getValue(Cliente.class);
-
-                    String nomeLogado = cliente.getNome();
-                    String emailLogado = idat.getEmail();
-                    Uri fotoURL = idat.getPhotoUrl();
-
-                    //nomeCliente = nomeLogado;
-                    emailCliente = emailLogado;
-                    fotoCliente = fotoURL;
-
-                }
-
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
 
 }
