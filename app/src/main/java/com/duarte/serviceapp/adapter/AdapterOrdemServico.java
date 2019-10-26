@@ -38,6 +38,7 @@ public class AdapterOrdemServico extends RecyclerView.Adapter<AdapterOrdemServic
         holder.nome.setText( ordemServico.getNome());
         holder.endereco.setText( "Endereço: "+ordemServico.getEndereco() );
         holder.telefone.setText( "Telefone: "+ordemServico.getTelefone() );
+        holder.status.setText( "Status: "+ ordemServico.getStatus() );
         holder.observacao.setText( "Obs: "+ ordemServico.getObservacao() );
 
         List<ItemOrdemServico> itens = new ArrayList<>();
@@ -77,16 +78,17 @@ public class AdapterOrdemServico extends RecyclerView.Adapter<AdapterOrdemServic
         TextView endereco;
         TextView telefone;
         TextView pgto;
+        TextView status;
         TextView observacao;
         TextView itens;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-
             nome        = itemView.findViewById(R.id.textOrdemServicoNome);
             endereco    = itemView.findViewById(R.id.textOrdemServicoEndereco);
             telefone    = itemView.findViewById(R.id.textOrdemServicoTelefone);
             pgto        = itemView.findViewById(R.id.textOrdemServicoPgto);
+            status      = itemView.findViewById(R.id.textOrdemServicoStatus);
             observacao  = itemView.findViewById(R.id.textOrdemServicoObs);
             itens       = itemView.findViewById(R.id.textOrdemServicoItens);
         }
