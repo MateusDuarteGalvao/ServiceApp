@@ -5,13 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center" android:layout_margin="16dp"
+    android:gravity="center"
     tools:context=".activity.CadastroClienteActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
         android:text="Crie seu cadastro"
+        android:textSize="20dp"
         android:layout_marginBottom="16dp" />
 
     <EditText
@@ -20,9 +22,11 @@
         android:layout_height="wrap_content"
         android:hint="Nome"
         android:inputType="text"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:padding="10dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/bg_edit_text" />
+        android:background="@drawable/borda_redonda" />
 
     <EditText
         android:id="@+id/editClienteCadastroEndereco"
@@ -30,9 +34,11 @@
         android:layout_height="wrap_content"
         android:hint="Endereço"
         android:inputType="text"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:padding="10dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/bg_edit_text" />
+        android:background="@drawable/borda_redonda" />
 
     <com.santalu.maskedittext.MaskEditText
         android:id="@+id/editClienteCadastroTelefone"
@@ -42,8 +48,10 @@
         android:inputType="phone"
         app:met_mask="(##) #####-####"
         android:padding="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/bg_edit_text" />
+        android:background="@drawable/borda_redonda" />
 
     <EditText
         android:id="@+id/editClienteCadastroEmail"
@@ -52,8 +60,10 @@
         android:hint="Email"
         android:inputType="textEmailAddress"
         android:padding="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/bg_edit_text" />
+        android:background="@drawable/borda_redonda" />
 
     <EditText
         android:id="@+id/editClienteCadastroSenha"
@@ -63,8 +73,9 @@
         android:hint="Senha"
         android:inputType="textPassword"
         android:padding="10dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/bg_edit_text"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/borda_redonda"
      />
 
     <Button
@@ -72,6 +83,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
+        android:layout_marginTop="85dp"
+        android:textColor="@color/white"
+        android:elevation="5dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:background="@drawable/borda_bottom"
         android:text="Cadastrar"
         android:theme="@style/botaoPadrao" />
 
@@ -80,6 +98,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:elevation="5dp"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/colorPrimary"
+        android:background="@drawable/borda_bottom"
         android:text="Cancelar" />
 
 </LinearLayout>

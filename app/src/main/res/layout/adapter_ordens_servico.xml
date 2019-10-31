@@ -2,22 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/borda_redonda">
 
     <TextView
         android:id="@+id/textOrdemServicoNome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="3dp"
         android:text="Matheus Duarte"
-        android:textColor="@color/common_google_signin_btn_text_dark_focused"
-        android:textSize="16sp"
+        android:textColor="@color/primary_dark"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textOrdemServicoEndereco"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:text="Endereço: Rua Carolina R. dos Santos, 173"
         android:textSize="14sp" />
 
@@ -25,6 +29,7 @@
         android:id="@+id/textOrdemServicoTelefone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:text="Telefone: 18991801971"
         android:textSize="14sp" />
 
@@ -32,6 +37,7 @@
         android:id="@+id/textOrdemServicoPgto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:text="Pgto: Dinheiro"
         android:textSize="14sp" />
 
@@ -41,6 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="Obs: teste"
+        android:layout_marginLeft="10dp"
         android:textSize="14sp" />
 
     <TextView
@@ -48,9 +55,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="1) Formatação notebook (1 X R$ 50.45)"
-        android:textColor="@color/colorAccent"
+        android:textColor="#ff9551"
         android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:elevation="2dp"
+        android:background="@drawable/borda_servico"/>
 
     <include layout="@layout/divisor" />
 
