@@ -6,13 +6,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:layout_margin="16dp"
     tools:context=".activity.CadastroPrestadorActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Realize seu cadastro"
+        android:textSize="20dp"
+        android:textColor="@color/colorPrimary"
         android:layout_marginBottom="16dp" />
 
     <EditText
@@ -22,8 +23,10 @@
         android:hint="Nome"
         android:inputType="text"
         android:padding="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/bg_edit_text" />
+        android:background="@drawable/borda_redonda" />
 
     <com.santalu.maskedittext.MaskEditText
         android:id="@+id/editPrestadorCadastroTelefone"
@@ -33,8 +36,10 @@
         android:inputType="phone"
         app:met_mask="(##) #####-####"
         android:padding="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/bg_edit_text" />
+        android:background="@drawable/borda_redonda" />
 
     <AutoCompleteTextView
         android:id="@+id/autoCompleteTextPrestadorCadastroCidade"
@@ -42,8 +47,10 @@
         android:layout_height="wrap_content"
         android:hint="Cidade"
         android:padding="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/bg_edit_text" />
+        android:background="@drawable/borda_redonda" />
 
     <AutoCompleteTextView
         android:id="@+id/autoCompletePrestadorCadastroCategoria"
@@ -51,8 +58,10 @@
         android:layout_height="wrap_content"
         android:hint="Categoria"
         android:padding="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/bg_edit_text" />
+        android:background="@drawable/borda_redonda" />
 
     <EditText
         android:id="@+id/editPrestadorCadastroEmail"
@@ -61,8 +70,10 @@
         android:hint="Email"
         android:inputType="textEmailAddress"
         android:padding="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/bg_edit_text" />
+        android:background="@drawable/borda_redonda" />
 
     <EditText
         android:id="@+id/editPrestadorCadastroSenha"
@@ -72,8 +83,9 @@
         android:hint="Senha"
         android:inputType="textPassword"
         android:padding="10dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/bg_edit_text" />
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/borda_redonda" />
 
     <Button
         android:id="@+id/buttonCadastro"
@@ -81,6 +93,13 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:text="Cadastrar"
+        android:elevation="5dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/colorPrimary"
+        android:background="@drawable/borda_bottom"
         android:theme="@style/botaoPadrao" />
 
     <Button
@@ -88,6 +107,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
+        android:elevation="5dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/white"
+        android:layout_marginRight="50dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:background="@drawable/borda_bottom"
         android:text="Cancelar" />
 
 </LinearLayout>

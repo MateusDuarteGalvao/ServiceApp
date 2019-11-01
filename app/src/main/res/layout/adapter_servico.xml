@@ -2,7 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginTop="3dp"
+    android:elevation="0.5dp"
+    android:background="@drawable/borda_servico">
 
     <TextView
         android:id="@+id/textNomeServico"
@@ -10,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:text="Formatação sem backup"
-        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textColor="#642fa8"
         android:textSize="16sp"
         android:textStyle="bold" />
 
@@ -27,10 +30,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="R$ 79.90"
-        android:textColor="@android:color/holo_green_light"
+        android:textColor="#66cf7d"
         android:textSize="18sp"
         android:textStyle="bold" />
 
-    <include layout="@layout/divisor" />
+<!--    <include layout="@layout/divisor" />-->
 
 </LinearLayout>

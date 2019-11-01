@@ -6,7 +6,7 @@
     android:padding="16dp"
     android:gravity="bottom"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
-    android:background="@drawable/bh">
+    android:background="@drawable/bg_header">
 
     <ImageView
         android:id="@+id/fotouser"
@@ -23,6 +23,7 @@
         android:layout_height="wrap_content"
         android:text="Lucas Henrique"
         android:textColor="@color/white"
+        android:textSize="18dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:layout_marginTop="8dp"
         android:layout_marginLeft="10dp"

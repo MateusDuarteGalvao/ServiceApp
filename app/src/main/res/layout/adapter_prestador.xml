@@ -4,8 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
+    android:elevation="0.8dp"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:background="@drawable/borda_servico"
+    android:padding="16dp"
+    android:layout_marginLeft="4dp"
+    android:layout_marginTop="2dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Matheus Duarte"
-                android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                android:textColor="#642fa8"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -57,6 +61,6 @@
 
     </LinearLayout>
 
-    <include layout="@layout/divisor" />
+<!--    <include layout="@layout/divisor" />-->
 
 </LinearLayout>
