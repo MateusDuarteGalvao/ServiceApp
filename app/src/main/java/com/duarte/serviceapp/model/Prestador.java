@@ -15,6 +15,8 @@ public class Prestador implements Serializable {
     private String email;
     private String senha;
     private String cidade;
+    private String avalia;
+
 
     public String getTelefone() {
         return telefone;
@@ -57,6 +59,16 @@ public class Prestador implements Serializable {
                 .child( getIdUsuario() );
         prestadorRef.setValue(this);
     }
+
+
+    public String getAvalia() {
+        return avalia;
+    }
+
+    public void setAvalia(String rating) {
+        this.avalia = rating;
+    }
+
 
     public String getIdUsuario() {
         return idUsuario;

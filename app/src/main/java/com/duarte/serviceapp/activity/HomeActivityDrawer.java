@@ -1,6 +1,8 @@
 package com.duarte.serviceapp.activity;
 
 import android.annotation.SuppressLint;
+import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,10 +11,12 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.telephony.PhoneNumberUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -65,6 +69,7 @@ public class HomeActivityDrawer extends AppCompatActivity implements NavigationV
     private TextView nomeAtual;
     private TextView emailAtual;
     private ImageView fotoAtual;
+    private String numeroTel;
 
     //Drawer
     private DrawerLayout drawer;
@@ -78,12 +83,35 @@ public class HomeActivityDrawer extends AppCompatActivity implements NavigationV
         setContentView(R.layout.activity_home_drawer);
 
         //Inicia componentes
-        searchView = findViewById(R.id.materialSearchView);
-        recyclerPrestador = findViewById(R.id.recyclerPrestador);
+
         firebaseRef = FirebaseDatabase.getInstance().getReference();
+        recyclerPrestador = findViewById(R.id.recyclerPrestador);
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         idUsuarioLogado = UsuarioFirebase.getIdUsuario();
         idat = FirebaseAuth.getInstance().getCurrentUser();
+
+        //Configura recyclerView
+        recyclerPrestador.setLayoutManager(new LinearLayoutManager(this));
+        recyclerPrestador.setHasFixedSize(true);
+        adapterPrestador = new AdapterPrestador(prestadores);
+        recyclerPrestador.setAdapter( adapterPrestador );
+
+        //Recupera prestadores para o cliente
+        DatabaseReference prestadorRef = firebaseRef.child("prestadores");
+        prestadorRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                prestadores.clear();
+                for (DataSnapshot ds: dataSnapshot.getChildren()){
+                    prestadores.add( ds.getValue(Prestador.class) );
+                }
+                adapterPrestador.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
 
         navigationView = findViewById(R.id.navView);
         drawer = findViewById(R.id.drawerlayout);
@@ -102,6 +130,7 @@ public class HomeActivityDrawer extends AppCompatActivity implements NavigationV
             String nomeLogado = idat.getDisplayName();
             String emailLogado = idat.getEmail();
             Uri fotoURL = idat.getPhotoUrl();
+            numeroTel = idat.getPhoneNumber();
 
             nomeCliente = nomeLogado;
             emailCliente = emailLogado;
@@ -129,33 +158,13 @@ public class HomeActivityDrawer extends AppCompatActivity implements NavigationV
         //Botão flutuante
         botaoFlutuante();
 
-        //Configura recyclerView
-        recyclerPrestador.setLayoutManager(new LinearLayoutManager(this));
-        recyclerPrestador.setHasFixedSize(true);
-        adapterPrestador = new AdapterPrestador(prestadores);
-        recyclerPrestador.setAdapter( adapterPrestador );
 
-        //Recupera prestadores para o cliente
-        DatabaseReference prestadorRef = firebaseRef.child("prestadores");
-        prestadorRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                prestadores.clear();
-                for (DataSnapshot ds: dataSnapshot.getChildren()){
-                    prestadores.add( ds.getValue(Prestador.class) );
-                }
-                adapterPrestador.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
 
         //Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("ServiceApp");
         setSupportActionBar(toolbar);
+        searchView = findViewById(R.id.materialSearchView);
 
         //Drawer
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar,R.string.open_drawer,R.string.close_drawer);
@@ -364,8 +373,10 @@ public class HomeActivityDrawer extends AppCompatActivity implements NavigationV
                     return true;
                 }*/
                 if (id == R.id.chat) {
-                    Toast.makeText(HomeActivityDrawer.this, "Em breve", Toast.LENGTH_SHORT).show();
-                    //startActivity(new Intent(PrestadorActivity.this, ConfiguracoesPrestadorActivity.class));
+                    //Toast.makeText(HomeActivityDrawer.this, "Em breve", Toast.LENGTH_SHORT).show();
+
+                    Toast.makeText(HomeActivityDrawer.this, "Escolha um prestador para iniciar uma conversa.", Toast.LENGTH_LONG).show();
+
                     return true;
                 }
                 return true;
@@ -377,6 +388,51 @@ public class HomeActivityDrawer extends AppCompatActivity implements NavigationV
             }
 
         });
+    }
+
+    public void dialogContato(String numero){
+
+        String contato = numero.replace(" ", "")
+                .replace("-", "")
+                .replace("(", "")
+                .replace(")", "");
+
+        final StringBuffer numeroContato = new StringBuffer(contato);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getBaseContext())
+                .setTitle("Entrar em Contato")
+                .setMessage("O que deseja fazer?")
+                .setPositiveButton("whatsApp", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        contatoZap(numeroContato);
+                    }
+                })
+                .setNegativeButton("Ligar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        contatoLigar();
+                    }
+                });
+
+
+    }
+
+    public void contatoZap(StringBuffer numeroContato){
+        numeroContato.deleteCharAt(2);
+
+        Intent intent = new Intent("android.intent.action.MAIN");
+        intent.setComponent(new ComponentName("com.whatsapp", "com.whatsapp.Conversation"));
+        intent.putExtra("jid",
+                PhoneNumberUtils.stripSeparators("55"+numeroContato) + "@s.whatsapp.net");
+
+        startActivity(intent);
+
+    }
+
+    public void contatoLigar(){
+
+
     }
 
 

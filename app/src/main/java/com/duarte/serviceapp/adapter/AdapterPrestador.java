@@ -19,6 +19,7 @@ public class AdapterPrestador extends RecyclerView.Adapter<AdapterPrestador.MyVi
 
     private List<Prestador> prestadores;
 
+
     public AdapterPrestador(List<Prestador> prestadores) {
         this.prestadores = prestadores;
     }
@@ -37,6 +38,7 @@ public class AdapterPrestador extends RecyclerView.Adapter<AdapterPrestador.MyVi
 
         holder.categoria.setText(prestador.getCategoria());
         holder.cidade.setText(prestador.getCidade());
+        holder.ava.setText(prestador.getAvalia());
 
         //Carregar imagem
         String urlImagem = prestador.getUrlImagem();
@@ -55,6 +57,7 @@ public class AdapterPrestador extends RecyclerView.Adapter<AdapterPrestador.MyVi
         TextView nomePrestador;
         TextView categoria;
         TextView cidade;
+        TextView ava;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -63,6 +66,14 @@ public class AdapterPrestador extends RecyclerView.Adapter<AdapterPrestador.MyVi
             categoria = itemView.findViewById(R.id.textCategoriaPrestador);
             cidade = itemView.findViewById(R.id.textCidadePrestador);
             imagemPrestador = itemView.findViewById(R.id.imagePrestador);
+            ava = itemView.findViewById(R.id.rtTeste);
+//
+
+
         }
     }
+
+
+
+
 }
