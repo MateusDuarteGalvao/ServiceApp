@@ -12,61 +12,78 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginTop="50dp"
-        android:padding="16dp">
+        android:layout_height="678dp"
+        android:layout_marginTop="0dp"
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/editServicoNome"
-            android:layout_width="match_parent"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/borda_redonda"
             android:hint="Nome"
             android:inputType="text"
             android:padding="10dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/borda_redonda" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.100" />
 
         <EditText
             android:id="@+id/editServicoDescricao"
-            android:layout_width="match_parent"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/borda_redonda"
             android:ems="10"
             android:hint="Descrição"
             android:inputType="text"
             android:padding="10dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/borda_redonda" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.200" />
 
         <EditText
             android:id="@+id/editServicoPreco"
-            android:layout_width="match_parent"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/borda_redonda"
             android:ems="10"
             android:hint="Valor"
             android:inputType="numberDecimal"
             android:padding="10dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/borda_redonda" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.300" />
 
         <Button
             android:id="@+id/buttonSalvar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="220dp"
+            android:layout_height="50dp"
+            android:background="@drawable/borda_bottom"
+            android:backgroundTint="@color/colorPrimary"
+            android:elevation="5dp"
+            android:onClick="validarDadosServico"
             android:padding="16dp"
             android:text="Salvar"
             android:textColor="@color/white"
             android:theme="@style/botaoPadrao"
-            android:elevation="5dp"
-            android:layout_marginTop="300dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
-            android:backgroundTint="@color/colorPrimary"
-            android:background="@drawable/borda_bottom"
-            android:onClick="validarDadosServico"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.760" />
 
-    </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 
 </LinearLayout>

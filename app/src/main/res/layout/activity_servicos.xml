@@ -26,6 +26,8 @@
             android:gravity="center"
             android:layout_margin="16dp">
 
+
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imagePrestadorServico"
                 android:layout_width="60dp"
@@ -35,7 +37,7 @@
 
             <TextView
                 android:id="@+id/textNomePrestadorServico"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Matheus Duarte"
                 android:textColor="#642fa8"
@@ -43,9 +45,47 @@
                 android:textStyle="bold"
                 android:layout_marginLeft="16dp"/>
 
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:layout_marginLeft="100dp"
+                android:layout_marginRight="10dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/ic_fav"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.520"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/rtTeste"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Star"
+                    android:textColor="@color/primary_dark"
+                    android:textSize="15dp"
+                    android:textStyle="italic"
+
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.521" />
+
+            </android.support.constraint.ConstraintLayout>
 
 
         </LinearLayout>
+
+
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -133,7 +173,8 @@
 
     </LinearLayout>
 
-
+    <include layout="@layout/adapter_prestador"/>
+    <include layout="@layout/avaliacao"/>
 
 
 

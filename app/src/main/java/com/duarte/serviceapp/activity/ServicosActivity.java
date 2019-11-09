@@ -1,6 +1,7 @@
 package com.duarte.serviceapp.activity;
 
 import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -11,13 +12,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.telephony.PhoneNumberUtils;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -79,6 +84,22 @@ public class ServicosActivity extends AppCompatActivity implements BottomNavigat
     private Uri fotoPrestador;
     private FirebaseAuth autenticacao;
 
+    private AlertDialog avalia;
+    private AlertDialog comunica;
+    private RatingBar rating01;
+    private RatingBar ratingTeste;
+    private TextView txtValor;
+    private Button btAvaliar;
+    private Float rate;
+
+    private String numeroTel;
+
+    private Button zap;
+    private Button liga;
+
+    private Prestador prest;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,6 +114,7 @@ public class ServicosActivity extends AppCompatActivity implements BottomNavigat
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         firebaseRef = ConfiguracaoFirebase.getFirebase();
         idUsuarioLogado = UsuarioFirebase.getIdUsuario();
+
 
         //Puxando os dados autenticados
         idat = FirebaseAuth.getInstance().getCurrentUser();
@@ -115,7 +137,7 @@ public class ServicosActivity extends AppCompatActivity implements BottomNavigat
 
             textNomePrestadorServico.setText( prestadorSelecionado.getNome() );
             idPrestador = prestadorSelecionado.getIdUsuario();
-
+            numeroTel = prestadorSelecionado.getTelefone();
             String url = prestadorSelecionado.getUrlImagem();
             Picasso.get().load(url).into(imagePrestadorServico);
         }
@@ -126,6 +148,10 @@ public class ServicosActivity extends AppCompatActivity implements BottomNavigat
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //Recupera serviços para o prestador
+        recuperarServicos();
+        recuperarDadosCliente();
+
         btView =  findViewById(R.id.bt_nav);
         btView.setOnNavigationItemSelectedListener(this);
 
@@ -135,6 +161,26 @@ public class ServicosActivity extends AppCompatActivity implements BottomNavigat
         recyclerServicosPrestador.setHasFixedSize(true);
         adapterServico = new AdapterServico(servicos, this);
         recyclerServicosPrestador.setAdapter( adapterServico );
+
+//        DatabaseReference prestRef = firebaseRef
+//                .child("prestadores")
+//                .child(idUsuarioLogado);
+//        prestRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                if( dataSnapshot.getValue() != null ){
+//                    Prestador prest = dataSnapshot.getValue(Prestador.class);
+//                    numeroTel = prest.getTelefone();
+//
+//
+//
+//                }
+//            }
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//            }
+//        });
+
 
         //Configurar evento de clique
         recyclerServicosPrestador.addOnItemTouchListener(
@@ -160,9 +206,9 @@ public class ServicosActivity extends AppCompatActivity implements BottomNavigat
                 )
         );
 
-        //Recupera serviços para o prestador
-        recuperarServicos();
-        recuperarDadosCliente();
+
+
+
 
     }
 
@@ -418,15 +464,124 @@ public class ServicosActivity extends AppCompatActivity implements BottomNavigat
 
             }
             case R.id.bt_fav:{
-                Toast.makeText(this, "Em breve..", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Em breve..", Toast.LENGTH_SHORT).show();
+
+               dialogAvaliacao();
+
                 break;
             }
             case R.id.bt_chat:{
-                Toast.makeText(this, "Em breve...", Toast.LENGTH_SHORT).show();
+
+                String numero = numeroTel;
+                if (!numero.isEmpty()){
+
+                    dialogContato(numero);
+
+                }
+                else{
+                    Toast.makeText(getBaseContext(), "Numero Indisponivel!", Toast.LENGTH_SHORT).show();
+                }
+
+                //Toast.makeText(this, "Em breve...", Toast.LENGTH_SHORT).show();
                 break;
             }
         }
 
         return true;
     }
+
+
+
+    private void dialogAvaliacao() {
+
+        txtValor = findViewById(R.id.rtTeste);
+        btAvaliar = findViewById(R.id.btAvaliar);
+
+        LayoutInflater li = getLayoutInflater();
+        final View image = li.inflate(R.layout.avaliacao, null);
+
+        image.findViewById(R.id.btAvaliar).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                rating01 = image.findViewById(R.id.ratingDialog);
+                txtValor.setText(String.valueOf(rating01.getRating()));
+                Toast.makeText(getBaseContext(), "" + rating01.getRating(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "Obrigado por avaliar!", Toast.LENGTH_SHORT).show();
+
+                avalia.dismiss();
+            }
+
+        });
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(image);
+        avalia = builder.create();
+        avalia.getWindow().setBackgroundDrawableResource(R.drawable.borda_redonda);
+        avalia.show();
+
+
+    }
+
+    public void dialogContato(String numero){
+
+        String contato = numero.replace(" ", "")
+                .replace("-", "")
+                .replace("(", "")
+                .replace(")", "");
+
+        final StringBuffer numeroContato = new StringBuffer(contato);
+
+        zap = findViewById(R.id.btZap);
+        liga = findViewById(R.id.btLiga);
+
+        LayoutInflater lc = getLayoutInflater();
+        View vcont = lc.inflate(R.layout.chat, null);
+
+        vcont.findViewById(R.id.btZap).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                contatoZap(numeroContato);
+            }
+        });
+
+        vcont.findViewById(R.id.btLiga).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                contatoLigar(numeroContato);
+            }
+        });
+
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(vcont);
+        comunica = builder.create();
+        comunica.getWindow().setBackgroundDrawableResource(R.drawable.borda_redonda);
+        comunica.show();
+
+//
+    }
+
+    public void contatoZap(StringBuffer numeroContato){
+        numeroContato.deleteCharAt(2);
+
+        Intent intent = new Intent("android.intent.action.MAIN");
+        intent.setComponent(new ComponentName("com.whatsapp", "com.whatsapp.Conversation"));
+        intent.putExtra("jid",
+                PhoneNumberUtils.stripSeparators("55"+numeroContato) + "@s.whatsapp.net");
+
+        startActivity(intent);
+
+    }
+
+    public void contatoLigar(StringBuffer numeroContato){
+        Uri uri = Uri.parse("tel:" + numeroContato);
+        Intent intent = new Intent(Intent.ACTION_DIAL, uri);
+        startActivity(intent);
+
+    }
+
+
+
 }

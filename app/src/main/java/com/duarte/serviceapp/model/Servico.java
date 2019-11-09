@@ -1,5 +1,7 @@
 package com.duarte.serviceapp.model;
 
+import android.widget.RatingBar;
+
 import com.duarte.serviceapp.helper.ConfiguracaoFirebase;
 import com.google.firebase.database.DatabaseReference;
 
@@ -12,6 +14,7 @@ public class Servico {
     private String nome;
     private String descricao;
     private Float preco;
+    private RatingBar rating;
     private NumberFormat formater = NumberFormat.getCurrencyInstance();
 
 
@@ -42,6 +45,10 @@ public class Servico {
                 .child( getIdServico() );
         servicoRef.removeValue();
     }
+
+
+
+
 
 
     public String getIdServico() {
@@ -84,4 +91,11 @@ public class Servico {
         this.preco = preco;
     }
 
+    public RatingBar getRating() {
+        return rating;
+    }
+
+    public void setRating(RatingBar rating) {
+        this.rating = rating;
+    }
 }
