@@ -208,7 +208,7 @@ public class HomeActivityDrawer extends AppCompatActivity implements NavigationV
                 break;
             }
             case R.id.menu_ordem:{
-                Intent ordem = new Intent(HomeActivityDrawer.this, OrdensServicoActivity.class);
+                Intent ordem = new Intent(HomeActivityDrawer.this, OrdensServicoClienteActivity.class);
                 startActivity(ordem);
                 break;
             }

@@ -159,7 +159,7 @@ public class SuporteActivity extends HomeActivityDrawer {
                 break;
             }
             case R.id.menu_ordem:{
-                Intent ordem = new Intent(SuporteActivity.this, OrdensServicoActivity.class);
+                Intent ordem = new Intent(SuporteActivity.this, OrdensServicoClienteActivity.class);
                 startActivity(ordem);
                 break;
             }

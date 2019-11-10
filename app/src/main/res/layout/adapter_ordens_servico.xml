@@ -45,6 +45,7 @@
         android:id="@+id/textOrdemServicoStatus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:textStyle="bold"
         android:text="Status: pendente"
         android:textSize="14sp" />
