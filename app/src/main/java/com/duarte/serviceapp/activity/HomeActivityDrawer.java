@@ -162,7 +162,7 @@ public class HomeActivityDrawer extends AppCompatActivity implements NavigationV
 
         //Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("ServiceApp");
+        toolbar.setTitle("Home");
         setSupportActionBar(toolbar);
         searchView = findViewById(R.id.materialSearchView);
 

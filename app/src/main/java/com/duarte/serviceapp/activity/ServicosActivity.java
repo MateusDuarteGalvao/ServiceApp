@@ -13,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.telephony.PhoneNumberUtils;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -206,10 +207,6 @@ public class ServicosActivity extends AppCompatActivity implements BottomNavigat
                 )
         );
 
-
-
-
-
     }
 
     private void confirmarQuantidade(final int posicao) {
@@ -220,6 +217,7 @@ public class ServicosActivity extends AppCompatActivity implements BottomNavigat
 
         final EditText editQunatidade = new EditText(this);
         editQunatidade.setText("1");
+        editQunatidade.setInputType(InputType.TYPE_CLASS_NUMBER);
 
         builder.setView( editQunatidade );
 
@@ -327,9 +325,6 @@ public class ServicosActivity extends AppCompatActivity implements BottomNavigat
 
                 }
 
-
-
-
                 textServicosQtde.setText( "Pedidos : " + String.valueOf(qtdeItensServico) );
                 textServicosTotal.setText( nf.format(totalServicos));
 
@@ -424,10 +419,12 @@ public class ServicosActivity extends AppCompatActivity implements BottomNavigat
                 ordemServicoRecuperada.remover();
                 ordemServicoRecuperada = null;
 
+                finish();
                 Toast.makeText(
-                        ServicosActivity.this,
+                        getApplicationContext(),
                         "Serviço confirmado com sucesso.",
                         Toast.LENGTH_SHORT).show();
+
 
             }
         });
