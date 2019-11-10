@@ -161,7 +161,7 @@ public class PrestadorActivityDrawer extends AppCompatActivity implements Naviga
 
         //Toolbar
         toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("ServiceApp");
+        toolbar.setTitle("Serviços");
         setSupportActionBar(toolbar);
 
         //Drawer

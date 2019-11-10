@@ -64,6 +64,12 @@ public class OrdemServico {
                 .child( getIdPrestador() )
                 .child( getIdOrdemServico() );
         ordemServicoRef.setValue( this );
+
+        DatabaseReference ordemServicoNovaRef = firebaseRef
+                .child("ordens_servico")
+                .child( getIdCliente() )
+                .child( getIdOrdemServico() );
+        ordemServicoNovaRef.setValue( this );
     }
 
     public void atualizarStatus() {
