@@ -4,10 +4,14 @@ import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.internal.NavigationMenu;
 import android.support.design.widget.NavigationView;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -43,6 +47,8 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,21 +129,33 @@ public class HomeActivityDrawer extends AppCompatActivity implements NavigationV
         nomeAtual = viewUser.findViewById(R.id.nomeuser);
         fotoAtual = viewFoto.findViewById(R.id.fotouser);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        searchView = findViewById(R.id.materialSearchView);
+
         DatabaseReference clienteRef = firebaseRef
                 .child("clientes")
                 .child(idUsuarioLogado);
         if (idat != null) {
             String nomeLogado = idat.getDisplayName();
             String emailLogado = idat.getEmail();
-            Uri fotoURL = idat.getPhotoUrl();
+            //Uri fotoURL = idat.getPhotoUrl();
             numeroTel = idat.getPhoneNumber();
 
             nomeCliente = nomeLogado;
             emailCliente = emailLogado;
-            fotoCliente = fotoURL;
+            //fotoCliente = fotoURL;
             emailAtual.setText(emailCliente);
-            fotoAtual.setImageURI(fotoCliente);
+            //fotoAtual.setImageURI(fotoCliente);
         }
+
+        //Toolbar
+
+        toolbar.setTitle("Home");
+        setSupportActionBar(toolbar);
+
+        //Configuração do search view
+        configSearchView();
+
 
         clienteRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -146,6 +164,28 @@ public class HomeActivityDrawer extends AppCompatActivity implements NavigationV
                     Cliente cliente = dataSnapshot.getValue(Cliente.class);
                     nomeCliente = cliente.getNome();
                     nomeAtual.setText(nomeCliente);
+                    String fURL = cliente.getUrlImagem();
+                    Picasso.get().load(fURL)
+                            .resize(300, 300)
+                            .centerCrop()
+                            .into(fotoAtual, new Callback() {
+                                @Override
+                                public void onSuccess() {
+                                    Bitmap imageBitmap = ((BitmapDrawable) fotoAtual.getDrawable()).getBitmap();
+                                    RoundedBitmapDrawable imageDrawable = RoundedBitmapDrawableFactory.create(getResources(), imageBitmap);
+                                    imageDrawable.setCircular(true);
+                                    imageDrawable.setCornerRadius(Math.max(imageBitmap.getWidth(), imageBitmap.getHeight()) / 2.0f);
+                                    fotoAtual.setImageDrawable(imageDrawable);
+                                }
+
+                                @Override
+                                public void onError(Exception e) {
+
+                                }
+
+                            });
+
+
 
 
                 }
@@ -160,11 +200,6 @@ public class HomeActivityDrawer extends AppCompatActivity implements NavigationV
 
 
 
-        //Toolbar
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Home");
-        setSupportActionBar(toolbar);
-        searchView = findViewById(R.id.materialSearchView);
 
         //Drawer
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar,R.string.open_drawer,R.string.close_drawer);
@@ -179,8 +214,7 @@ public class HomeActivityDrawer extends AppCompatActivity implements NavigationV
 
             }
         });
-        //Configuração do search view
-        configSearchView();
+
 
         //Configurar evento de clique
         configEventClique();
@@ -236,6 +270,7 @@ public class HomeActivityDrawer extends AppCompatActivity implements NavigationV
 
     private void configSearchView(){
         searchView.setHint("Pesquisar...");
+        searchView.setVoiceSearch(true);
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -249,6 +284,8 @@ public class HomeActivityDrawer extends AppCompatActivity implements NavigationV
                 return true;
             }
         });
+
+
     }
 
     private void configEventClique(){
@@ -361,21 +398,18 @@ public class HomeActivityDrawer extends AppCompatActivity implements NavigationV
 
             @Override
             public boolean onMenuItemSelected(MenuItem menuItem) {
-                //Toast.makeText(PrestadorActivity.this, "" + menuItem.getTitle(), Toast.LENGTH_SHORT).show();
                 int id = menuItem.getItemId();
 
                 if (id == R.id.menuConfiguracoes) {
-                    startActivity(new Intent(HomeActivityDrawer.this, PerfilClienteActivity.class));
+                    startActivity(new Intent(getBaseContext(), PerfilClienteActivity.class));
                     return true;
                 }
-               /* if (id == R.id.serviços) {
-                    startActivity(new Intent(HomeActivity.this, ServicosActivity.class));
+                if (id == R.id.serviços) {
+                    startActivity(new Intent(getBaseContext(), OrdensServicoClienteActivity.class));
                     return true;
-                }*/
-                if (id == R.id.chat) {
-                    //Toast.makeText(HomeActivityDrawer.this, "Em breve", Toast.LENGTH_SHORT).show();
-
-                    Toast.makeText(HomeActivityDrawer.this, "Escolha um prestador para iniciar uma conversa.", Toast.LENGTH_LONG).show();
+                }
+                if (id == R.id.fav) {
+                    Toast.makeText(getBaseContext(), "Em breve!", Toast.LENGTH_SHORT).show();
 
                     return true;
                 }

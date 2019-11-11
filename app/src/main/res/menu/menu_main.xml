@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <item
-        android:id="@+id/chat"
-        android:icon="@drawable/ic_chat"
-        android:title="Chat"
-        />
+<!--    <item-->
+<!--        android:id="@+id/fav"-->
+<!--        android:icon="@drawable/ic_fav"-->
+<!--        android:title="Favoritos"-->
+<!--        />-->
     <item
         android:id="@+id/menuConfiguracoes"
         android:icon="@drawable/ic_config"
@@ -16,7 +16,7 @@
     <item
         android:id="@+id/ordens"
         android:icon="@drawable/ic_contratos"
-        android:title="Contratos"
+        android:title="Pedidos"
         />
 
 
