@@ -105,9 +105,12 @@ public class HomeActivityDrawer extends AppCompatActivity implements NavigationV
         adapterPrestador = new AdapterPrestador(prestadores);
         recyclerPrestador.setAdapter( adapterPrestador );
 
+
+
         dialog = new SpotsDialog.Builder()
                 .setContext(this)
                 .setMessage("Carregando dados")
+                .setTheme(R.style.Custom)
                 .setCancelable(false)
                 .build();
         dialog.show();
@@ -122,7 +125,7 @@ public class HomeActivityDrawer extends AppCompatActivity implements NavigationV
                     prestadores.add( ds.getValue(Prestador.class) );
                 }
 
-                dialog.dismiss();
+               dialog.dismiss();
                 adapterPrestador.notifyDataSetChanged();
             }
 
@@ -381,7 +384,9 @@ public class HomeActivityDrawer extends AppCompatActivity implements NavigationV
     private void deslogarUsuario(){
         try {
             autenticacao.signOut();
-            finish();
+            Intent i = new Intent(getBaseContext(), LoginActivity.class);
+            startActivity(i);
+           // finish();
         }catch (Exception e){
             e.printStackTrace();
         }

@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.OrdensServicoClienteActivity"
-            android:parentActivityName=".activity.PrestadorActivityDrawer"
+            android:parentActivityName=".activity.HomeActivityDrawer"
             android:screenOrientation="portrait" />
         <activity android:name=".activity.SuporteActivityPrestador" />
         <activity android:name=".activity.PrestadorActivityDrawer" />

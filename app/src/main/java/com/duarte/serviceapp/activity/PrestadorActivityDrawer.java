@@ -299,7 +299,9 @@ public class PrestadorActivityDrawer extends AppCompatActivity implements Naviga
     private void deslogarUsuario(){
         try {
             autenticacao.signOut();
-            finish();
+            Intent i = new Intent(getBaseContext(), LoginActivity.class);
+            startActivity(i);
+            // finish();
         }catch (Exception e){
             e.printStackTrace();
         }

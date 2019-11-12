@@ -55,7 +55,7 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
 
     /* Dependência dialog de progresso */
-    implementation 'com.github.d-max:spots-dialog:1.1@aar'
+    implementation 'com.github.d-max:spots-dialog:1.1'
 
     /*Slider*/
     implementation 'com.github.apl-devs:appintro:v4.2.3'

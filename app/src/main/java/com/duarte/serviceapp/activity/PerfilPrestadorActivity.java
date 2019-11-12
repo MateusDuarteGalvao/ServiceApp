@@ -55,6 +55,14 @@ public class PerfilPrestadorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil_prestador);
 
+        dialog = new SpotsDialog.Builder()
+                .setContext(this)
+                .setMessage("Carregando dados")
+                .setTheme(R.style.Custom)
+                .setCancelable(false)
+                .build();
+        dialog.show();
+
         //Configurações iniciais
         editPrestadorNome = findViewById(R.id.editPrestadorNome);
         editPrestadorTelefone = findViewById(R.id.editPrestadorTelefone);
@@ -87,16 +95,13 @@ public class PerfilPrestadorActivity extends AppCompatActivity {
 
         //Recuperar dados do prestador
         recuperarDadosPrestador();
+
+        dialog.dismiss();
     }
 
    private void recuperarDadosPrestador(){
 
-       dialog = new SpotsDialog.Builder()
-               .setContext(this)
-               .setMessage("Carregando dados")
-               .setCancelable(false)
-               .build();
-       dialog.show();
+
 
         DatabaseReference prestadorRef = firebaseRef
                 .child("prestadores")
@@ -119,7 +124,7 @@ public class PerfilPrestadorActivity extends AppCompatActivity {
                                 .into(imagePerfilPrestador);
                     }
 
-                    dialog.dismiss();
+
                 }
 
             }

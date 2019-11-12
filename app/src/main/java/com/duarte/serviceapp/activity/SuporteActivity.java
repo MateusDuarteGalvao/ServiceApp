@@ -1,9 +1,13 @@
 package com.duarte.serviceapp.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -30,6 +34,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +109,26 @@ public class SuporteActivity extends HomeActivityDrawer {
                     Cliente cliente = dataSnapshot.getValue(Cliente.class);
                     nomeCliente = cliente.getNome();
                     nomeAtual.setText(nomeCliente);
+                    String fURL = cliente.getUrlImagem();
+                    Picasso.get().load(fURL)
+                            .resize(300, 300)
+                            .centerCrop()
+                            .into(fotoAtual, new Callback() {
+                                @Override
+                                public void onSuccess() {
+                                    Bitmap imageBitmap = ((BitmapDrawable) fotoAtual.getDrawable()).getBitmap();
+                                    RoundedBitmapDrawable imageDrawable = RoundedBitmapDrawableFactory.create(getResources(), imageBitmap);
+                                    imageDrawable.setCircular(true);
+                                    imageDrawable.setCornerRadius(Math.max(imageBitmap.getWidth(), imageBitmap.getHeight()) / 2.0f);
+                                    fotoAtual.setImageDrawable(imageDrawable);
+                                }
 
+                                @Override
+                                public void onError(Exception e) {
+
+                                }
+
+                            });
 
                 }
             }
@@ -150,7 +175,7 @@ public class SuporteActivity extends HomeActivityDrawer {
 
         switch (item.getItemId()){
             case R.id.menu_home:{
-                Intent home = new Intent(SuporteActivity.this, HomeActivityDrawer.class);
+                Intent home = new Intent(getBaseContext(), HomeActivityDrawer.class);
                 startActivity(home);
                 break;
             }
@@ -159,17 +184,17 @@ public class SuporteActivity extends HomeActivityDrawer {
                 break;
             }
             case R.id.menu_ordem:{
-                Intent ordem = new Intent(SuporteActivity.this, OrdensServicoClienteActivity.class);
+                Intent ordem = new Intent(getBaseContext(), OrdensServicoClienteActivity.class);
                 startActivity(ordem);
                 break;
             }
             case R.id.menu_config:{
-                Intent config = new Intent(SuporteActivity.this, PerfilClienteActivity.class);
+                Intent config = new Intent(getBaseContext(), PerfilClienteActivity.class);
                 startActivity(config);
                 break;
             }
             case R.id.menu_sup:{
-                Intent sup = new Intent(SuporteActivity.this, SuporteActivity.class);
+                Intent sup = new Intent(getBaseContext(), SuporteActivity.class);
                 startActivity(sup);
                 break;
             }
@@ -186,7 +211,9 @@ public class SuporteActivity extends HomeActivityDrawer {
     private void deslogarUsuario(){
         try {
             autenticacao.signOut();
-            finish();
+            Intent i = new Intent(getBaseContext(), LoginActivity.class);
+            startActivity(i);
+            // finish();
         }catch (Exception e){
             e.printStackTrace();
         }
