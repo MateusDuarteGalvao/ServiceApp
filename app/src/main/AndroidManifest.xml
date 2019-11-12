@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_logoe"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.OrdensServicoClienteActivity"></activity>
+        <activity android:name=".activity.OrdensServicoClienteActivity"
+            android:parentActivityName=".activity.PrestadorActivityDrawer"
+            android:screenOrientation="portrait" />
         <activity android:name=".activity.SuporteActivityPrestador" />
         <activity android:name=".activity.PrestadorActivityDrawer" />
         <activity android:name=".activity.HomeActivityDrawer" />
