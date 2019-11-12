@@ -1,10 +1,14 @@
 package com.duarte.serviceapp.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.internal.NavigationMenu;
 import android.support.design.widget.NavigationView;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -34,6 +38,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -141,6 +147,26 @@ public class PrestadorActivityDrawer extends AppCompatActivity implements Naviga
                     Prestador prestador= dataSnapshot.getValue(Prestador.class);
                     nomePrestador = prestador.getNome();
                     nomeAtual.setText(nomePrestador);
+                    String fURL = prestador.getUrlImagem();
+                    Picasso.get().load(fURL)
+                            .resize(300, 300)
+                            .centerCrop()
+                            .into(fotoAtual, new Callback() {
+                                @Override
+                                public void onSuccess() {
+                                    Bitmap imageBitmap = ((BitmapDrawable) fotoAtual.getDrawable()).getBitmap();
+                                    RoundedBitmapDrawable imageDrawable = RoundedBitmapDrawableFactory.create(getResources(), imageBitmap);
+                                    imageDrawable.setCircular(true);
+                                    imageDrawable.setCornerRadius(Math.max(imageBitmap.getWidth(), imageBitmap.getHeight()) / 2.0f);
+                                    fotoAtual.setImageDrawable(imageDrawable);
+                                }
+
+                                @Override
+                                public void onError(Exception e) {
+
+                                }
+
+                            });
 
 
 
@@ -343,11 +369,11 @@ public class PrestadorActivityDrawer extends AppCompatActivity implements Naviga
                     startActivity(new Intent(PrestadorActivityDrawer.this, OrdensServicoActivity.class));
                     return true;
                 }
-                if (id == R.id.chat) {
-                    Toast.makeText(PrestadorActivityDrawer.this, "Em breve", Toast.LENGTH_SHORT).show();
-                    //startActivity(new Intent(PrestadorActivity.this, PerfilPrestadorActivity.class));
-                    return true;
-                }
+//                if (id == R.id.chat) {
+//                    Toast.makeText(PrestadorActivityDrawer.this, "Em breve", Toast.LENGTH_SHORT).show();
+//                    //startActivity(new Intent(PrestadorActivity.this, PerfilPrestadorActivity.class));
+//                    return true;
+//                }
                 return true;
             }
 

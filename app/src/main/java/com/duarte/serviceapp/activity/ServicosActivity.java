@@ -87,6 +87,7 @@ public class ServicosActivity extends AppCompatActivity implements BottomNavigat
 
     private AlertDialog avalia;
     private AlertDialog comunica;
+    private AlertDialog diaQTD;
     private RatingBar rating01;
     private RatingBar ratingTeste;
     private TextView txtValor;
@@ -98,7 +99,7 @@ public class ServicosActivity extends AppCompatActivity implements BottomNavigat
     private Button zap;
     private Button liga;
 
-    private Prestador prest;
+    private Button cancel;
 
 
     @Override
@@ -209,23 +210,26 @@ public class ServicosActivity extends AppCompatActivity implements BottomNavigat
 
     }
 
-    private void confirmarQuantidade(final int posicao) {
+    private void confirmarQuantidade(final int posicao){
+
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Quantidade");
-        builder.setMessage("Digite a quantidade");
+        final EditText editQTD;
+        Button conf;
+        Button canc;
 
-        final EditText editQunatidade = new EditText(this);
-        editQunatidade.setText("1");
-        editQunatidade.setInputType(InputType.TYPE_CLASS_NUMBER);
+        LayoutInflater li = getLayoutInflater();
+        final View image = li.inflate(R.layout.qtd_servico, null);
 
-        builder.setView( editQunatidade );
+        editQTD = image.findViewById(R.id.editQTD);
+        editQTD.setInputType(InputType.TYPE_CLASS_NUMBER);
 
-        builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+        conf = image.findViewById(R.id.btConfirmar);
+        conf.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(View view) {
 
-                String quantidade = editQunatidade.getText().toString();
+                String quantidade = editQTD.getText().toString();
 
                 Servico servicoSelecionado = servicos.get(posicao);
 
@@ -248,19 +252,80 @@ public class ServicosActivity extends AppCompatActivity implements BottomNavigat
                 ordemServicoRecuperada.setItens( itensServicos );
                 ordemServicoRecuperada.salvar();
 
+                diaQTD.dismiss();
+
+
             }
         });
 
-        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+
+        canc = image.findViewById(R.id.btCancelar);
+        canc.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-
+            public void onClick(View view) {
+                diaQTD.dismiss();
             }
         });
 
-        AlertDialog dialog = builder.create();
-        dialog.show();
+
+        builder.setView( image );
+        diaQTD = builder.create();
+        diaQTD.getWindow().setBackgroundDrawableResource(R.drawable.borda_redonda);
+        diaQTD.show();
+
     }
+
+
+//    private void confirmarQuantidade(final int posicao) {
+//
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//
+//        final EditText editQunatidade = new EditText(this);
+//        editQunatidade.setText("");
+//        editQunatidade.setInputType(InputType.TYPE_CLASS_NUMBER);
+//
+//        builder.setView( editQunatidade );
+//
+//        builder.setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//
+//                String quantidade = editQunatidade.getText().toString();
+//
+//                Servico servicoSelecionado = servicos.get(posicao);
+//
+//                ItemOrdemServico itemOrdemServico = new ItemOrdemServico();
+//                itemOrdemServico.setIdServico( servicoSelecionado.getIdServico() );
+//                itemOrdemServico.setDescricaoServico( servicoSelecionado.getDescricao() );
+//                itemOrdemServico.setNomeServico( servicoSelecionado.getNome() );
+//                itemOrdemServico.setPreco( servicoSelecionado.getPreco() );
+//                itemOrdemServico.setQuantidade( Integer.parseInt(quantidade) );
+//
+//                itensServicos.add( itemOrdemServico );
+//
+//                if( ordemServicoRecuperada == null ){
+//                    ordemServicoRecuperada = new OrdemServico(idUsuarioLogado, idPrestador);
+//                }
+//
+//                ordemServicoRecuperada.setNome( cliente.getNome() );
+//                ordemServicoRecuperada.setEndereco( cliente.getEndereco() );
+//                ordemServicoRecuperada.setTelefone( cliente.getTelefone() );
+//                ordemServicoRecuperada.setItens( itensServicos );
+//                ordemServicoRecuperada.salvar();
+//
+//            }
+//        });
+//
+//        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//
+//            }
+//        });
+//
+//        AlertDialog dialog = builder.create();
+//        dialog.show();
+//    }
 
     private void recuperarDadosCliente() {
 
@@ -443,7 +508,7 @@ public class ServicosActivity extends AppCompatActivity implements BottomNavigat
     private void deslogarUsuario() {
         try {
             autenticacao.signOut();
-            finish();
+           // finish();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -454,9 +519,12 @@ public class ServicosActivity extends AppCompatActivity implements BottomNavigat
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()){
-            case R.id.bt_home:{
-                Intent i = new Intent(ServicosActivity.this, HomeActivityDrawer.class);
-                startActivity(i);
+            case R.id.cancelar:{
+
+                //Toast.makeText(getBaseContext(), "Cancela os itens marcados!", Toast.LENGTH_SHORT).show();
+
+               ordemServicoRecuperada.remover();
+
                 break;
 
             }
@@ -578,6 +646,8 @@ public class ServicosActivity extends AppCompatActivity implements BottomNavigat
         startActivity(intent);
 
     }
+
+
 
 
 

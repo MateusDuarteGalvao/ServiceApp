@@ -15,6 +15,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:src="@mipmap/ic_profile"
+        android:background="@drawable/campo_foto"
         />
 
     <TextView
