@@ -52,6 +52,14 @@ public class PerfilClienteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil_cliente);
 
+        dialog = new SpotsDialog.Builder()
+                .setContext(this)
+                .setMessage("Carregando dados")
+                .setTheme(R.style.Custom)
+                .setCancelable(false)
+                .build();
+        dialog.show();
+
         //Configurações iniciais
         editClienteNome = findViewById(R.id.editClienteNome);
         editClienteEndereco = findViewById(R.id.editClienteEndereco);
@@ -67,6 +75,8 @@ public class PerfilClienteActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
+
         //Adicionando evento de click na imagem
         imagePerfilCliente.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,19 +91,15 @@ public class PerfilClienteActivity extends AppCompatActivity {
             }
         });
 
+
         //Recuperar dados do cliente
         recuperarDadosCliente();
+        dialog.dismiss();
 
     }
 
     private void recuperarDadosCliente(){
 
-        dialog = new SpotsDialog.Builder()
-                .setContext(this)
-                .setMessage("Carregando dados")
-                .setCancelable(false)
-                .build();
-        dialog.show();
 
         DatabaseReference clienteRef = firebaseRef
                 .child("clientes")
@@ -115,7 +121,7 @@ public class PerfilClienteActivity extends AppCompatActivity {
                                     .into(imagePerfilCliente);
                         }
 
-                        dialog.dismiss();
+
                     }
 
                 }
