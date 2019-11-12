@@ -53,6 +53,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import dmax.dialog.SpotsDialog;
 import io.github.yavski.fabspeeddial.FabSpeedDial;
 
 public class HomeActivityDrawer extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -76,6 +77,8 @@ public class HomeActivityDrawer extends AppCompatActivity implements NavigationV
     private TextView emailAtual;
     private ImageView fotoAtual;
     private String numeroTel;
+    private android.app.AlertDialog dialog;
+
 
     //Drawer
     private DrawerLayout drawer;
@@ -102,6 +105,13 @@ public class HomeActivityDrawer extends AppCompatActivity implements NavigationV
         adapterPrestador = new AdapterPrestador(prestadores);
         recyclerPrestador.setAdapter( adapterPrestador );
 
+        dialog = new SpotsDialog.Builder()
+                .setContext(this)
+                .setMessage("Carregando dados")
+                .setCancelable(false)
+                .build();
+        dialog.show();
+
         //Recupera prestadores para o cliente
         DatabaseReference prestadorRef = firebaseRef.child("prestadores");
         prestadorRef.addValueEventListener(new ValueEventListener() {
@@ -111,6 +121,8 @@ public class HomeActivityDrawer extends AppCompatActivity implements NavigationV
                 for (DataSnapshot ds: dataSnapshot.getChildren()){
                     prestadores.add( ds.getValue(Prestador.class) );
                 }
+
+                dialog.dismiss();
                 adapterPrestador.notifyDataSetChanged();
             }
 
@@ -149,13 +161,11 @@ public class HomeActivityDrawer extends AppCompatActivity implements NavigationV
         }
 
         //Toolbar
-
         toolbar.setTitle("Home");
         setSupportActionBar(toolbar);
 
         //Configuração do search view
         configSearchView();
-
 
         clienteRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -184,10 +194,6 @@ public class HomeActivityDrawer extends AppCompatActivity implements NavigationV
                                 }
 
                             });
-
-
-
-
                 }
             }
             @Override
@@ -197,9 +203,6 @@ public class HomeActivityDrawer extends AppCompatActivity implements NavigationV
 
         //Botão flutuante
         botaoFlutuante();
-
-
-
 
         //Drawer
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawer,toolbar,R.string.open_drawer,R.string.close_drawer);
